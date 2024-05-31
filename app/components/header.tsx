@@ -10,7 +10,7 @@ import React from "react";
 
 export default function Header() {
   return (
-    <Navbar position="static">
+    <Navbar position="sticky">
       <NavbarBrand>
         <p className="font-bold text-inherit">NSL Forever!</p>
       </NavbarBrand>
