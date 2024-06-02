@@ -28,7 +28,7 @@ export default function Sidebar() {
                     </div>
                 </div>
             </AccordionItem>
-            <AccordionItem key="2" aria-label="Module 2: How to get Mr. C on the SCOTUS" title="Module 2: How to get Mr. C on the SCOTUS" className="px-6 py-2 ">
+            {/* <AccordionItem key="2" aria-label="Module 2: How to get Mr. C on the SCOTUS" title="Module 2: How to get Mr. C on the SCOTUS" className="px-6 py-2 ">
                 <div className="flex flex-col">
                     <div className="flex flex-row  items-center py-4 pl-8 w-full border-b-1">
                     <img src={video.src} className="w-6 h-6"></img>
@@ -59,7 +59,7 @@ export default function Sidebar() {
                     <p className="ml-4 leading-5 text-sm text-[#3E8914]">Quiz</p>
                     </div>
                 </div>
-            </AccordionItem>
+            </AccordionItem> */}
         </Accordion>            
         </ScrollShadow>
     </div>

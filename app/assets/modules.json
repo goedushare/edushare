@@ -1,0 +1,28 @@
+{
+    "modules": [
+        {
+            "id": 0,
+            "name": "NAME",
+            "videoName": "VIDEO_NAME",
+            "articleName": "ARTICLE_NAME"
+        },
+        {
+            "id": 1,
+            "name": "NAME",
+            "videoName": "VIDEO_NAME",
+            "articleName": "ARTICLE_NAME"
+        },
+        {
+            "id": 2,
+            "name": "NAME",
+            "videoName": "VIDEO_NAME",
+            "articleName": "ARTICLE_NAME"
+        },
+        {
+            "id": 3,
+            "name": "NAME",
+            "videoName": "VIDEO_NAME",
+            "articleName": "ARTICLE_NAME"
+        }
+    ]
+}
