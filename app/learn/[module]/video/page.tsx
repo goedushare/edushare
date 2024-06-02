@@ -1,7 +1,12 @@
 import Video from "@/app/components/Video";
+// import json object from assets/modules.json
+import Modules from "@/app/assets/modules.json";
 
-export default function Page({ params }: { params: { module: string } }) {
+export default function Page({ params }: { params: { module: number } }) {
+  const mod = Modules["modules"][params.module];
   return (
-    <Video title="Video" link="https://www.youtube.com/embed/tgbNymZ7vqY" />
+    <>
+      <Video title={mod["videoName"]} link={mod["videoURL"]} />
+    </>
   );
 }
