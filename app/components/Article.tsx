@@ -1,7 +1,7 @@
 import React from "react";
 import ProgressBar from "./ProgressBar";
 
-export default function ArticlePage() {
+export default function Article() {
     return (
         <div className="w-3/4 h-full min-h-[100vh] pb-16 flex flex-col items-center">
             <h1 className="font-semibold text-3xl mt-6">How a Bill Becomes a Law</h1>
