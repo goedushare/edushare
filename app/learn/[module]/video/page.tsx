@@ -10,3 +10,5 @@ export default function Page({ params }: { params: { module: number } }) {
     </>
   );
 }
+
+export const runtime = 'edge';
