@@ -10,33 +10,10 @@ export default function LearnLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const videoTitles = [
-    {
-      title: "How a Bill Becomes a Law",
-      url: "how-a-bill-becomes-a-law",
-      link: "https://www.youtube.com/embed/tgbNymZ7vqY",
-    },
-    {
-      title: "Rah Rah Ooh La La",
-      url: "how-to-get-mr-c-on-the-scotus",
-      link: "https://www.youtube.com/embed/tgbNymZ7vqY",
-    },
-    {
-      title: "Nom Nom Nom Nom",
-      url: "the-world-of-campaign-finance",
-      link: "https://www.youtube.com/embed/tgbNymZ7vqY",
-    },
-  ];
-
   return (
-    <div className="flex flex-col h-screen">
-      <Header></Header>
-      <div className="flex flex-row flex-1">
-        <Sidebar></Sidebar>
-        {children}
-      </div>
+    <div className="flex flex-row flex-1">
+      <Sidebar />
+      {children}
     </div>
   );
 }
-
-/*<VideoPage title="How a Bill Becomes a law" link="https://www.youtube.com/embed/tgbNymZ7vqY"></VideoPage> */
