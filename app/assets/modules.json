@@ -15,6 +15,14 @@
             "articleName": "How a Bill Becomes a Law 2",
             "videoURL": "https://www.youtube.com/embed/tgbNymZ7vqY",
             "authors": "John Doe, Jane Doe 2"
+        },
+        {
+            "id": 2,
+            "moduleName": "How a Bill Becomes a Law 3",
+            "videoName": "How a Bill Becomes a Law 3",
+            "articleName": "How a Bill Becomes a Law 3",
+            "videoURL": "https://www.youtube.com/embed/tgbNymZ7vqY",
+            "authors": "John Doe, Jane Doe 3"
         }
     ]
 }

@@ -31,9 +31,9 @@ export default function LearnLayout({
   return (
     <div className="flex flex-col h-screen">
       <Header></Header>
-      <div className="flex flex-row">
+      <div className="flex flex-row flex-1">
         <Sidebar></Sidebar>
-        <div>{children}</div>
+        {children}
       </div>
     </div>
   );

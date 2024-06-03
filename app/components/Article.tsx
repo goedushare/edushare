@@ -12,7 +12,7 @@ export default function Article({
   body: string;
 }) {
   return (
-    <div className="w-3/4 h-full min-h-[100vh] pb-16 flex flex-col items-center">
+    <div className="w-3/4 pb-16 flex flex-col items-center h-[calc(100vh-64px)] overflow-scroll px-8">
       <h1 className="font-semibold text-3xl mt-6">{articleName}</h1>
       <h2 className="font-normal text-xl mt-2">By: {authors}</h2>
       <ReactMarkdown>{body}</ReactMarkdown>
