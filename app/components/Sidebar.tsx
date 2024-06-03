@@ -5,6 +5,7 @@ import quiz from "../assets/quiz.svg";
 import { ScrollShadow } from "@nextui-org/scroll-shadow";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import modules from "../assets/modules.json";
+import Link from "next/link";
 
 export default function Sidebar() {
   return (
@@ -27,24 +28,30 @@ export default function Sidebar() {
                 className="px-6 py-2 "
               >
                 <div className="flex flex-col">
-                  <div className="flex flex-row  items-center py-4 pl-8 w-full border-b-1">
-                    <img src={video.src} className="w-10 h-10" />
-                    <p className="ml-4 leading-5 text-sm text-[#3E8914]">
-                      {module["videoName"]}
-                    </p>
-                  </div>
-                  <div className="flex flex-row  items-center py-4 pl-8 w-full border-b-1">
-                    <img src={article.src} className="w-10 h-10" />
-                    <p className="ml-4 leading-5 text-sm text-[#3E8914]">
-                      {module["articleName"]}
-                    </p>
-                  </div>
-                  <div className="flex flex-row items-center py-4 pl-8 w-full">
-                    <img src={quiz.src} className="w-10 h-10" />
-                    <p className="ml-4 leading-5 text-sm text-[#3E8914]">
-                      Quiz
-                    </p>
-                  </div>
+                  <Link href={`/learn/${module["id"]}/video`}>
+                    <div className="flex flex-row  items-center py-4 pl-8 w-full border-b-1">
+                      <img src={video.src} className="w-10 h-10" />
+                      <p className="ml-4 leading-5 text-sm text-[#3E8914]">
+                        {module["videoName"]}
+                      </p>
+                    </div>
+                  </Link>
+                  <Link href={`/learn/${module["id"]}/article`}>
+                    <div className="flex flex-row  items-center py-4 pl-8 w-full border-b-1">
+                      <img src={article.src} className="w-10 h-10" />
+                      <p className="ml-4 leading-5 text-sm text-[#3E8914]">
+                        {module["articleName"]}
+                      </p>
+                    </div>
+                  </Link>
+                  <Link href={`/learn/${module["id"]}/quiz`}>
+                    <div className="flex flex-row items-center py-4 pl-8 w-full">
+                      <img src={quiz.src} className="w-10 h-10" />
+                      <p className="ml-4 leading-5 text-sm text-[#3E8914]">
+                        Quiz
+                      </p>
+                    </div>
+                  </Link>
                 </div>
               </AccordionItem>
             );
