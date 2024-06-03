@@ -6,6 +6,8 @@ import { readFileSync } from "fs";
 export function generateStaticParams() {
   return Modules["modules"].map((mod) => ({ module: String(mod["id"]) }));
 }
+export const dynamicParams = false;
+
 
 export default function ArticlePage({
   params,

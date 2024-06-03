@@ -5,6 +5,8 @@ import Modules from "@/app/assets/modules.json";
 export function generateStaticParams() {
   return Modules["modules"].map((mod) => ({ module: String(mod["id"]) }));
 }
+export const dynamicParams = false;
+
 
 export default function Page({ params }: { params: { module: number } }) {
   const mod = Modules["modules"][params.module];
