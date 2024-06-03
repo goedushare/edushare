@@ -1,5 +1,6 @@
 import Article from "@/app/components/Article";
 import Modules from "@/app/assets/modules.json";
+import path from "path";
 import { readFileSync } from "fs";
 
 export function generateStaticParams() {
@@ -15,7 +16,7 @@ export default function ArticlePage({
   let mdarticle;
   try {
     mdarticle = readFileSync(
-      `@/app/assets/modules/${mod["id"]}/article.md`,
+      path.resolve(`app/assets/modules/${mod["id"]}/article.md`),
       "utf8"
     );
   } catch (e) {
