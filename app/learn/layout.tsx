@@ -3,8 +3,7 @@
 import { Button } from "@nextui-org/button";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
-import VideoPage from "../components/Video";
-import ArticlePage from "../components/Article";
+import Modules from "@/app/assets/modules.json";
 
 export default function LearnLayout({
   children,

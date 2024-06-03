@@ -2,30 +2,11 @@
     "modules": [
         {
             "id": 0,
-            "name": "How a Bill Becomes a Law",
+            "moduleName": "How a Bill Becomes a Law",
             "videoName": "How a Bill Becomes a Law",
             "articleName": "How a Bill Becomes a Law",
             "videoURL": "https://www.youtube.com/embed/tgbNymZ7vqY",
-            "articlePath": "ARTICLE_PATH",
-            "quizPath": "QUIZ_PATH"
-        },
-        {
-            "id": 1,
-            "name": "NAME",
-            "videoName": "VIDEO_NAME",
-            "articleName": "ARTICLE_NAME",
-            "videoURL": "VIDEO_URL",
-            "articlePath": "ARTICLE_PATH",
-            "quizPath": "QUIZ_PATH"
-        },
-        {
-            "id": 2,
-            "name": "NAME",
-            "videoName": "VIDEO_NAME",
-            "articleName": "ARTICLE_NAME",
-            "videoURL": "VIDEO_URL",
-            "articlePath": "ARTICLE_PATH",
-            "quizPath": "QUIZ_PATH"
+            "authors": "John Doe, Jane Doe"
         }
     ]
 }
