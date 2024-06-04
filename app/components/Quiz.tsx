@@ -23,8 +23,8 @@ export default function Quiz({ questions }: { questions: QuestionType[] }) {
   };
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("submit");
     e.preventDefault();
+    setSelected("");
     checkAnswer();
     handleNextQuestion();
   };
@@ -60,6 +60,7 @@ export default function Quiz({ questions }: { questions: QuestionType[] }) {
           <Question
             question={questions[currQuestion]}
             handleOptionChange={handleOptionChange}
+            selected={selected}
           />
         )}
         <div>{end ? <Button type="submit">Try Again</Button> : <Button type="submit">Submit</Button>}</div>
