@@ -11,7 +11,6 @@ export const dynamicParams = false;
 export default function Page({ params }: { params: { module: number } }) {
   try {
     const raw = readFileSync(path.resolve(`app/assets/modules/${params.module}/quiz.json`), "utf8");
-    console.log(raw);
     const quiz = JSON.parse(raw);
     return <Quiz questions={quiz["questions"]} />;
   } catch (e) {
