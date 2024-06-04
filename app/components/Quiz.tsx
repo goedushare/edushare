@@ -61,7 +61,7 @@ export default function Quiz({ questions }: { questions: QuestionType[] }) {
             handleOptionChange={handleOptionChange}
           />
         )}
-        <div>{end ? <Button type="submit">Try Again</Button> : <Button>Submit</Button>}</div>
+        <div>{end ? <Button type="submit">Try Again</Button> : <Button type="submit">Submit</Button>}</div>
       </form>
     </div>
   );
