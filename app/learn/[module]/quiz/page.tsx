@@ -6,7 +6,12 @@ export function generateStaticParams() {
 }
 export const dynamicParams = false;
 
-
-export default function Page({ params }: { params: { module: string } }) {
-  return <Quiz />;
+export default function Page({ params }: { params: { module: number } }) {
+  try {
+    console.log(`@/app/assets/modules/${params.module}/quiz.json`);
+    const quiz = require(`@/app/assets/modules/${params.module}/quiz.json`);
+    return <Quiz questions={quiz["questions"]} />;
+  } catch (e) {
+    return <div>Quiz not found</div>;
+  }
 }
