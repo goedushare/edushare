@@ -34,8 +34,9 @@ export default function Quiz({ questions }: { questions: QuestionType[] }) {
       selected ===
       questions[currQuestion]["answers"][questions[currQuestion]["correct"]]
     ) {
-      // set answer array at index of current question to true
       setAnswers([...answers, true]);
+    } else {
+      setAnswers([...answers, false]);
     }
   };
 
@@ -54,7 +55,7 @@ export default function Quiz({ questions }: { questions: QuestionType[] }) {
           Question {currQuestion + 1} of {questions.length}
         </h1>
         {end ? (
-          <Score />
+          <Score answers={answers} />
         ) : (
           <Question
             question={questions[currQuestion]}
