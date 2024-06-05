@@ -63,7 +63,7 @@ export default function Quiz({ questions }: { questions: QuestionType[] }) {
   };
 
   return (
-    <div className="w-3/4 h-[calc(100vh-64px)] overflow-scroll flex flex-col">
+    <div className="w-3/4 overflow-scroll flex flex-col">
       <div className="flex flex-col items-center">
         <h1 className="font-semibold text-3xl my-8">Quiz</h1>
       </div>
@@ -72,9 +72,9 @@ export default function Quiz({ questions }: { questions: QuestionType[] }) {
           onSubmit={handleFormSubmit}
           className="flex-1 justify-between flex flex-col"
         >
-          <div className="px-8 mb-auto">
+          <div className="px-8 mb-auto h-[calc(100vh-)]">
             {end ? (
-              <Score answers={answers} />
+              <Score answers={answers} questions={questions} />
             ) : (
               <div>
                 <h2 className="font-bold mb-6">
