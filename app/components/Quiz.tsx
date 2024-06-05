@@ -82,7 +82,7 @@ export default function Quiz({ questions }: { questions: QuestionType[] }) {
               {end ? (
                 <Button type="submit">Try Again</Button>
               ) : (
-                <Button type="submit">Submit</Button>
+                <Button type="submit" disabled={selected === ""} className={selected === "" ? "" : "bg-[#0E793C] text-white"}>Submit</Button>
               )}
             </div>
           </div>
