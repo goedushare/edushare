@@ -9,7 +9,7 @@ import Link from "next/link";
 
 export default function Sidebar() {
   return (
-    <div className="w-1/4 pt-4 flex flex-col sticky top-[10vh] h-[calc(100vh-64px)]">
+    <div className="w-1/4 pt-4 flex flex-col sticky top-[10vh] h-[calc(100vh-64px)] border-r-1 border-gray-100">
       <h1 className="font-bold text-center mb-4">
         AP®︎/College US Government and Politics
       </h1>

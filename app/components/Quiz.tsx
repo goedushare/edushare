@@ -49,22 +49,45 @@ export default function Quiz({ questions }: { questions: QuestionType[] }) {
   };
 
   return (
-    <div className="w-3/4 min-h-[100vh] pb-16 h-[calc(100vh-64px)] overflow-scroll px-8">
-      <form onSubmit={handleFormSubmit}>
-        <h1>
-          Question {currQuestion + 1} of {questions.length}
-        </h1>
-        {end ? (
-          <Score answers={answers} />
-        ) : (
-          <Question
-            question={questions[currQuestion]}
-            handleOptionChange={handleOptionChange}
-            selected={selected}
-          />
-        )}
-        <div>{end ? <Button type="submit">Try Again</Button> : <Button type="submit">Submit</Button>}</div>
-      </form>
+    <div className="w-3/4 h-[calc(100vh-64px)] overflow-scroll flex flex-col">
+      <div className="flex flex-col items-center">
+        <h1 className="font-semibold text-3xl my-8">Quiz</h1>
+      </div>
+      <div className="flex flex-1">
+        <form
+          onSubmit={handleFormSubmit}
+          className="flex-1 justify-between flex flex-col"
+        >
+          <div className="px-8 mb-auto">
+            {end ? (
+              <Score answers={answers} />
+            ) : (
+              <div>
+                <h2 className="font-bold mb-6">
+                  Question {currQuestion + 1} of {questions.length}
+                </h2>
+                <Question
+                  question={questions[currQuestion]}
+                  handleOptionChange={handleOptionChange}
+                  selected={selected}
+                />
+              </div>
+            )}
+          </div>
+          <div className="p-2 px-6 flex flex-row justify-between border-t-1">
+            <div className="flex items-center">
+              <p>Do {questions.length} problems</p>
+            </div>
+            <div>
+              {end ? (
+                <Button type="submit">Try Again</Button>
+              ) : (
+                <Button type="submit">Submit</Button>
+              )}
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

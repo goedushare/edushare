@@ -12,7 +12,7 @@ export default function Question({
 }) {
   return (
     <div>
-      <p>{question["question"]}</p>
+      <h2 className="mb-4">{question["question"]}</h2>
       <div>
         <RadioGroup value={selected}>
           {question["answers"].map((answer, i) => {
