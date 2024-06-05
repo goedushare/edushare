@@ -1,5 +1,6 @@
 import { Button, Radio, RadioGroup } from "@nextui-org/react";
 import { QuestionType } from "./Quiz";
+import ReactMarkdown from "react-markdown";
 
 export default function Question({
   question,
@@ -12,7 +13,7 @@ export default function Question({
 }) {
   return (
     <div>
-      <h2 className="mb-4">{question["question"]}</h2>
+      <ReactMarkdown className="mb-4">{question["question"]}</ReactMarkdown>
       <div>
         <RadioGroup value={selected}>
           {question["answers"].map((answer, i) => {

@@ -1,6 +1,7 @@
 import { Radio, RadioGroup } from "@nextui-org/react";
 import Question from "./Question";
 import { QuestionType } from "./Quiz";
+import ReactMarkdown from "react-markdown";
 
 export default function Score({
   answers,
@@ -25,17 +26,15 @@ export default function Score({
         if (answers[i] !== 1) {
           return (
             <div key={i} className="my-4">
-              <h2 className="mb-2">{question["question"]}</h2>
+              <ReactMarkdown className="mb-4">
+                {question["question"]}
+              </ReactMarkdown>
               <div className="">
                 <RadioGroup>
                   {question["answers"].map((answer, i) => {
                     return (
                       <>
-                        <Radio
-                          value={answer}
-                        >
-                          {answer}
-                        </Radio>
+                        <Radio value={answer}>{answer}</Radio>
                       </>
                     );
                   })}
