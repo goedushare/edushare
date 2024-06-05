@@ -24,9 +24,20 @@ export default function Quiz({ questions }: { questions: QuestionType[] }) {
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (end) {
+      handleRestart();
+      return;
+    }
     setSelected("");
     checkAnswer();
     handleNextQuestion();
+  };
+
+  const handleRestart = () => {
+    setCurrQuestion(0);
+    setAnswers([] as boolean[]);
+    setEnd(false);
+    setSelected("");
   };
 
   const checkAnswer = () => {
@@ -80,9 +91,15 @@ export default function Quiz({ questions }: { questions: QuestionType[] }) {
             </div>
             <div>
               {end ? (
-                <Button type="submit">Try Again</Button>
+                <Button type="submit" className="bg-[#0E793C] text-white">Try Again</Button>
               ) : (
-                <Button type="submit" disabled={selected === ""} className={selected === "" ? "" : "bg-[#0E793C] text-white"}>Submit</Button>
+                <Button
+                  type="submit"
+                  disabled={selected === ""}
+                  className={selected === "" ? "" : "bg-[#0E793C] text-white"}
+                >
+                  Submit
+                </Button>
               )}
             </div>
           </div>

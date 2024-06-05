@@ -6,6 +6,6 @@ export default function Score({answers}: {answers: boolean[]}) {
     }
   }
   return <div>
-    <h2>Score: {total}</h2>
+    <h2>Score: {total}/{answers.length}</h2>
   </div>
 }
