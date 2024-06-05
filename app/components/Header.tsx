@@ -3,9 +3,9 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Link,
   Button,
 } from "@nextui-org/react";
+import Link from "next/link";
 import React from "react";
 
 export default function Header() {
