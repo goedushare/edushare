@@ -4,6 +4,7 @@ import ProgressBar from "./ProgressBar";
 import { Button } from "@nextui-org/button";
 import Score from "./Score";
 import Question from "./Question";
+import QuizProgress from "./QuizProgress";
 
 export type QuestionType = {
   id: number;
@@ -14,7 +15,7 @@ export type QuestionType = {
 
 export default function Quiz({ questions }: { questions: QuestionType[] }) {
   const [currQuestion, setCurrQuestion] = React.useState(0);
-  const [answers, setAnswers] = React.useState([] as boolean[]);
+  const [answers, setAnswers] = React.useState(new Array<number>(questions.length).fill(-1));
   const [end, setEnd] = React.useState(false);
   const [selected, setSelected] = React.useState("");
 
@@ -35,20 +36,22 @@ export default function Quiz({ questions }: { questions: QuestionType[] }) {
 
   const handleRestart = () => {
     setCurrQuestion(0);
-    setAnswers([] as boolean[]);
+    setAnswers(new Array<number>(questions.length).fill(-1));
     setEnd(false);
     setSelected("");
   };
 
   const checkAnswer = () => {
+    let tempAnswers = [...answers]
     if (
       selected ===
       questions[currQuestion]["answers"][questions[currQuestion]["correct"]]
     ) {
-      setAnswers([...answers, true]);
+      tempAnswers[currQuestion] = 1;
     } else {
-      setAnswers([...answers, false]);
+      tempAnswers[currQuestion] = 0;
     }
+    setAnswers(tempAnswers);
   };
 
   const handleNextQuestion = () => {
@@ -87,7 +90,8 @@ export default function Quiz({ questions }: { questions: QuestionType[] }) {
           </div>
           <div className="p-2 px-6 flex flex-row justify-between border-t-1">
             <div className="flex items-center">
-              <p>Do {questions.length} problems</p>
+              <p className="mr-6">Do {questions.length} problems</p>
+              <QuizProgress answers={answers} />
             </div>
             <div>
               {end ? (
