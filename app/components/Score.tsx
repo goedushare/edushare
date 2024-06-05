@@ -2,6 +2,7 @@ import { Radio, RadioGroup } from "@nextui-org/react";
 import Question from "./Question";
 import { QuestionType } from "./Quiz";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function Score({
   answers,
@@ -26,7 +27,7 @@ export default function Score({
         if (answers[i] !== 1) {
           return (
             <div key={i} className="my-4">
-              <ReactMarkdown className="mb-4">
+              <ReactMarkdown remarkPlugins={[remarkGfm]} className="mb-4 prose">
                 {question["question"]}
               </ReactMarkdown>
               <div className="">
