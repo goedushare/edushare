@@ -32,7 +32,7 @@ export default function Header() {
           <Button
             as={Link}
             className="bg-[#0E793C] text-white"
-            href="#"
+            href="https://nslforever.github.io/manage/upload"
             variant="flat"
           >
             Upload
