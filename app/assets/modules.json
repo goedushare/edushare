@@ -3,26 +3,10 @@
         {
             "id": 0,
             "moduleName": "How a Bill Becomes a Law",
-            "videoName": "How a Bill Becomes a Law",
+            "videoName": "The Journey of a Bill",
             "articleName": "How a Bill Becomes a Law",
-            "videoURL": "https://www.youtube.com/embed/tgbNymZ7vqY",
-            "authors": "John Doe, Jane Doe"
-        },
-        {
-            "id": 1,
-            "moduleName": "How a Bill Becomes a Law 2",
-            "videoName": "How a Bill Becomes a Law 2",
-            "articleName": "How a Bill Becomes a Law 2",
-            "videoURL": "https://www.youtube.com/embed/tgbNymZ7vqY",
-            "authors": "John Doe, Jane Doe 2"
-        },
-        {
-            "id": 2,
-            "moduleName": "How a Bill Becomes a Law 3",
-            "videoName": "How a Bill Becomes a Law 3",
-            "articleName": "How a Bill Becomes a Law 3",
-            "videoURL": "https://www.youtube.com/embed/tgbNymZ7vqY",
-            "authors": "John Doe, Jane Doe 3"
+            "videoURL": "https://www.youtube.com/embed/PvJVipk0F4c",
+            "authors": "Arjun Samavedam, Eliana Wang, Shaun Wang, and Alex Zhao"
         }
     ]
 }
