@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from "@nextui-org/button";
-import Header from "../components/Header";
-import Sidebar from "../components/Sidebar";
+import Header from "../../components/Header";
+import Sidebar from "../../components/Sidebar";
 import Modules from "@/app/assets/modules.json";
 
 export default function LearnLayout({
