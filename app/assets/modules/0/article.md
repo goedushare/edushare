@@ -1,6 +1,14 @@
-| C1       | C2        |
-| -------- | --------- |
-| asdf     | asdf      |
+| Terms                    | Definition                                                                                                       |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| **Interest Group**       | A group of people that seeks to influence public policy on the basis of a particular common interest or concern. |
+| **Lobby**                | Influence (a politician or public official) on an issue                                                          |
+| **Sponsor**              | The congressional representative who initially drafts the bill.                                                  |
+| **Committees**           | A group of legislators in Congress who specialize in a particular area of legislation                            |
+| **Markup Session**       | A meeting where subcommittee proposes amendments to a bill                                                       |
+| **Floor**                | The space where the House or Senate as a whole conducts its business                                             |
+| **Discharge Petition**   | A way for a bill to brought to the floor after the committee has been deliberating on it for 30 days             |
+| **Conference Committee** | Reconcilces differeneces in the versions of bills passed by the House and Senate                                 |
+| **Veto**                 | A constitutional right to reject a decision or proposal made by a law-making body                                |
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et malesuada fames ac turpis. Enim praesent elementum facilisis leo vel fringilla est. Dictum fusce ut placerat orci nulla pellentesque dignissim enim. Varius morbi enim nunc faucibus a pellentesque sit amet porttitor. Nascetur ridiculus mus mauris vitae. Sed faucibus turpis in eu mi bibendum neque egestas congue. In vitae turpis massa sed. Est ultricies integer quis auctor elit sed. Amet est placerat in egestas. Facilisis magna etiam tempor orci eu lobortis. Vitae nunc sed velit dignissim sodales ut.
 
