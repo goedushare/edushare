@@ -28,7 +28,7 @@ export default function Header() {
               <span className="absolute -bottom-1 right-1/2 w-0 h-0.5 bg-primary-green group-hover:w-1/2 group-hover:transition-all duration-200 mt-0.5"></span>
             </p></Link>
         </NavbarItem>
-        <NavbarItem>
+        {/* <NavbarItem>
           <Button
             as={Link}
             className="bg-[#0E793C] text-white"
@@ -37,7 +37,7 @@ export default function Header() {
           >
             Upload
           </Button>
-        </NavbarItem>
+        </NavbarItem> */}
       </NavbarContent>
     </Navbar>
   );
