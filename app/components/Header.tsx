@@ -21,7 +21,7 @@ export default function Header() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          <Link color="foreground" href="/learn/0/article">
+          <Link color="foreground" href="/learn">
             <p className="relative group text-base">
               <span>Learn</span>
               <span className="absolute -bottom-1 left-1/2 w-0 h-0.5 bg-primary-green group-hover:w-1/2 group-hover:transition-all duration-200 mt-0.5"></span>
