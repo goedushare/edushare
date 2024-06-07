@@ -88,7 +88,7 @@ export default function Quiz({ questions }: { questions: QuestionType[] }) {
               </div>
             )}
           </div>
-          <div className="p-2 px-6 flex flex-row justify-between border-t-1">
+          <div className="mt-6 p-2 px-6 flex flex-row justify-between border-t-1">
             <div className="flex items-center">
               <p className="mr-6">Do {questions.length} problems</p>
               <QuizProgress answers={answers} />

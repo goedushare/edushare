@@ -1,17 +1,6 @@
 {
   "questions": [
     {
-      "id": 0,
-      "question": "Where does the idea for a bill usually originate from?",
-      "answers": [
-        "The President",
-        "Supreme Court Justices",
-        "Citizens and Interest Groups",
-        "State Governors"
-      ],
-      "correct": 2
-    },
-    {
       "id": 1,
       "question": "Who drafts a new bill once it is introduced?",
       "answers": [
@@ -35,14 +24,14 @@
     },
     {
       "id": 3,
-      "question": "What is the role of subcommittees in the legislative process?",
+      "question": "What are the roles of a subcommittee vs. committee in the legislative process? ![](/images/0/q3img.png)",
       "answers": [
-        "They draft the final version of the bill.",
-        "They vote on the bill before it goes to the full chamber.",
-        "They carry out investigations and hearings related to the bill.",
-        "They introduce the bill to Congress."
+        "A",
+        "B",
+        "C",
+        "D"
       ],
-      "correct": 2
+      "correct": 1
     },
     {
       "id": 4,
@@ -101,14 +90,54 @@
     },
     {
       "id": 9,
-      "question": "What can Congress do if the President vetoes a bill?",
+      "question": "Which of the following accurately compares the roles of the President and Congress in the creation of a bill? ![](/images/0/q9img.png)",
       "answers": [
-        "The veto can be overridden by a simple majority vote in both houses.",
-        "The veto can be overridden by a 2/3 supermajority vote in both houses.",
-        "The Supreme Court can override the veto.",
-        "The bill is automatically passed into law without changes."
+        "A",
+        "B",
+        "C",
+        "D"
       ],
       "correct": 1
+    }, {
+      "id": 10,
+      "question": "Number of bills enacted by each Congress in the United States from 1973 to 2023 © Statista 2024 https://www.statista.com/statistics/1361682/bills-passed-congress-us/ ![](/images/0/q12img.png) Which of the following claims does the graph best support?",
+      "answers": [
+        "The average percentage of bills passed over time has decreased.",
+        "The Senate passed the most bills in 1977.",
+        "The least amount of bills were approved by both the House of Representatives and the Senate in the 118th congress.",
+        "The amount of bills that become law decreased from 2003 to 2009"
+      ],
+      "correct": 3
+    }, {
+      "id": 11,
+      "question": "Number of bills enacted by each Congress in the United States from 1973 to 2023 © Statista 2024 https://www.statista.com/statistics/1361682/bills-passed-congress-us/ ![](/images/0/q12img.png) Which of the following could be an explanation for the trend shown in the graph?",
+      "answers": [
+        "The public has on average grown more dissatisfied with representatives",
+        "Presidents has on average become older over time",
+        "There has been an increasing amount of political divide over time",
+        "The Supreme Court has declared laws passed by Congress unconstitutional"
+      ],
+      "correct": 2
+    }, {
+      "id": 12,
+      "question": "![](/images/0/q14img.png) Which statement would the artist of the cartoon most agree with?",
+      "answers": [
+        "Representatives constantly oppose the legislation of their peers.",
+        "Parties in Congress are willing to compromise to achieve their goals",
+        "Filibusters are becoming too frequent in Congress",
+        "Parties in Congress have different priorities"
+      ],
+      "correct": 3
+    },{
+      "id": 13,
+      "question": "![](/images/0/q14img.png) What is an issue that would most likely arise from the problem presented in the cartoon?",
+      "answers": [
+        "Decreased congressional productivity",
+        "The President will pass the budget instead of Congress",
+        "Congressmen of the same party will work together to vote out opposing party members",
+        "The U.S. will go into deficit spending"
+      ],
+      "correct": 0
     }
   ]
 }
