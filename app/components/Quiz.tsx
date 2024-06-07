@@ -13,9 +13,11 @@ export type QuestionType = {
   correct: number;
 };
 
-export default function Quiz({ questions }: { questions: QuestionType[] }) {
+export default function Quiz({ questions, authors }: { questions: QuestionType[], authors: string}) {
   const [currQuestion, setCurrQuestion] = React.useState(0);
-  const [answers, setAnswers] = React.useState(new Array<number>(questions.length).fill(-1));
+  const [answers, setAnswers] = React.useState(
+    new Array<number>(questions.length).fill(-1)
+  );
   const [end, setEnd] = React.useState(false);
   const [selected, setSelected] = React.useState("");
 
@@ -42,7 +44,7 @@ export default function Quiz({ questions }: { questions: QuestionType[] }) {
   };
 
   const checkAnswer = () => {
-    let tempAnswers = [...answers]
+    let tempAnswers = [...answers];
     if (
       selected ===
       questions[currQuestion]["answers"][questions[currQuestion]["correct"]]
@@ -65,14 +67,15 @@ export default function Quiz({ questions }: { questions: QuestionType[] }) {
   return (
     <div className="w-3/4 overflow-scroll flex flex-col">
       <div className="flex flex-col items-center">
-        <h1 className="font-semibold text-3xl my-8">Quiz</h1>
+        <h1 className="font-semibold text-3xl mt-6">Quiz</h1>
+        <h2 className="font-normal text-xl mt-2 mb-12">By: {authors}</h2>
       </div>
       <div className="flex flex-1">
         <form
           onSubmit={handleFormSubmit}
           className="flex-1 justify-between flex flex-col"
         >
-          <div className="px-8 mb-auto h-[calc(100vh-)]">
+          <div className="px-16 mb-auto h-[calc(100vh-)]">
             {end ? (
               <Score answers={answers} questions={questions} />
             ) : (
@@ -95,7 +98,9 @@ export default function Quiz({ questions }: { questions: QuestionType[] }) {
             </div>
             <div>
               {end ? (
-                <Button type="submit" className="bg-[#0E793C] text-white">Try Again</Button>
+                <Button type="submit" className="bg-[#0E793C] text-white">
+                  Try Again
+                </Button>
               ) : (
                 <Button
                   type="submit"

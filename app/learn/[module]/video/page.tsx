@@ -12,7 +12,7 @@ export default function Page({ params }: { params: { module: number } }) {
   const mod = Modules["modules"][params.module];
   return (
     <>
-      <Video title={mod["videoName"]} link={mod["videoURL"]} />
+      <Video title={mod["videoName"]} link={mod["videoURL"]} authors={mod["authors"]} />
     </>
   );
 }

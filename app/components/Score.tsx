@@ -22,7 +22,7 @@ export default function Score({
       <h2 className="text-2xl font-bold mb-2">
         Score: {total}/{answers.length}
       </h2>
-      <h2 className="text-2xl mb-8">Questions missed: </h2>
+      <h2 className="text-2xl mb-8">Review questions missed: </h2>
       {questions.map((question, i) => {
         if (answers[i] !== 1) {
           return (
