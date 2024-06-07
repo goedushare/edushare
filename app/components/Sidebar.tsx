@@ -6,8 +6,10 @@ import { ScrollShadow } from "@nextui-org/scroll-shadow";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import modules from "../assets/modules.json";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Sidebar() {
+  const path = usePathname();
   return (
     <div className="w-1/4 pt-4 flex flex-col sticky top-[10vh] h-[calc(100vh-64px)] border-r-1 border-gray-100">
       <h1 className="font-bold text-center mb-4">
@@ -18,6 +20,7 @@ export default function Sidebar() {
         <Accordion
           selectionMode="multiple"
           className="p-0 flex flex-col w-full"
+          defaultExpandedKeys={path.split("/").slice(1)}
         >
           {modules["modules"].map((module) => {
             return (
@@ -25,7 +28,7 @@ export default function Sidebar() {
                 key={module["id"]}
                 aria-label={module["moduleName"]}
                 title={module["moduleName"]}
-                className="px-6 py-2 "
+                className="px-6 py-2"
               >
                 <div className="flex flex-col">
                   <Link href={`/learn/${module["id"]}/video`}>
