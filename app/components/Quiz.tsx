@@ -20,21 +20,30 @@ export default function Quiz({
   questions: QuestionType[];
   authors: string;
 }) {
-  const [currQuestion, setCurrQuestion] = React.useState(
-    localStorage.getItem("currQuestion")
-      ? JSON.parse(localStorage.getItem("currQuestion")!)
-      : 0
-  );
-  const [answers, setAnswers] = React.useState(
-    localStorage.getItem("answers")
-      ? JSON.parse(localStorage.getItem("answers")!)
-      : new Array<number>(questions.length).fill(-1)
-  );
-  const [end, setEnd] = React.useState(
-    localStorage.getItem("end")
-      ? JSON.parse(localStorage.getItem("end")!)
-      : false
-  );
+  let lsCurrQuestion;
+  let lsAnswers;
+  let lsEnd;
+  if (typeof window !== "undefined") {
+    lsCurrQuestion = localStorage.getItem("currQuestion")
+    ? JSON.parse(localStorage.getItem("currQuestion")!)
+    : 0;
+
+    lsAnswers = localStorage.getItem("answers")
+    ? JSON.parse(localStorage.getItem("answers")!)
+    : new Array<number>(questions.length).fill(-1);
+
+    lsEnd = localStorage.getItem("end")
+    ? JSON.parse(localStorage.getItem("end")!)
+    : false;
+  } else {
+    lsCurrQuestion = 0;
+    lsAnswers = new Array<number>(questions.length).fill(-1);
+    lsEnd = false;
+  }
+
+  const [currQuestion, setCurrQuestion] = React.useState(lsCurrQuestion);
+  const [answers, setAnswers] = React.useState(lsAnswers);
+  const [end, setEnd] = React.useState(lsEnd);
   const [selected, setSelected] = React.useState("");
 
   const handleOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
