@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import ProgressBar from "./ProgressBar";
 import { Button } from "@nextui-org/button";
 import Score from "./Score";
@@ -13,12 +13,28 @@ export type QuestionType = {
   correct: number;
 };
 
-export default function Quiz({ questions, authors }: { questions: QuestionType[], authors: string}) {
-  const [currQuestion, setCurrQuestion] = React.useState(0);
-  const [answers, setAnswers] = React.useState(
-    new Array<number>(questions.length).fill(-1)
+export default function Quiz({
+  questions,
+  authors,
+}: {
+  questions: QuestionType[];
+  authors: string;
+}) {
+  const [currQuestion, setCurrQuestion] = React.useState(
+    localStorage.getItem("currQuestion")
+      ? JSON.parse(localStorage.getItem("currQuestion")!)
+      : 0
   );
-  const [end, setEnd] = React.useState(false);
+  const [answers, setAnswers] = React.useState(
+    localStorage.getItem("answers")
+      ? JSON.parse(localStorage.getItem("answers")!)
+      : new Array<number>(questions.length).fill(-1)
+  );
+  const [end, setEnd] = React.useState(
+    localStorage.getItem("end")
+      ? JSON.parse(localStorage.getItem("end")!)
+      : false
+  );
   const [selected, setSelected] = React.useState("");
 
   const handleOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,6 +79,18 @@ export default function Quiz({ questions, authors }: { questions: QuestionType[]
       setEnd(true);
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem("answers", JSON.stringify(answers));
+  }, [answers]);
+
+  useEffect(() => {
+    localStorage.setItem("currQuestion", JSON.stringify(currQuestion));
+  }, [currQuestion]);
+
+  useEffect(() => {
+    localStorage.setItem("end", JSON.stringify(end));
+  }, [end]);
 
   return (
     <div className="w-3/4 overflow-scroll flex flex-col">
