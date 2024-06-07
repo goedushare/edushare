@@ -29,7 +29,7 @@ export default function Sidebar() {
               >
                 <div className="flex flex-col">
                   <Link href={`/learn/${module["id"]}/video`}>
-                    <div className="group flex flex-row items-center py-4 pl-8 w-full border-b-1 hover:bg-primary-green/10 transition-all duration-200">
+                    <div className="group flex flex-row items-center py-4 pl-8 w-full border-b-1 hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
                       <img src={video.src} className="w-10 h-10" />
                       <p className="ml-4 leading-5 text-sm group-hover:text-primary-green transition-all duration-200">
                         {module["videoName"]}
@@ -37,7 +37,7 @@ export default function Sidebar() {
                     </div>
                   </Link>
                   <Link href={`/learn/${module["id"]}/article`}>
-                    <div className="group flex flex-row  items-center py-4 pl-8 w-full border-b-1 hover:bg-primary-green/10 transition-all duration-200">
+                    <div className="group flex flex-row  items-center py-4 pl-8 w-full border-b-1 hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
                       <img src={article.src} className="w-10 h-10" />
                       <p className="ml-4 leading-5 text-sm group-hover:text-primary-green transition-all duration-200">
                         {module["articleName"]}
@@ -45,7 +45,7 @@ export default function Sidebar() {
                     </div>
                   </Link>
                   <Link href={`/learn/${module["id"]}/quiz`}>
-                    <div className="flex flex-row items-center py-4 pl-8 w-full group hover:bg-primary-green/10 transition-all duration-200">
+                    <div className="flex flex-row items-center py-4 pl-8 w-full group hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
                       <img src={quiz.src} className="w-10 h-10" />
                       <p className="ml-4 leading-5 text-sm group-hover:text-primary-green transition-all duration-200">
                         Quiz
