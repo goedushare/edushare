@@ -7,6 +7,14 @@
             "articleName": "How a Bill Becomes a Law",
             "videoURL": "https://www.youtube.com/embed/PvJVipk0F4c",
             "authors": "Arjun Samavedam, Eliana Wang, Shaun Wang, and Alex Zhao"
+        },
+        {
+            "id": 1,
+            "moduleName": "Federalist Papers",
+            "videoName": "Federalist 10, 51, and Brutus",
+            "articleName": "Federalist 10, 51, and Brutus",
+            "videoURL": "https://www.youtube.com/watch?v=cLyT95llzg0",
+            "authors": "Peter Cirincione"  
         }
     ]
 }
