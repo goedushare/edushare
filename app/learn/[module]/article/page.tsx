@@ -1,7 +1,11 @@
+
 import Article from "@/app/components/Article";
 import Modules from "@/app/assets/modules.json";
 import path from "path";
 import { readFileSync } from "fs";
+
+
+
 
 export function generateStaticParams() {
   return Modules["modules"].map((mod) => ({ module: String(mod["id"]) }));
@@ -14,6 +18,8 @@ export default function ArticlePage({
 }: {
   params: { module: number };
 }) {
+
+
   const mod = Modules["modules"][params.module];
   let mdarticle;
   try {
