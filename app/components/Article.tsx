@@ -5,6 +5,10 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from 'remark-gfm';
 
+import { api } from "@/convex/_generated/api";
+import { useQuery } from "convex/react";
+
+
 export default function Article({
   articleName,
   authors,
@@ -19,6 +23,12 @@ export default function Article({
   const {scrollYProgress} = useScroll({
       container: containerRef
   });
+
+
+  // const numbers = useQuery(api.myFunctions.listNumbers2, { count: 5 })
+  // if(!numbers) return <div>Loading...</div>
+  // console.log(numbers)
+
   return (
     <div className="w-3/4 pb-16 flex flex-col items-center h-[calc(100vh-64px)] overflow-y-scroll overflow-x-hidden px-8" ref={containerRef}>
       <h1 className="font-semibold text-3xl mt-6">{articleName}</h1>
