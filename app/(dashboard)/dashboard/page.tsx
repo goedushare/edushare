@@ -11,7 +11,7 @@ const Dashboard = () => {
       </div>
       <div className="mt-4 mb-8">
         {modules["modules"].map((module) => {
-          return <Module module={module} key={module.id} />;
+          return <Module module={module} isEditable={true} key={module.id} />;
         })}
       </div>
     </div>

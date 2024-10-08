@@ -2,6 +2,7 @@ import Link from "next/link";
 import video from "../assets/video.svg";
 import article from "../assets/article.svg";
 import quiz from "../assets/quiz.svg";
+import { Button } from "@nextui-org/react";
 
 type Module = {
   id: number;
@@ -12,7 +13,13 @@ type Module = {
   authors: string;
 };
 
-export default function Module({ module }: { module: Module }) {
+export default function Module({
+  module,
+  isEditable,
+}: {
+  module: Module;
+  isEditable?: boolean;
+}) {
   return (
     <div className="bg-green-50 rounded-lg p-8 mt-8">
       <div>
@@ -51,6 +58,11 @@ export default function Module({ module }: { module: Module }) {
           </Link>
         </div>
       </div>
+      {isEditable && (
+        <div className="mt-6">
+          <Button className="bg-[#0E793C] text-white">Add Resource</Button>
+        </div>
+      )}
     </div>
   );
 }
