@@ -10,6 +10,8 @@ export const dynamicParams = false;
 
 export const runtime = "nodejs";
 
+export const dynamic = "force-static";
+
 export default function ArticlePage({
   params,
 }: {
