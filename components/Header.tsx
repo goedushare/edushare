@@ -22,6 +22,13 @@ export default function Header() {
       ></NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
+          <Link color="foreground" href="/dashboard">
+            <p className="relative group text-base">
+              <span>Dashboard</span>
+            </p>
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
           <Link color="foreground" href="/learn">
             <p className="relative group text-base">
               <span>Learn</span>

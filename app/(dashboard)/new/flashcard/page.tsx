@@ -1,7 +1,7 @@
 const NewFlashcard = () => {
   return (
     <div>
-      <h1>New Flashcard</h1>
+      <h1 className="text-4xl">New Flashcard</h1>
     </div>
   );
 };

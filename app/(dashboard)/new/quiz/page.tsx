@@ -1,7 +1,7 @@
 const NewQuiz = () => {
   return (
     <div>
-      <h1>New Quiz</h1>
+      <h1 className="text-4xl">New Quiz</h1>
     </div>
   );
 };
