@@ -8,8 +8,6 @@ export function generateStaticParams() {
 }
 export const dynamicParams = false;
 
-export const runtime = "edge";
-
 export default function Page({ params }: { params: { module: number } }) {
   try {
     const raw = readFileSync(
