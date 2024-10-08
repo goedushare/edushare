@@ -5,7 +5,7 @@ const TextField = ({
   label,
   className,
 }: {
-  type: string;
+  type?: string;
   label: string;
   className?: string;
 }) => {

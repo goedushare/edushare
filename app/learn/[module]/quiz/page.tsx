@@ -1,5 +1,5 @@
-import Quiz from "@/app/components/Quiz";
-import Modules from "@/app/assets/modules.json";
+import Quiz from "@/components/Quiz";
+import Modules from "@/assets/modules.json";
 import path from "path";
 import { readFileSync } from "fs";
 
@@ -10,7 +10,10 @@ export const dynamicParams = false;
 
 export default function Page({ params }: { params: { module: number } }) {
   try {
-    const raw = readFileSync(path.resolve(`app/assets/modules/${params.module}/quiz.json`), "utf8");
+    const raw = readFileSync(
+      path.resolve(`assets/modules/${params.module}/quiz.json`),
+      "utf8"
+    );
     const mod = Modules["modules"][params.module];
     const quiz = JSON.parse(raw);
     return <Quiz questions={quiz["questions"]} authors={mod["authors"]} />;

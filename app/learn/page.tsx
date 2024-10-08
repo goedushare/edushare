@@ -1,5 +1,5 @@
-import Module from "@/app/components/Module";
-import modules from "../assets/modules.json";
+import Module from "@/components/Module";
+import modules from "@/assets/modules.json";
 
 export default function Learn() {
   return (
