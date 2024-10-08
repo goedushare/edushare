@@ -1,0 +1,137 @@
+{
+  "questions": [
+    {
+      "id": 0,
+      "question": "Who drafts a new bill once it is introduced?",
+      "answers": [
+        "The President",
+        "The Speaker of the House",
+        "A Senator from the opposing party",
+        "A Representative known as the 'sponsor'"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 1,
+      "question": "Who assigns a bill to a committee in the House of Representatives?",
+      "answers": [
+        "The President",
+        "The Speaker of the House",
+        "The Vice President",
+        "The Majority Leader of the Senate"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 2,
+      "question": "What are the roles of a subcommittee vs. committee in the legislative process? ![](/images/0/q3img.png)",
+      "answers": ["A", "B", "C", "D"],
+      "correct": 1
+    },
+    {
+      "id": 3,
+      "question": "What happens during a 'markup session'?",
+      "answers": [
+        "The bill is debated by the entire chamber.",
+        "The subcommittee proposes amendments to the bill.",
+        "The President signs or vetoes the bill.",
+        "The bill is introduced to the other chamber of Congress."
+      ],
+      "correct": 1
+    },
+    {
+      "id": 4,
+      "question": "What is a 'discharge petition'?",
+      "answers": [
+        "A method to send a bill directly to the President.",
+        "A way for the House of Representatives to bring a bill to the floor after 30 days in committee.",
+        "A procedure to remove a bill from consideration in Congress after 30 days in committee.",
+        "A tool used by the Senate to delay voting on a bill."
+      ],
+      "correct": 1
+    },
+    {
+      "id": 5,
+      "question": "Who sets the order of debate in the House of Representatives?",
+      "answers": [
+        "The Vice President",
+        "The Speaker of the House",
+        "The Senate Majority Leader",
+        "The President Pro Tempore"
+      ],
+      "correct": 1
+    },
+    {
+      "id": 6,
+      "question": "How do the House of Representatives and the Senate differ in their debate rules?",
+      "answers": [
+        "The House allows filibusters while the Senate does not.",
+        "The House operates under structured debate with time limits, while the Senate allows more flexible discussion.",
+        "The Senate operates under structured debate with time limits, while the House allows more flexible discussion.",
+        "Both chambers operate under the same debate rules."
+      ],
+      "correct": 1
+    },
+    {
+      "id": 7,
+      "question": "What happens if the versions of a bill passed by the House and the Senate are not identical?",
+      "answers": [
+        "The President decides which version to sign.",
+        "The bill is sent back to the committee for redrafting.",
+        "A conference committee is formed to reconcile the differences.",
+        "The bill is automatically vetoed."
+      ],
+      "correct": 2
+    },
+    {
+      "id": 8,
+      "question": "Which of the following accurately compares the roles of the President and Congress in the creation of a bill? ![](/images/0/q9img.png)",
+      "answers": ["A", "B", "C", "D"],
+      "correct": 1
+    },
+    {
+      "id": 9,
+      "question": "Number of bills enacted by each Congress in the United States from 1973 to 2023 © Statista 2024 https://www.statista.com/statistics/1361682/bills-passed-congress-us/ ![](/images/0/q12img.png) Which of the following claims does the graph best support?",
+      "answers": [
+        "The average percentage of bills passed over time has decreased.",
+        "The Senate passed the most bills in 1977.",
+        "The least amount of bills were approved by both the House of Representatives and the Senate in the 118th congress.",
+        "The amount of bills that become law decreased from 2003 to 2009"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 10,
+      "question": "Number of bills enacted by each Congress in the United States from 1973 to 2023 © Statista 2024 https://www.statista.com/statistics/1361682/bills-passed-congress-us/ ![](/images/0/q12img.png) Which of the following could be an explanation for the trend shown in the graph?",
+      "answers": [
+        "The public has on average grown more dissatisfied with representatives",
+        "Presidents has on average become older over time",
+        "There has been an increasing amount of political divide over time",
+        "The Supreme Court has declared laws passed by Congress unconstitutional"
+      ],
+      "correct": 2
+    },
+    {
+      "id": 11,
+      "question": "![](/images/0/q14img.png) Which statement would the artist of the cartoon most agree with?",
+      "answers": [
+        "Representatives constantly oppose the legislation of their peers.",
+        "Parties in Congress are willing to compromise to achieve their goals",
+        "Filibusters are becoming too frequent in Congress",
+        "Parties in Congress have different priorities"
+      ],
+      "correct": 3
+    },
+    {
+      "id": 12,
+      "question": "![](/images/0/q14img.png) What is an issue that would most likely arise from the problem presented in the cartoon?",
+      "answers": [
+        "Decreased congressional productivity",
+        "The President will pass the budget instead of Congress",
+        "Congressmen of the same party will work together to vote out opposing party members",
+        "The U.S. will go into deficit spending"
+      ],
+      "correct": 0
+    }
+  ]
+}
