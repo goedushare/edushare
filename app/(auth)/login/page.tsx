@@ -12,13 +12,13 @@ const Login = () => {
           <TextField type="password" label="Password" className="basis-1/4" />
           <div className="basis-1/2 flex flex-col justify-end">
             <div className="flex flex-row justify-between items-end">
-              <Button color="primary" type="submit" className="">
-                Button
+              <Button type="submit" className="bg-[#0E793C] text-white">
+                Log In
               </Button>
               <p>
                 <Link
                   href="/register"
-                  className="hover:underline text-blue-500"
+                  className="hover:underline text-[#0E793C]"
                 >
                   Register Here
                 </Link>

@@ -25,16 +25,16 @@ export default function Quiz({
   let lsEnd;
   if (typeof window !== "undefined") {
     lsCurrQuestion = localStorage.getItem("currQuestion")
-    ? JSON.parse(localStorage.getItem("currQuestion")!)
-    : 0;
+      ? JSON.parse(localStorage.getItem("currQuestion")!)
+      : 0;
 
     lsAnswers = localStorage.getItem("answers")
-    ? JSON.parse(localStorage.getItem("answers")!)
-    : new Array<number>(questions.length).fill(-1);
+      ? JSON.parse(localStorage.getItem("answers")!)
+      : new Array<number>(questions.length).fill(-1);
 
     lsEnd = localStorage.getItem("end")
-    ? JSON.parse(localStorage.getItem("end")!)
-    : false;
+      ? JSON.parse(localStorage.getItem("end")!)
+      : false;
   } else {
     lsCurrQuestion = 0;
     lsAnswers = new Array<number>(questions.length).fill(-1);
@@ -102,7 +102,7 @@ export default function Quiz({
   }, [end]);
 
   return (
-    <div className="w-3/4 overflow-scroll flex flex-col">
+    <div className="w-3/4 h-[calc(100vh-64px)] overflow-y-scroll overflow-scroll flex flex-col">
       <div className="flex flex-col items-center">
         <h1 className="font-semibold text-3xl mt-6">Quiz</h1>
         <h2 className="font-normal text-xl mt-2 mb-12">By: {authors}</h2>
