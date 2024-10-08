@@ -8,6 +8,8 @@ export function generateStaticParams() {
 }
 export const dynamicParams = false;
 
+export const runtime = "nodejs";
+
 export default function ArticlePage({
   params,
 }: {
