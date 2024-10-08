@@ -1,8 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import video from "../assets/video.svg";
 import article from "../assets/article.svg";
 import quiz from "../assets/quiz.svg";
-import { Button } from "@nextui-org/react";
+import {
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@nextui-org/react";
 
 type Module = {
   id: number;
@@ -21,6 +29,7 @@ export default function Module({
   isEditable?: boolean;
 }) {
   return (
+    // TODO: Fix positioning of module component (causes page to shift in x-axis)
     <div className="bg-green-50 rounded-lg p-8 mt-8">
       <div>
         <h2 className="text-2xl">{module["moduleName"]}</h2>
@@ -60,7 +69,21 @@ export default function Module({
       </div>
       {isEditable && (
         <div className="mt-6">
-          <Button className="bg-[#0E793C] text-white">Add Resource</Button>
+          <Dropdown>
+            <DropdownTrigger>
+              <Button className="bg-[#0E793C] text-white">Add Resource</Button>
+            </DropdownTrigger>
+            <DropdownMenu>
+              <DropdownItem key="quiz" href="/new/quiz">
+                Quiz
+              </DropdownItem>
+              <DropdownItem key="flashcard" href="/new/flashcard">
+                Flashcard
+              </DropdownItem>
+              <DropdownItem key="article">Article</DropdownItem>
+              <DropdownItem key="video">Video</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </div>
       )}
     </div>
