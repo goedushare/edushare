@@ -1,16 +1,40 @@
+"use client";
+
 import TextField from "@/components/TextField";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
+import { useState } from "react";
 
 const Register = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <div className="h-screen flex flex-row justify-center">
       <div className="w-96 h-96 mt-24 px-4 py-4 bg-gray-50 rounded-lg shadow-md">
         <h1 className="text-3xl font-bold">Register</h1>
         <form className="flex flex-col h-5/6 mt-4">
-          <TextField label="Name" className="basis-1/4" />
-          <TextField type="email" label="Email" className="basis-1/4" />
-          <TextField type="password" label="Password" className="basis-1/4" />
+          <TextField
+            value={name}
+            setValue={setName}
+            label="Name"
+            className="basis-1/6"
+          />
+          <TextField
+            value={email}
+            setValue={setEmail}
+            type="email"
+            label="Email"
+            className="basis-1/6"
+          />
+          <TextField
+            value={password}
+            setValue={setPassword}
+            type="password"
+            label="Password"
+            className="basis-1/6"
+          />
           <div className="basis-1/2 flex flex-col justify-end">
             <div className="flex flex-row justify-between items-end">
               <Button type="submit" className="bg-[#0E793C] text-white">
