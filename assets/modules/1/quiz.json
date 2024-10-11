@@ -121,17 +121,6 @@
         "Parties in Congress have different priorities"
       ],
       "correct": 3
-    },
-    {
-      "id": 12,
-      "question": "![](/images/0/q14img.png) What is an issue that would most likely arise from the problem presented in the cartoon?",
-      "answers": [
-        "Decreased congressional productivity",
-        "The President will pass the budget instead of Congress",
-        "Congressmen of the same party will work together to vote out opposing party members",
-        "The U.S. will go into deficit spending"
-      ],
-      "correct": 0
     }
   ]
 }
