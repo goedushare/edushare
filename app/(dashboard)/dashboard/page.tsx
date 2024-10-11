@@ -4,6 +4,8 @@ import { Button, useDisclosure } from "@nextui-org/react";
 import Module from "@/components/Module";
 import modules from "@/assets/modules.json";
 import ModuleModal from "@/components/Modal";
+import TextField from "@/components/TextField";
+import { useState } from "react";
 
 const Dashboard = () => {
   const {
@@ -14,7 +16,10 @@ const Dashboard = () => {
 
   const onCreate = (onClose: () => void) => {
     onClose();
+    setModuleName("");
   };
+
+  const [moduleName, setModuleName] = useState("");
 
   return (
     <div>
@@ -29,7 +34,16 @@ const Dashboard = () => {
           title="Create Module"
           actionText="Create"
           onAction={onCreate}
-        ></ModuleModal>
+        >
+          <div>
+            <TextField
+              label="Name"
+              value={moduleName}
+              setValue={setModuleName}
+              labelPlacement="inside"
+            />
+          </div>
+        </ModuleModal>
       </div>
       <div className="mt-4 mb-8">
         {modules["modules"].map((module) => {

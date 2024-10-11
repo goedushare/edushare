@@ -6,12 +6,14 @@ const TextField = ({
   className,
   value,
   setValue,
+  labelPlacement,
 }: {
   type?: string;
   label: string;
   className?: string;
   value?: string;
   setValue?: (value: string) => void;
+  labelPlacement?: "outside" | "outside-left" | "inside" | undefined;
 }) => {
   return (
     <Input
@@ -19,7 +21,7 @@ const TextField = ({
       label={label}
       className={className}
       variant="flat"
-      labelPlacement={"outside"}
+      labelPlacement={labelPlacement || "outside"}
       value={value}
       onValueChange={setValue}
     />
