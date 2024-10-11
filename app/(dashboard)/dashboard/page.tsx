@@ -3,7 +3,7 @@
 import { Button, useDisclosure } from "@nextui-org/react";
 import Module from "@/components/Module";
 import modules from "@/assets/modules.json";
-import ModuleModal from "@/components/Modal";
+import Modal from "@/components/Modal";
 import TextField from "@/components/TextField";
 import { useState } from "react";
 
@@ -28,7 +28,7 @@ const Dashboard = () => {
         <Button className="bg-[#0E793C] text-white" onPress={onModalOpen}>
           Create New
         </Button>
-        <ModuleModal
+        <Modal
           isOpen={isModalOpen}
           onOpenChange={onModalOpenChange}
           title="Create Module"
@@ -43,7 +43,7 @@ const Dashboard = () => {
               labelPlacement="inside"
             />
           </div>
-        </ModuleModal>
+        </Modal>
       </div>
       <div className="mt-4 mb-8">
         {modules["modules"].map((module) => {

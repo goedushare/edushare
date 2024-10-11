@@ -8,7 +8,7 @@ import {
 } from "@nextui-org/react";
 import TextField from "./TextField";
 
-const ModalComponent = ({
+const Modal = ({
   isOpen,
   onOpenChange,
   title,
@@ -50,4 +50,4 @@ const ModalComponent = ({
   );
 };
 
-export default ModalComponent;
+export default Modal;

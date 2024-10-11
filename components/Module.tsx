@@ -10,7 +10,10 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  useDisclosure,
 } from "@nextui-org/react";
+import Modal from "./Modal";
+import { useState } from "react";
 
 type Module = {
   id: number;
@@ -28,6 +31,20 @@ export default function Module({
   module: Module;
   isEditable?: boolean;
 }) {
+  const {
+    isOpen: isArticleModalOpen,
+    onOpen: onArticleModalOpen,
+    onOpenChange: onArticleModalOpenChange,
+  } = useDisclosure();
+
+  const {
+    isOpen: isVideoModalOpen,
+    onOpen: onVideoModalOpen,
+    onOpenChange: onVideoModalOpenChange,
+  } = useDisclosure();
+
+  const [currentModule, setCurrentModule] = useState(0);
+
   return (
     // TODO: Fix positioning of module component (causes page to shift in x-axis)
     <div className="bg-green-50 rounded-lg p-8 mt-8">
@@ -80,10 +97,36 @@ export default function Module({
               <DropdownItem key="flashcard" href="/new/flashcard">
                 Flashcard
               </DropdownItem>
-              <DropdownItem key="article">Article</DropdownItem>
-              <DropdownItem key="video">Video</DropdownItem>
+              <DropdownItem
+                key="article"
+                onPress={() => {
+                  setCurrentModule(module["id"]);
+                  onArticleModalOpen();
+                }}
+              >
+                Article
+              </DropdownItem>
+              <DropdownItem
+                key="video"
+                onPress={() => {
+                  setCurrentModule(module["id"]);
+                  onVideoModalOpen();
+                }}
+              >
+                Video
+              </DropdownItem>
             </DropdownMenu>
           </Dropdown>
+          <Modal
+            isOpen={isArticleModalOpen}
+            onOpenChange={onArticleModalOpenChange}
+            title="Add Article"
+          ></Modal>
+          <Modal
+            isOpen={isVideoModalOpen}
+            onOpenChange={onVideoModalOpenChange}
+            title="Add Video"
+          ></Modal>
         </div>
       )}
     </div>
