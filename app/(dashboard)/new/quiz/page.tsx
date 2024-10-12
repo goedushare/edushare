@@ -10,7 +10,7 @@ const NewQuiz = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
 
   const addQuestion = () => {
-    setQuestions([...questions, { question: "", answers: [], correct: 0 }]);
+    setQuestions([...questions, { question: "", answers: [""], correct: 0 }]);
   };
 
   const createQuiz = () => {};
@@ -41,6 +41,12 @@ const NewQuiz = () => {
             setAnswers={(newAnswers) => {
               const newQuestions = [...questions];
               newQuestions[index].answers = newAnswers;
+              setQuestions(newQuestions);
+            }}
+            correct={question.correct}
+            setCorrect={(newCorrect) => {
+              const newQuestions = [...questions];
+              newQuestions[index].correct = newCorrect;
               setQuestions(newQuestions);
             }}
           />
