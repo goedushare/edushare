@@ -5,7 +5,7 @@ import TextField from "@/components/TextField";
 import { Button } from "@nextui-org/react";
 import { useState } from "react";
 
-const NewQuiz = () => {
+const NewQuiz = ({ params }: { params: { module: number } }) => {
   const [title, setTitle] = useState("");
   const [questions, setQuestions] = useState<Question[]>([]);
 

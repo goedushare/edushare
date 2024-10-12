@@ -104,10 +104,13 @@ export default function Module({
               <Button className="bg-[#0E793C] text-white">Add Resource</Button>
             </DropdownTrigger>
             <DropdownMenu>
-              <DropdownItem key="quiz" href="/new/quiz">
+              <DropdownItem key="quiz" href={`/new/${module.id}/quiz`}>
                 Quiz
               </DropdownItem>
-              <DropdownItem key="flashcard" href="/new/flashcard">
+              <DropdownItem
+                key="flashcard"
+                href={`/new/${module.id}/flashcard`}
+              >
                 Flashcard Set
               </DropdownItem>
               <DropdownItem
