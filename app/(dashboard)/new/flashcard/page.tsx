@@ -30,9 +30,17 @@ const NewFlashcardSet = () => {
             key={index}
             number={index + 1}
             term={flashcard.term}
-            setTerm={() => {}}
+            setTerm={(newTerm: string) => {
+              const newFlashcards = [...flashcards];
+              newFlashcards[index].term = newTerm;
+              setFlashcards(newFlashcards);
+            }}
             definition={flashcard.definition}
-            setDefinition={() => {}}
+            setDefinition={(newDefinition) => {
+              const newFlashcards = [...flashcards];
+              newFlashcards[index].definition = newDefinition;
+              setFlashcards(newFlashcards);
+            }}
           />
         ))}
       </div>

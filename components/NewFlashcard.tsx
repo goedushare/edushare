@@ -11,7 +11,7 @@ const NewFlashcard = ({
 }: {
   number: number;
   term: string;
-  setTerm?: (term: String) => void;
+  setTerm?: (term: string) => void;
   definition: string;
   setDefinition: (definition: string) => void;
 }) => {
