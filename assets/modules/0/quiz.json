@@ -1,7 +1,6 @@
 {
   "questions": [
     {
-      "id": 0,
       "question": "Who drafts a new bill once it is introduced?",
       "answers": [
         "The President",
@@ -12,7 +11,6 @@
       "correct": 3
     },
     {
-      "id": 1,
       "question": "Who assigns a bill to a committee in the House of Representatives?",
       "answers": [
         "The President",
@@ -23,18 +21,11 @@
       "correct": 1
     },
     {
-      "id": 2,
       "question": "What are the roles of a subcommittee vs. committee in the legislative process? ![](/images/0/q3img.png)",
-      "answers": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
+      "answers": ["A", "B", "C", "D"],
       "correct": 1
     },
     {
-      "id": 3,
       "question": "What happens during a 'markup session'?",
       "answers": [
         "The bill is debated by the entire chamber.",
@@ -45,7 +36,6 @@
       "correct": 1
     },
     {
-      "id": 4,
       "question": "What is a 'discharge petition'?",
       "answers": [
         "A method to send a bill directly to the President.",
@@ -56,7 +46,6 @@
       "correct": 1
     },
     {
-      "id": 5,
       "question": "Who sets the order of debate in the House of Representatives?",
       "answers": [
         "The Vice President",
@@ -67,7 +56,6 @@
       "correct": 1
     },
     {
-      "id": 6,
       "question": "How do the House of Representatives and the Senate differ in their debate rules?",
       "answers": [
         "The House allows filibusters while the Senate does not.",
@@ -78,7 +66,6 @@
       "correct": 1
     },
     {
-      "id": 7,
       "question": "What happens if the versions of a bill passed by the House and the Senate are not identical?",
       "answers": [
         "The President decides which version to sign.",
@@ -89,17 +76,11 @@
       "correct": 2
     },
     {
-      "id": 8,
       "question": "Which of the following accurately compares the roles of the President and Congress in the creation of a bill? ![](/images/0/q9img.png)",
-      "answers": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
+      "answers": ["A", "B", "C", "D"],
       "correct": 1
-    }, {
-      "id": 9,
+    },
+    {
       "question": "Number of bills enacted by each Congress in the United States from 1973 to 2023 © Statista 2024 https://www.statista.com/statistics/1361682/bills-passed-congress-us/ ![](/images/0/q12img.png) Which of the following claims does the graph best support?",
       "answers": [
         "The average percentage of bills passed over time has decreased.",
@@ -108,8 +89,8 @@
         "The amount of bills that become law decreased from 2003 to 2009"
       ],
       "correct": 3
-    }, {
-      "id": 10,
+    },
+    {
       "question": "Number of bills enacted by each Congress in the United States from 1973 to 2023 © Statista 2024 https://www.statista.com/statistics/1361682/bills-passed-congress-us/ ![](/images/0/q12img.png) Which of the following could be an explanation for the trend shown in the graph?",
       "answers": [
         "The public has on average grown more dissatisfied with representatives",
@@ -118,8 +99,8 @@
         "The Supreme Court has declared laws passed by Congress unconstitutional"
       ],
       "correct": 2
-    }, {
-      "id": 11,
+    },
+    {
       "question": "![](/images/0/q14img.png) Which statement would the artist of the cartoon most agree with?",
       "answers": [
         "Representatives constantly oppose the legislation of their peers.",
@@ -128,8 +109,8 @@
         "Parties in Congress have different priorities"
       ],
       "correct": 3
-    },{
-      "id": 12,
+    },
+    {
       "question": "![](/images/0/q14img.png) What is an issue that would most likely arise from the problem presented in the cartoon?",
       "answers": [
         "Decreased congressional productivity",

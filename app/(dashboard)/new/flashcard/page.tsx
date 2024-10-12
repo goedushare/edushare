@@ -7,7 +7,7 @@ import { useState } from "react";
 
 const NewFlashcardSet = () => {
   const [title, setTitle] = useState("");
-  const [flashcards, setFlashcards] = useState<FlashcardForm[]>([]);
+  const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
 
   const addFlashcard = () => {
     setFlashcards([...flashcards, { term: "", definition: "" }]);

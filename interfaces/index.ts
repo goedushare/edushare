@@ -8,7 +8,7 @@ interface ArticleForm {
   text: string;
 }
 
-interface FlashcardForm {
+interface Flashcard {
   term: string;
   definition: string;
 }
@@ -23,7 +23,6 @@ interface Module {
 }
 
 interface Question {
-  id: number;
   question: string;
   answers: string[];
   correct: number;
