@@ -20,7 +20,7 @@ const NewFlashcard = ({
       <div>
         <h2 className="text-xl font-semibold">{String(number)}</h2>
       </div>
-      <div className="flex flex-row justify-between space-x-4 mt-4">
+      <div className="flex flex-row justify-between space-x-4 mt-4 pb-1">
         <TextField placeholder="Term" value={term} setValue={setTerm} />
         <TextField
           placeholder="Definition"

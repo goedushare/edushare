@@ -13,12 +13,17 @@ const NewFlashcardSet = () => {
     setFlashcards([...flashcards, { term: "", definition: "" }]);
   };
 
+  const createFlashcardSet = () => {};
+
   return (
     <div className="mb-12">
       <div className="flex flex-row justify-between">
         <h1 className="text-4xl">New Flashcard Set</h1>
-        <Button className="bg-[#0E793C] text-white" onPress={addFlashcard}>
-          Add Flashcard
+        <Button
+          className="bg-[#0E793C] text-white"
+          onPress={createFlashcardSet}
+        >
+          Create Set
         </Button>
       </div>
       <div className="mt-12">
@@ -43,6 +48,11 @@ const NewFlashcardSet = () => {
             }}
           />
         ))}
+      </div>
+      <div className="mt-6">
+        <Button className="bg-[#0E793C] text-white" onPress={addFlashcard}>
+          Add Flashcard
+        </Button>
       </div>
     </div>
   );
