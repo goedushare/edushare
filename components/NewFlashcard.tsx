@@ -16,7 +16,7 @@ const NewFlashcard = ({
   setDefinition: (definition: string) => void;
 }) => {
   return (
-    <div className="p-4 bg-slate-50 border-1 rounded-lg">
+    <div className="p-4 bg-slate-50 border-1 rounded-2xl">
       <div>
         <h2 className="text-xl font-semibold">{String(number)}</h2>
       </div>
