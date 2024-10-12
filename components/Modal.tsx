@@ -15,6 +15,7 @@ const Modal = ({
   children,
   actionText,
   onAction,
+  onCloseModal,
 }: {
   isOpen: boolean;
   onOpenChange: () => void;
@@ -22,9 +23,14 @@ const Modal = ({
   children?: React.ReactNode;
   actionText?: string;
   onAction?: (onClose: () => void) => void;
+  onCloseModal?: () => void;
 }) => {
   return (
-    <NextModal isOpen={isOpen} onOpenChange={onOpenChange}>
+    <NextModal
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
+      onClose={onCloseModal}
+    >
       <ModalContent>
         {(onClose) => (
           <>

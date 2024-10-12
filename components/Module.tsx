@@ -145,6 +145,7 @@ export default function Module({
             title="Add Article"
             actionText="Create"
             onAction={onCreateArticle}
+            onCloseModal={() => setArticleForm({ title: "", text: "" })}
           >
             <div>
               <TextField
@@ -172,6 +173,7 @@ export default function Module({
             title="Add Video"
             actionText="Create"
             onAction={onCreateVideo}
+            onCloseModal={() => setVideoForm({ title: "", videoUrl: "" })}
           >
             <div>
               <TextField
