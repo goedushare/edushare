@@ -14,7 +14,10 @@ const Register = () => {
     <div className="h-screen flex flex-row justify-center">
       <div className="w-96 h-96 mt-24 px-4 py-4 bg-gray-50 rounded-lg shadow-md">
         <h1 className="text-3xl font-bold">Register</h1>
-        <form className="flex flex-col h-5/6 mt-4">
+        <form
+          className="flex flex-col h-5/6 mt-4"
+          onSubmit={(e) => e.preventDefault()}
+        >
           <TextField
             value={name}
             setValue={setName}

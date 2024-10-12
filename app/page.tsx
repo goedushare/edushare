@@ -11,9 +11,9 @@ export default function Home() {
             Access AP NSL review modules containing videos, articles, and
             quizzes.
           </h2>
-          <Link href="/learn">
-            <Button className="bg-[#0E793C] text-white">Get Started</Button>
-          </Link>
+          <Button className="bg-[#0E793C] text-white" as={Link} href="/learn">
+            Get Started
+          </Button>
         </div>
       </div>
     </div>
