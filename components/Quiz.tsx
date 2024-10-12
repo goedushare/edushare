@@ -6,18 +6,11 @@ import Score from "./Score";
 import Question from "./Question";
 import QuizProgress from "./QuizProgress";
 
-export type QuestionType = {
-  id: number;
-  question: string;
-  answers: string[];
-  correct: number;
-};
-
 export default function Quiz({
   questions,
   authors,
 }: {
-  questions: QuestionType[];
+  questions: Question[];
   authors: string;
 }) {
   let lsCurrQuestion;

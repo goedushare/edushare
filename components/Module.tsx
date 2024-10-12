@@ -17,15 +17,6 @@ import Modal from "./Modal";
 import { useState } from "react";
 import TextField from "./TextField";
 
-type Module = {
-  id: number;
-  moduleName: string;
-  videoName: string;
-  articleName: string;
-  videoURL: string;
-  authors: string;
-};
-
 export default function Module({
   module,
   isEditable,
