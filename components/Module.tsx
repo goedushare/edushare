@@ -10,10 +10,12 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  Textarea,
   useDisclosure,
 } from "@nextui-org/react";
 import Modal from "./Modal";
 import { useState } from "react";
+import TextField from "./TextField";
 
 type Module = {
   id: number;
@@ -44,6 +46,26 @@ export default function Module({
   } = useDisclosure();
 
   const [currentModule, setCurrentModule] = useState(0);
+
+  const [videoForm, setVideoForm] = useState<VideoForm>({
+    title: "",
+    videoUrl: "",
+  });
+
+  const [articleForm, setArticleForm] = useState<ArticleForm>({
+    title: "",
+    text: "",
+  });
+
+  const onCreateArticle = (onClose: () => void) => {
+    onClose();
+    setArticleForm({ title: "", text: "" });
+  };
+
+  const onCreateVideo = (onClose: () => void) => {
+    onClose();
+    setVideoForm({ title: "", videoUrl: "" });
+  };
 
   return (
     // TODO: Fix positioning of module component (causes page to shift in x-axis)
@@ -121,12 +143,56 @@ export default function Module({
             isOpen={isArticleModalOpen}
             onOpenChange={onArticleModalOpenChange}
             title="Add Article"
-          ></Modal>
+            actionText="Create"
+            onAction={onCreateArticle}
+          >
+            <div>
+              <TextField
+                label="Title"
+                value={articleForm.title}
+                setValue={(newTitle) =>
+                  setArticleForm({ ...articleForm, title: newTitle })
+                }
+                labelPlacement="inside"
+              />
+              <TextField
+                placeholder="Article Text"
+                value={articleForm.text}
+                setValue={(newText) =>
+                  setArticleForm({ ...articleForm, text: newText })
+                }
+                as={Textarea}
+                className="mt-4"
+              />
+            </div>
+          </Modal>
           <Modal
             isOpen={isVideoModalOpen}
             onOpenChange={onVideoModalOpenChange}
             title="Add Video"
-          ></Modal>
+            actionText="Create"
+            onAction={onCreateVideo}
+          >
+            <div>
+              <TextField
+                label="Title"
+                value={videoForm.title}
+                setValue={(newTitle) =>
+                  setVideoForm({ ...videoForm, title: newTitle })
+                }
+                labelPlacement="inside"
+              />
+              <TextField
+                label="Video URL"
+                value={videoForm.videoUrl}
+                setValue={(newVideoUrl) =>
+                  setVideoForm({ ...videoForm, videoUrl: newVideoUrl })
+                }
+                labelPlacement="inside"
+                className="mt-4"
+              />
+            </div>
+          </Modal>
         </div>
       )}
     </div>
