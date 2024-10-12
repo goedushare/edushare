@@ -1,6 +1,5 @@
 import { Radio, RadioGroup } from "@nextui-org/react";
 import Question from "./Question";
-import { QuestionType } from "./Quiz";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -9,7 +8,7 @@ export default function Score({
   questions,
 }: {
   answers: number[];
-  questions: QuestionType[];
+  questions: Question[];
 }) {
   let total = 0;
   for (let i = 0; i < answers.length; i++) {
