@@ -33,7 +33,10 @@ const NewQuestion = ({
       <div>
         <RadioGroup value={String(correct)}>
           {answers.map((answer, index) => (
-            <div key={index} className="flex flex-row justify-between mt-4">
+            <div
+              key={index}
+              className="flex flex-row justify-between space-x-2 mt-4"
+            >
               <Radio
                 value={String(index)}
                 key={index}
@@ -54,7 +57,7 @@ const NewQuestion = ({
           ))}
         </RadioGroup>
       </div>
-      <div>
+      <div className="mt-4">
         <p
           onClick={() => {
             setAnswers([...answers, ""]);
