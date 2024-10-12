@@ -7,3 +7,8 @@ interface ArticleForm {
   title: string;
   text: string;
 }
+
+interface FlashcardForm {
+  term: string;
+  definition: string;
+}

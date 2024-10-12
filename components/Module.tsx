@@ -117,7 +117,7 @@ export default function Module({
                 Quiz
               </DropdownItem>
               <DropdownItem key="flashcard" href="/new/flashcard">
-                Flashcard
+                Flashcard Set
               </DropdownItem>
               <DropdownItem
                 key="article"
