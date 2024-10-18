@@ -3,18 +3,14 @@ import Modules from "@/assets/modules.json";
 import path from "path";
 import { readFileSync } from "fs";
 
-export function generateStaticParams() {
-  return Modules["modules"].map((mod) => ({ module: String(mod["id"]) }));
-}
-export const dynamicParams = false;
+// export function generateStaticParams() {
+//   return Modules["modules"].map((mod) => ({ module: String(mod["id"]) }));
+// }
+// export const dynamicParams = false;
 
-export const dynamic = "force-static";
+// export const dynamic = "force-static";
 
-export default function ArticlePage({
-  params,
-}: {
-  params: { module: number };
-}) {
+const ArticlePage = ({ params }: { params: { module: number } }) => {
   const mod = Modules["modules"][params.module];
   let mdarticle;
   try {
@@ -35,4 +31,6 @@ export default function ArticlePage({
       body={mdarticle}
     />
   );
-}
+};
+
+export default ArticlePage;
