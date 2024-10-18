@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="h-[calc(100vh-64px)] overflow-scroll px-8">
+    <div className="h-full px-8">
       <div className="text-center flex flex-col justify-center items-center h-full">
         <div>
           <h1 className="text-3xl mb-4">Welcome to NSL Forever</h1>

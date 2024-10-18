@@ -3,7 +3,7 @@ import React from "react";
 export default function Video({
   title,
   link,
-  authors
+  authors,
 }: {
   title: string;
   link: string;
@@ -13,7 +13,12 @@ export default function Video({
     <div className="w-3/4 h-[calc(100vh-64px)] overflow-y-scroll overflow-x-hidden px-8 flex flex-col items-center">
       <h1 className="font-semibold text-3xl mt-6">{title}</h1>
       <h2 className="font-normal text-xl mt-2 mb-12">By: {authors}</h2>
-      <iframe width="1000px" height="600px" src={link} className="rounded-xl shadow-xl mb-16"></iframe>
+      <iframe
+        width="1000px"
+        height="600px"
+        src={link}
+        className="rounded-xl shadow-xl mb-16"
+      ></iframe>
     </div>
   );
 }
