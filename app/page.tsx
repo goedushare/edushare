@@ -1,5 +1,6 @@
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
+import Chatbot from '../components/Chatbot'
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
           <Button className="bg-[#0E793C] text-white" as={Link} href="/learn">
             Get Started
           </Button>
+          <Chatbot />
         </div>
       </div>
     </div>
