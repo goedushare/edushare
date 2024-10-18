@@ -7,7 +7,9 @@ import { useState } from "react";
 
 const NewQuiz = ({ params }: { params: { module: number } }) => {
   const [title, setTitle] = useState("");
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [questions, setQuestions] = useState<Question[]>([
+    { question: "", answers: [""], correct: 0 },
+  ]);
 
   const addQuestion = () => {
     setQuestions([...questions, { question: "", answers: [""], correct: 0 }]);
