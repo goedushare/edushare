@@ -20,11 +20,7 @@ const authors = "AUTHORS";
 const title = "TITLE";
 
 const FlashcardsPage = ({ params }: { params: { module: number } }) => {
-  return (
-    <div>
-      <Flashcards authors={authors} flashcards={flashcards} title={title} />
-    </div>
-  );
+  return <Flashcards authors={authors} flashcards={flashcards} title={title} />;
 };
 
 export default FlashcardsPage;
