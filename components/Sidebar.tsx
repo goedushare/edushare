@@ -20,7 +20,7 @@ export default function Sidebar() {
         <Accordion
           selectionMode="multiple"
           className="p-0 flex flex-col w-full"
-          defaultExpandedKeys={path.split("/").slice(1)}
+          defaultExpandedKeys={path?.split("/").slice(1) || []}
         >
           {modules["modules"].map((module) => {
             return (
