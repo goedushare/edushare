@@ -10,13 +10,13 @@ const Flashcard = ({
   setSide: (side: "term" | "definition") => void;
 }) => {
   return (
-    <Card
-      onClick={() =>
-        side === "term" ? setSide("definition") : setSide("term")
-      }
-      className="w-2/3 h-3/5"
-    >
-      <CardBody className="flex flex-col justify-center items-center cursor-pointer">
+    <Card className="w-2/3 h-3/5">
+      <CardBody
+        className="flex flex-col justify-center items-center cursor-pointer"
+        onClick={() =>
+          side === "term" ? setSide("definition") : setSide("term")
+        }
+      >
         {side === "term" ? (
           <p>{flashcard.term}</p>
         ) : (

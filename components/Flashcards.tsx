@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Flashcard from "./Flashcard";
+import { Button } from "@nextui-org/react";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const Flashcards = ({
   title,
@@ -24,6 +26,34 @@ const Flashcards = ({
         side={side}
         setSide={setSide}
       />
+      <div className="flex flex-row justify-between content-center gap-4 mt-6">
+        <Button
+          className="bg-green-600 text-white"
+          isIconOnly
+          radius="full"
+          onClick={() => {
+            console.log("Left");
+            if (currentCard > 0) setCurrentCard(currentCard - 1);
+          }}
+        >
+          <FaArrowLeft />
+        </Button>
+        <p className="content-center">
+          {currentCard + 1} of {flashcards.length}
+        </p>
+        <Button
+          className="bg-green-600 text-white"
+          isIconOnly
+          radius="full"
+          onClick={() => {
+            console.log("Right");
+            if (currentCard < flashcards.length - 1)
+              setCurrentCard(currentCard + 1);
+          }}
+        >
+          <FaArrowRight />
+        </Button>
+      </div>
     </div>
   );
 };
