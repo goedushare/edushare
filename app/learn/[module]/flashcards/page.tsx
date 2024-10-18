@@ -17,10 +17,16 @@ const flashcards: Flashcard[] = [
 
 const authors = "AUTHORS";
 
-const title = "TITLE";
+const flashcardsName = "TITLE";
 
 const FlashcardsPage = ({ params }: { params: { module: number } }) => {
-  return <Flashcards authors={authors} flashcards={flashcards} title={title} />;
+  return (
+    <Flashcards
+      authors={authors}
+      flashcards={flashcards}
+      flashcardsName={flashcardsName}
+    />
+  );
 };
 
 export default FlashcardsPage;

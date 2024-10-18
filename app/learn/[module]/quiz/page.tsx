@@ -18,7 +18,14 @@ const QuizPage = ({ params }: { params: { module: number } }) => {
     );
     const mod = Modules["modules"][params.module];
     const quiz = JSON.parse(raw);
-    return <Quiz questions={quiz["questions"]} authors={mod["authors"]} />;
+    const quizName = "QUIZ";
+    return (
+      <Quiz
+        quizName={quizName}
+        questions={quiz["questions"]}
+        authors={mod["authors"]}
+      />
+    );
   } catch (e) {
     return <div>Quiz not found</div>;
   }
