@@ -17,6 +17,9 @@ jobs:
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          vercel-args: "--prod --logs"
+          vercel-args: "--prod"
           vercel-org-id: ${{ secrets.ORG_ID}}
           vercel-project-id: ${{ secrets.PROJECT_ID}}
+      - name: Retrieve build logs
+        if: always()
+        run: /usr/local/bin/npx vercel logs ${{steps.vercel-deploy.outputs.preview-url}} -t ${{secrets.VERCEL_TOKEN}} --scope ${{secrets.ORG_ID}}
