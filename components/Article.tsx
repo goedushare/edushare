@@ -5,9 +5,6 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from 'remark-gfm';
 
-import { api } from "@/convex/_generated/api";
-import { useQuery } from "convex/react";
-
 
 export default function Article({
   articleName,

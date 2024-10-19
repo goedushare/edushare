@@ -3,11 +3,36 @@
 import TextField from "@/components/TextField";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/lib/firebaseConfig';
+import useAuth from '@/lib/useAuth';
+import { useRouter } from 'next/router';
+import { redirect } from 'next/navigation';
+
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { user, loading } = useAuth();
+
+  useEffect(() => {
+
+    if (!loading && user) {
+      redirect('/dashboard');
+    }
+  }, [user, loading]);
+
+  const handleLogin = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log('User logged in:', userCredential.user);
+    } catch (error) {
+      console.error('Error logging in:', error);
+    }
+  };
 
   return (
     <div className="h-screen flex flex-row justify-center">
@@ -33,7 +58,7 @@ const Login = () => {
           />
           <div className="basis-1/2 flex flex-col justify-end">
             <div className="flex flex-row justify-between items-end">
-              <Button type="submit" className="bg-[#0E793C] text-white">
+              <Button onClick={handleLogin} type="submit" className="bg-[#0E793C] text-white">
                 Log In
               </Button>
               <p>

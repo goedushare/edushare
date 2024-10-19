@@ -16,14 +16,17 @@ import {
 import Modal from "./Modal";
 import { useState } from "react";
 import TextField from "./TextField";
+import { ModuleForm, ArticleForm, VideoForm, QuizForm } from "../interfaces";
 
 export default function Module({
   module,
   isEditable,
 }: {
-  module: Module;
+  module: ModuleForm;
   isEditable?: boolean;
 }) {
+
+  console.log(module);
   const {
     isOpen: isArticleModalOpen,
     onOpen: onArticleModalOpen,
@@ -38,63 +41,79 @@ export default function Module({
 
   const [currentModule, setCurrentModule] = useState(0);
 
-  const [videoForm, setVideoForm] = useState<VideoForm>({
-    title: "",
-    videoUrl: "",
-  });
+  const [videoForm, setVideoForm] = useState<VideoForm>()
 
-  const [articleForm, setArticleForm] = useState<ArticleForm>({
-    title: "",
-    text: "",
-  });
+  const [articleForm, setArticleForm] = useState<ArticleForm>()
 
   const onCreateArticle = (onClose: () => void) => {
+    const defaultArticleForm: ArticleForm = {
+      id : "0",
+      title: "",
+      text: ""
+    };
+
+    const newArticle: ArticleForm = {
+      ...defaultArticleForm,
+      title: articleForm?.title || "",
+      text: articleForm?.text || "",
+    };
+
+    addDocument('modules', newModule);
+
     onClose();
-    setArticleForm({ title: "", text: "" });
+    setArticleForm({ id: "", title: "", text: "" });
   };
 
   const onCreateVideo = (onClose: () => void) => {
     onClose();
-    setVideoForm({ title: "", videoUrl: "" });
+    setVideoForm({ id: "", title: "", videoUrl: "" });
   };
 
   return (
     // TODO: Fix positioning of module component (causes page to shift in x-axis)
     <div className="bg-green-50 rounded-lg p-8 mt-8">
       <div>
-        <h2 className="text-2xl">{module["moduleName"]}</h2>
+        <h2 className="text-2xl">{module["title"]}</h2>
         <p>By: {module["authors"]}</p>
       </div>
       <div className="flex flex-row mt-4 gap-12">
         <div className="flex flex-col w-full">
           <h3 className="font-semibold">Learn</h3>
-          <Link href={`/learn/${module["id"]}/video`}>
+          {module["videos"].map((video1, index) => (
+          <Link key={index} href={`/learn/${module["id"]}/video/${video1.id}`}>
             <div className="group flex flex-row items-center py-4 pl-8 w-full border-b-1 hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
               <img src={video.src} className="w-10 h-10" />
               <p className="ml-4 leading-5 text-sm group-hover:text-primary-green transition-all duration-200">
-                {module["videoName"]}
+                {video1.title}
               </p>
             </div>
           </Link>
-          <Link href={`/learn/${module["id"]}/article`}>
-            <div className="group flex flex-row  items-center py-4 pl-8 w-full border-b-1 hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
+          ))}
+          {module["articles"].map((article1, index) => (
+          <Link key={index} href={`/learn/${module["id"]}/article/${article1.id}`}>
+            <div className="group flex flex-row items-center py-4 pl-8 w-full border-b-1 hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
               <img src={article.src} className="w-10 h-10" />
               <p className="ml-4 leading-5 text-sm group-hover:text-primary-green transition-all duration-200">
-                {module["articleName"]}
+                {article1.title}
               </p>
             </div>
           </Link>
+          ))}
+        
         </div>
         <div className="flex flex-col w-full">
           <h3 className="font-semibold">Practice</h3>
-          <Link href={`/learn/${module["id"]}/quiz`}>
-            <div className="group flex flex-row  items-center py-4 pl-8 w-full border-b-1 hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
+          
+          {module["quizzes"].map((quiz1, index) => (
+          <Link key={index} href={`/learn/${module["id"]}/quiz/${quiz1.id}`}>
+            <div className="group flex flex-row items-center py-4 pl-8 w-full border-b-1 hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
               <img src={quiz.src} className="w-10 h-10" />
               <p className="ml-4 leading-5 text-sm group-hover:text-primary-green transition-all duration-200">
-                Quiz
+                {quiz1.title}
               </p>
             </div>
           </Link>
+          ))}
         </div>
       </div>
       {isEditable && (
@@ -139,12 +158,12 @@ export default function Module({
             title="Add Article"
             actionText="Create"
             onAction={onCreateArticle}
-            onCloseModal={() => setArticleForm({ title: "", text: "" })}
+            onCloseModal={() => setArticleForm({ id: "", title: "", text: "" })}
           >
             <div>
               <TextField
                 label="Title"
-                value={articleForm.title}
+                value={articleForm?.title || ""}
                 setValue={(newTitle) =>
                   setArticleForm({ ...articleForm, title: newTitle })
                 }
@@ -152,7 +171,7 @@ export default function Module({
               />
               <TextField
                 placeholder="Article Text"
-                value={articleForm.text}
+                value={articleForm?.text || ""}
                 setValue={(newText) =>
                   setArticleForm({ ...articleForm, text: newText })
                 }
@@ -167,12 +186,12 @@ export default function Module({
             title="Add Video"
             actionText="Create"
             onAction={onCreateVideo}
-            onCloseModal={() => setVideoForm({ title: "", videoUrl: "" })}
+            onCloseModal={() => setVideoForm({ id: "", title: "", videoUrl: "" })}
           >
             <div>
               <TextField
                 label="Title"
-                value={videoForm.title}
+                value={videoForm?.title}
                 setValue={(newTitle) =>
                   setVideoForm({ ...videoForm, title: newTitle })
                 }
@@ -180,7 +199,7 @@ export default function Module({
               />
               <TextField
                 label="Video URL"
-                value={videoForm.videoUrl}
+                value={videoForm?.videoUrl}
                 setValue={(newVideoUrl) =>
                   setVideoForm({ ...videoForm, videoUrl: newVideoUrl })
                 }

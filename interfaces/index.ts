@@ -1,9 +1,11 @@
-interface VideoForm {
+export interface VideoForm {
+  id: string;
   title: string;
   videoUrl: string;
 }
 
-interface ArticleForm {
+export interface ArticleForm {
+  id: string;
   title: string;
   text: string;
 }
@@ -13,13 +15,19 @@ interface Flashcard {
   definition: string;
 }
 
-interface Module {
-  id: number;
-  moduleName: string;
-  videoName: string;
-  articleName: string;
-  videoURL: string;
+export interface ModuleForm {
+  id: string;
+  title: string;
   authors: string;
+  articles: ArticleForm[];
+  videos: VideoForm[];
+  quizzes: QuizForm[];
+}
+
+export interface QuizForm {
+  id: string;
+  title: string;
+  questions: Question[];
 }
 
 interface Question {
@@ -27,3 +35,4 @@ interface Question {
   answers: string[];
   correct: number;
 }
+

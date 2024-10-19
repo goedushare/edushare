@@ -15,7 +15,10 @@ const NewQuiz = ({ params }: { params: { module: number } }) => {
     setQuestions([...questions, { question: "", answers: [""], correct: 0 }]);
   };
 
-  const createQuiz = () => {};
+  const createQuiz = () => {
+    console.log("Creating quiz...");
+    console.log({ title, questions });
+  };
 
   return (
     <div className="mb-12">

@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Navbar,
   NavbarBrand,
@@ -8,7 +10,20 @@ import {
 import Link from "next/link";
 import React from "react";
 
+import { redirect } from 'next/navigation';
+import { logout } from '@/lib/authHelpers';
+
 export default function Header() {
+
+  const handleLogout = async () => {
+    try {
+      await logout();  // Call the logout function
+      redirect('/login');  // Redirect to login page after logout
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
+
   return (
     <Navbar position="sticky">
       <NavbarBrand>
@@ -47,6 +62,11 @@ export default function Header() {
             <p className="relative group text-base">
               <span>Register</span>
             </p>
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link legacyBehavior color="foreground" href="/">
+              <a onClick={handleLogout}>Logout</a>
           </Link>
         </NavbarItem>
         {/* <NavbarItem>

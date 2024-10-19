@@ -10,10 +10,12 @@ import { readFileSync } from "fs";
 
 // export const dynamic = "force-static";
 
-const ArticlePage = ({ params }: { params: { module: number } }) => {
-  const mod = Modules["modules"][params.module];
+const ArticlePage = ({ params }: { params: { module: string } }) => {
+  console.log("HIHI")
+  const mod = Modules["modules"];
   let mdarticle;
   try {
+    console.log(mod)
     mdarticle = readFileSync(
       path.resolve(`assets/modules/${mod["id"]}/article.md`),
       "utf8"

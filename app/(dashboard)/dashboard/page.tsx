@@ -6,8 +6,20 @@ import modules from "@/assets/modules.json";
 import Modal from "@/components/Modal";
 import TextField from "@/components/TextField";
 import { useState } from "react";
+import withAuth from "@/lib/withAuth";
+import { useEffect } from "react";
+import { addDocument, fetchCollectionData } from "@/lib/firestoreHelpers";
+import { ModuleForm } from "@/interfaces";
+
+
+
+
+
 
 const Dashboard = () => {
+  
+  const [modules, setModules] = useState<ModuleForm[]>([]);
+
   const {
     isOpen: isModalOpen,
     onOpen: onModalOpen,
@@ -15,11 +27,44 @@ const Dashboard = () => {
   } = useDisclosure();
 
   const onCreate = (onClose: () => void) => {
+    const defaultModuleForm: ModuleForm = {
+      id : "0",
+      title: "",
+      authors: "",
+      articles: [],
+      quizzes: [],
+      videos: [],
+    };
+
+    const newModule: ModuleForm = {
+      ...defaultModuleForm,
+      title: moduleName,
+      authors: authors,
+    };
+
+    addDocument('modules', newModule);
+
     onClose();
     setModuleName("");
   };
 
+  useEffect(() => {
+    const getModules = async () => {
+      try {
+        const moduleData = await fetchCollectionData('modules'); 
+        console.log('Module Data:', moduleData); 
+        setModules(moduleData);
+        console.log('Modules:', modules);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+
+    getModules();
+  }, []);
+
   const [moduleName, setModuleName] = useState("");
+  const [authors, setAuthors] = useState("");
 
   return (
     <div>
@@ -43,10 +88,18 @@ const Dashboard = () => {
               labelPlacement="inside"
             />
           </div>
+          <div>
+          <TextField
+              label="Authors"
+              value={authors}
+              setValue={setAuthors}
+              labelPlacement="inside"
+            />
+          </div>
         </Modal>
       </div>
       <div className="mt-4 mb-8">
-        {modules["modules"].map((module) => {
+        {modules.map((module) => {
           return <Module module={module} isEditable={true} key={module.id} />;
         })}
       </div>
@@ -54,4 +107,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default withAuth(Dashboard);
