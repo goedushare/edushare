@@ -16,6 +16,9 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       }, colors: {
         'primary-green': "#3E8914"
+      }, fontFamily: {
+        'raleway': ['var(--font-raleway)'],
+        'montserrat': ['var(--font-montserrat)'],
       }
     },
   },
