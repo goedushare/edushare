@@ -21,6 +21,3 @@ jobs:
           vercel-args: "--prod"
           vercel-org-id: ${{ secrets.ORG_ID}}
           vercel-project-id: ${{ secrets.PROJECT_ID}}
-      - name: Retrieve build logs
-        if: always()
-        run: /usr/local/bin/npx vercel logs ${{steps.vercel-deploy.outputs.preview-url}} -t ${{secrets.VERCEL_TOKEN}} --scope ${{secrets.ORG_ID}}
