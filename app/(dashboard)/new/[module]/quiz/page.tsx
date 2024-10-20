@@ -20,21 +20,23 @@ const NewQuiz = ({ params }: { params: { module: string } }) => {
   const createQuiz = () => {
 
     const defaultQuizForm: QuizForm = {
-      id : "0",
+      id: 0,
       title: "",
       questions: []
     };
 
-    const newQuiz: QuizForm = {
-      ...defaultQuizForm,
-      title: title,
-      questions: questions
-    };
+    
 
     const modules = getDocumentById('modules', params.module);
 
     modules.then((data) => {
       console.log(data?.quizzes);
+      const newQuiz: QuizForm = {
+        ...defaultQuizForm,
+        id: data?.quizzes.length,
+        title: title,
+        questions: questions
+      };
       updateDocument('modules', params.module, {quizzes: [...data?.quizzes, newQuiz]});
     });
 

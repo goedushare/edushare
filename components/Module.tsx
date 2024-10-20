@@ -17,7 +17,9 @@ import Modal from "./Modal";
 import { useState } from "react";
 import TextField from "./TextField";
 import { ModuleForm, ArticleForm, VideoForm, QuizForm } from "../interfaces";
-import { updateDocument } from "@/lib/firestoreHelpers";
+import { updateDocument, getDocumentById } from "@/lib/firestoreHelpers";
+
+
 
 export default function Module({
   module,
@@ -48,42 +50,56 @@ export default function Module({
 
   const onCreateArticle = (onClose: () => void) => {
     const defaultArticleForm: ArticleForm = {
-      id : "0",
+      id: 0,
       title: "",
       text: ""
-    };
+    }; 
 
-    const newArticle: ArticleForm = {
-      ...defaultArticleForm,
-      title: articleForm?.title || "",
-      text: articleForm?.text || "",
-    };
+    const modules = getDocumentById('modules', currentModule);
 
-    updateDocument('modules', currentModule, {articles: [...module.articles, newArticle]});
+    modules.then((data) => {
+      console.log(data?.articles.length);
+      const newArticle: ArticleForm = {
+        ...defaultArticleForm,
+        id: data?.articles.length,
+        title: articleForm?.title || "",
+        text: articleForm?.text || "",
+      };
+      updateDocument('modules', currentModule, {articles: [...data?.articles, newArticle]});
+    });
+
+    
+
 
     onClose();
-    setArticleForm({ id: "", title: "", text: "" });
+    setArticleForm({ id: 0, title: "", text: "" });
     setCurrentModule("");
   };
 
   const onCreateVideo = (onClose: () => void) => {
 
     const defaultVideoForm: VideoForm = {
-      id : "0",
+      id: 0,
       title: "",
       videoUrl: ""
     };
 
-    const newVideo: VideoForm = {
-      ...defaultVideoForm,
-      title: videoForm?.title || "",
-      videoUrl: videoForm?.videoUrl || "",
-    };
+    const modules = getDocumentById('modules', currentModule);
 
-    updateDocument('modules', currentModule, {videos: [...module.videos, newVideo]});
+    modules.then((data) => {
+      console.log(data?.videos.length);
+      const newVideo: VideoForm = {
+        ...defaultVideoForm,
+        id: data?.videos.length,
+        title: videoForm?.title || "",
+        videoUrl: videoForm?.videoUrl || "",
+      };
+      updateDocument('modules', currentModule, {videos: [...data?.videos, newVideo]});
+    });
 
     onClose();
-    setVideoForm({ id: "", title: "", videoUrl: "" });
+    setVideoForm({ id: 0, title: "", videoUrl: "" });
+    setCurrentModule("");
   };
 
   return (
@@ -175,7 +191,7 @@ export default function Module({
             title="Add Article"
             actionText="Create"
             onAction={onCreateArticle}
-            onCloseModal={() => setArticleForm({ id: "", title: "", text: "" })}
+            onCloseModal={() => setArticleForm({ id: 9, title: "", text: "" })}
           >
             <div>
               <TextField
@@ -203,7 +219,7 @@ export default function Module({
             title="Add Video"
             actionText="Create"
             onAction={onCreateVideo}
-            onCloseModal={() => setVideoForm({ id: "", title: "", videoUrl: "" })}
+            onCloseModal={() => setVideoForm({ id: 0, title: "", videoUrl: "" })}
           >
             <div>
               <TextField

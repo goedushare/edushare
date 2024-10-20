@@ -28,7 +28,7 @@ const Dashboard = () => {
 
   const onCreate = (onClose: () => void) => {
     const defaultModuleForm: ModuleForm = {
-      id : "0",
+      id: "0",
       title: "",
       authors: "",
       articles: [],
