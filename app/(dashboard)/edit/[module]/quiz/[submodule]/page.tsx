@@ -69,7 +69,7 @@ const NewQuiz = ({ params }: { params: { module: string, submodule: number } }) 
   return (
     <div className="mb-12">
       <div className="flex flex-row justify-between">
-        <h1 className="text-4xl">New Quiz</h1>
+        <h1 className="text-4xl">Edit Quiz</h1>
         <Button className="bg-[#0E793C] text-white" onPress={createQuiz}>
           Save Quiz
         </Button>
