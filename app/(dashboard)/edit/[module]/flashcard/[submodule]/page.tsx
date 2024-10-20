@@ -6,12 +6,13 @@ import { Button } from "@nextui-org/react";
 import { useState } from "react";
 import { FlashcardSetForm, FlashcardForm, ModuleForm } from "@/interfaces";
 import { updateDocument, getDocumentById } from "@/lib/firestoreHelpers";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react"; 
 
 const NewFlashcardSet = ({ params }: { params: { module: string, submodule: number } }) => {
   const [title, setTitle] = useState("");
   const [flashcards, setFlashcards] = useState<FlashcardForm[]>([]);
+  const router = useRouter();
 
   const [modules, setModules] = useState<ModuleForm>();
   useEffect(() => {
@@ -63,7 +64,7 @@ const NewFlashcardSet = ({ params }: { params: { module: string, submodule: numb
 
     setTitle("");
     setFlashcards([]);
-    redirect(`/dashboard`); // doesnt work for some reason
+    router.push(`/dashboard`);
   };
 
   return (
