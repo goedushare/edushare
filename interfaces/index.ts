@@ -1,11 +1,11 @@
 export interface VideoForm {
-  id: string;
+  id: number;
   title: string;
   videoUrl: string;
 }
 
 export interface ArticleForm {
-  id: string;
+  id: number;
   title: string;
   text: string;
 }
@@ -25,12 +25,12 @@ export interface ModuleForm {
 }
 
 export interface QuizForm {
-  id: string;
+  id: number;
   title: string;
-  questions: Question[];
+  questions: QuestionForm[];
 }
 
-interface Question {
+export interface QuestionForm {
   question: string;
   answers: string[];
   correct: number;

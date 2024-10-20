@@ -10,29 +10,24 @@ import { readFileSync } from "fs";
 
 // export const dynamic = "force-static";
 
-const ArticlePage = ({ params }: { params: { module: string } }) => {
-  console.log("HIHI")
-  const mod = Modules["modules"];
-  let mdarticle;
-  try {
-    console.log(mod)
-    mdarticle = readFileSync(
-      path.resolve(`assets/modules/${mod["id"]}/article.md`),
-      "utf8"
-    );
-  } catch (e) {
-    console.log(e);
-  }
-  if (!mdarticle) {
-    return <div>Article not found</div>;
-  }
-  return (
-    <Article
-      articleName={mod["articleName"]}
-      authors={mod["authors"]}
-      body={mdarticle}
-    />
-  );
+const ArticlePage1 = ({ params }: { params: { module: string } }) => {
+  // console.log("HIHI")
+  // const mod = Modules["modules"];
+  // let mdarticle;
+  // try {
+  //   console.log(mod)
+  //   mdarticle = readFileSync(
+  //     path.resolve(`assets/modules/${mod["id"]}/article.md`),
+  //     "utf8"
+  //   );
+  // } catch (e) {
+  //   console.log(e);
+  // }
+  // if (!mdarticle) {
+  //   return <div>Article not found</div>;
+  // }
+  return <h1></h1>;
+  
 };
 
-export default ArticlePage;
+export default ArticlePage1;
