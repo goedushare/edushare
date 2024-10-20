@@ -62,6 +62,12 @@ export default function Module({
     onOpenChange: onEditVideoModalOpenChange,
   } = useDisclosure();
 
+  const {
+    isOpen: isConfirmDeleteModalOpen,
+    onOpen: onConfirmDeleteModalOpen,
+    onOpenChange: onConfirmDeleteModalOpenChange,
+  } = useDisclosure()
+
 
 
   const [currentModule, setCurrentModule] = useState("");
@@ -77,6 +83,8 @@ export default function Module({
   const [articles, setArticles] = useState(module["articles"]);
   const [flashcards, setFlashcard] = useState(module["flashcards"]);
   const [quizzes, setQuizzes] = useState(module["quizzes"]);
+
+  const [pendingDelete, setPendingDelete] = useState({type: "", id: ""});
 
 
 
@@ -247,6 +255,27 @@ export default function Module({
     setCurrentModule("");
   }
 
+  const onConfirmDelete = (onClose: () => void) => {
+
+    if (pendingDelete.type === "module") {
+      deleteDocument('modules', pendingDelete.id);
+    }
+    else if (pendingDelete.type === "video") {
+      deleteVideo(parseInt(pendingDelete.id));
+    }
+    else if (pendingDelete.type === "article") {
+      deleteArticle(parseInt(pendingDelete.id));
+    }
+    else if (pendingDelete.type === "flashcard") {
+      deleteFlashcards(parseInt(pendingDelete.id));
+    }
+    else if (pendingDelete.type === "quiz") {
+      deleteQuiz(parseInt(pendingDelete.id));
+    }
+    onClose();
+    setPendingDelete({type: "", id: ""});
+  }
+
   const onCreateVideo = (onClose: () => void) => {
 
     const defaultVideoForm: VideoForm = {
@@ -329,7 +358,10 @@ export default function Module({
           className="text-gray-500 hover:text-red-500 transition-all duration-200"
           onClick={() => {
               // document.getElementById(`${module["id"]}moduleDiv`)?.remove();
-              deleteDocument('modules', module["id"]);
+              // deleteDocument('modules', module["id"]);
+              setPendingDelete({type: "module", id: module["id"]});
+              onConfirmDeleteModalOpen();
+
           }}
         >
           <svg
@@ -399,7 +431,10 @@ export default function Module({
                     console.log(module["videos"])
                     e.preventDefault();
                     e.stopPropagation();
-                    deleteVideo(video1.id);
+                    // deleteVideo(video1.id);
+                    setPendingDelete({type: "video", id: video1.id.toString()});
+                    onConfirmDeleteModalOpen();
+
                   }}
                     className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100">
                     <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -452,7 +487,11 @@ export default function Module({
                     console.log(module["videos"])
                     e.preventDefault();
                     e.stopPropagation();
-                    deleteArticle(article1.id);
+                    // deleteArticle(article1.id);
+                    setPendingDelete({type: "article", id: article1.id.toString()});
+                    onConfirmDeleteModalOpen();
+
+
                   }}
                     className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100">
                     <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -499,7 +538,11 @@ export default function Module({
                     console.log(module["videos"])
                     e.preventDefault();
                     e.stopPropagation();
-                    deleteFlashcards(flashcard1.id);
+                    // deleteFlashcards(flashcard1.id);
+                    setPendingDelete({type: "flashcard", id: flashcard1.id.toString()});
+                    onConfirmDeleteModalOpen();
+
+
                   }}
                     className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100">
                     <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -549,7 +592,11 @@ export default function Module({
                   <button onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    deleteQuiz(quiz1.id);
+                    // deleteQuiz(quiz1.id);
+                    setPendingDelete({type: "quiz", id: quiz1.id.toString()});
+                    onConfirmDeleteModalOpen();
+
+
                   }}
                     className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100">
                     <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -743,6 +790,18 @@ export default function Module({
                 labelPlacement="inside"
                 className="mt-4"
               />
+            </div>
+          </Modal>
+          <Modal
+            isOpen={isConfirmDeleteModalOpen}
+            onOpenChange={onConfirmDeleteModalOpenChange}
+            title="Warning"
+            actionText="Yes"
+            onAction={onConfirmDelete}
+            // onCloseModal={() => setVideoForm({ id: 0, title: "", videoUrl: "" })}
+          >
+            <div>
+              <p>Are you sure you want to delete this resource?</p>
             </div>
           </Modal>
         </div>
