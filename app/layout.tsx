@@ -27,7 +27,7 @@ export default function RootLayout({
     <html lang="en" className="">
       <body className={`${raleway.variable} ${montserrat.variable}`}>
         <Providers>
-          <div className="flex flex-col h-screen">
+          <div className="flex flex-col h-screen overflow-x-hidden">
             <Header />
             {children}
           </div>
