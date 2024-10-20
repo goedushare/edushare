@@ -80,6 +80,11 @@ const NewQuiz = ({ params }: { params: { module: string } }) => {
               newQuestions[index].correct = newCorrect;
               setQuestions(newQuestions);
             }}
+            removeQuestion={() => {
+              const newQuestions = [...questions];
+              newQuestions.splice(index, 1);
+              setQuestions(newQuestions);
+            }}
           />
         ))}
       </div>

@@ -97,6 +97,11 @@ const NewFlashcardSet = ({ params }: { params: { module: string, submodule: numb
               newFlashcards[index].definition = newDefinition;
               setFlashcards(newFlashcards);
             }}
+            removeFlashcard={() => {
+              const newFlashcards = [...flashcards];
+              newFlashcards.splice(index, 1);
+              setFlashcards(newFlashcards);
+            }}
           />
         ))}
       </div>

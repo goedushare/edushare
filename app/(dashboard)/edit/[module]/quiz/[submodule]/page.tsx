@@ -69,7 +69,7 @@ const NewQuiz = ({ params }: { params: { module: string, submodule: number } }) 
       <div className="flex flex-row justify-between">
         <h1 className="text-4xl">New Quiz</h1>
         <Button className="bg-[#0E793C] text-white" onPress={createQuiz}>
-          Create Quiz
+          Save Quiz
         </Button>
       </div>
       <div className="mt-12">
@@ -96,6 +96,11 @@ const NewQuiz = ({ params }: { params: { module: string, submodule: number } }) 
             setCorrect={(newCorrect) => {
               const newQuestions = [...questions];
               newQuestions[index].correct = newCorrect;
+              setQuestions(newQuestions);
+            }}
+            removeQuestion={() => {
+              const newQuestions = [...questions];
+              newQuestions.splice(index, 1);
               setQuestions(newQuestions);
             }}
           />
