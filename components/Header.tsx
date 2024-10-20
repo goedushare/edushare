@@ -12,8 +12,24 @@ import React from "react";
 
 import { redirect } from 'next/navigation';
 import { logout } from '@/lib/authHelpers';
+import { auth } from '@/lib/firebaseConfig';
+import { useState, useEffect } from 'react';
 
 export default function Header() {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
+  }, []);
+
+
 
   const handleLogout = async () => {
     try {
@@ -50,6 +66,7 @@ export default function Header() {
             </p>
           </Link>
         </NavbarItem>
+        {!isLoggedIn && (
         <NavbarItem>
           <Link color="foreground" href="/login">
             <p className="relative group text-base">
@@ -57,6 +74,8 @@ export default function Header() {
             </p>
           </Link>
         </NavbarItem>
+        )}
+        {!isLoggedIn && (
         <NavbarItem>
           <Link color="foreground" href="/register">
             <p className="relative group text-base">
@@ -64,11 +83,14 @@ export default function Header() {
             </p>
           </Link>
         </NavbarItem>
-        <NavbarItem>
-          <Link legacyBehavior color="foreground" href="/">
+        )}
+        {isLoggedIn && (
+          <NavbarItem>
+            <Link legacyBehavior color="foreground" href="/">
               <a onClick={handleLogout}>Logout</a>
-          </Link>
-        </NavbarItem>
+            </Link>
+          </NavbarItem>
+        )}
         {/* <NavbarItem>
           <Button
             as={Link}
