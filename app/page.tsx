@@ -7,7 +7,7 @@ import Marquee from "../components/Marquee"
 export default function Home() {
   return (
     <div className="h-full">
-      <div className="text-center flex justify-center items-center h-full w-full px-[96px]">
+      <div className="text-center flex justify-center items-center h-full w-full px-[116px]">
         <div className=" h-[100vh] w-[60%] flex flex-col justify-center items-start">
           <h1 className="text-7xl mb-4 font-montserrat font-bold text-left text-[#444444]">Welcome to NSL Forever!</h1>
           <h2 className="mb-8 font-raleway text-left text-[18px] w-[75%]">Upload your own resources, access materials from others, and collaborate to succeed together. Join our community and make studying easier than ever.
@@ -23,7 +23,7 @@ export default function Home() {
       </div>
       <Marquee></Marquee>
 
-      <div className="text-center flex flex-row justify-center items-center h-full w-full px-[96px]">
+      <div className="text-center flex flex-row justify-center items-center h-full w-full px-[116px]">
         <div className="h-full w-[40%] flex flex-col justify-center items-center">
           <Image src="/images/online-exam.png" width={400} height={400} alt="icon"></Image>
         </div>
@@ -37,7 +37,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="text-center flex flex-col justify-start items-center h-full w-full px-[96px]">
+      <div className="text-center flex flex-col justify-start items-center h-full w-full px-[116px]">
         <div className="flex flex-col justify-center items-center">
           <p className="text-[16px] font-montserrat font-bold text-[#6B7280]">Why Us</p>
           <p className="text-[32px] font-montserrat font-bold text-[#444444]">Key Features of our Platform</p>
@@ -68,11 +68,11 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="text-center flex flex-row justify-center items-center h-full w-full px-[96px]">
+      <div className="text-center flex flex-row justify-center items-center h-full w-full px-[116px]">
         <div className="h-full w-[60%] flex flex-col justify-center items-start">
           <div className="flex flex-col justify-center items-start">
             <p className="text-[16px] font-montserrat font-bold text-[#6B7280]">Easy and Fast</p>
-            <p className="text-[32px] font-montserrat font-bold text-[#444444] w-[50%]">Transform Your Learning In Three Steps</p>
+            <p className="text-[32px] font-montserrat font-bold text-[#444444] w-[80%] text-left">Transform Your Learning In Three Steps</p>
           </div>
 
           <div className="grid grid-rows-3 grid-flow-col justify-start items-start gap-x-[24px] gap-y-[16px] mt-[20px] w-full">
