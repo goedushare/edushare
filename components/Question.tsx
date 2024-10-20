@@ -1,13 +1,14 @@
 import { Button, Radio, RadioGroup } from "@nextui-org/react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { QuestionForm } from "@/interfaces";
 
 export default function Question({
   question,
   handleOptionChange,
   selected,
 }: {
-  question: Question;
+  question: QuestionForm;
   handleOptionChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   selected: string;
 }) {

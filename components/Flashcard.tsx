@@ -1,13 +1,14 @@
 import { Card, CardBody } from "@nextui-org/react";
 import { useState } from "react";
 import ReactCardFlip from "react-card-flip";
+import { FlashcardForm } from "@/interfaces";
 
 const Flashcard = ({
   flashcard,
   side,
   setSide,
 }: {
-  flashcard: Flashcard;
+  flashcard: FlashcardForm;
   side: "term" | "definition";
   setSide: (side: "term" | "definition") => void;
 }) => {

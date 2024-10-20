@@ -5,6 +5,7 @@ import Flashcard from "./Flashcard";
 import { Button } from "@nextui-org/react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import ReactCardFlip from "react-card-flip";
+import { FlashcardForm } from "@/interfaces";
 
 const Flashcards = ({
   flashcardsName,
@@ -13,7 +14,7 @@ const Flashcards = ({
 }: {
   flashcardsName: string;
   authors: string;
-  flashcards: Flashcard[];
+  flashcards: FlashcardForm[];
 }) => {
   const [side, setSide] = useState<"term" | "definition">("term");
   const [currentCard, setCurrentCard] = useState<number>(0);

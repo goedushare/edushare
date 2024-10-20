@@ -5,6 +5,7 @@ import { Button } from "@nextui-org/button";
 import Score from "./Score";
 import Question from "./Question";
 import QuizProgress from "./QuizProgress";
+import { QuestionForm } from "../interfaces";
 
 export default function Quiz({
   quizName,
@@ -12,7 +13,7 @@ export default function Quiz({
   authors,
 }: {
   quizName: string;
-  questions: Question[];
+  questions: QuestionForm[];
   authors: string;
 }) {
   let lsCurrQuestion;

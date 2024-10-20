@@ -209,7 +209,8 @@ export default function Module({
                 label="Title"
                 value={articleForm?.title || ""}
                 setValue={(newTitle) =>
-                  setArticleForm({ ...articleForm, title: newTitle })
+        
+                  setArticleForm({ ...articleForm, title: newTitle, id: articleForm?.id || 0, text: articleForm?.text || "" })
                 }
                 labelPlacement="inside"
               />
@@ -217,7 +218,7 @@ export default function Module({
                 placeholder="Article Text"
                 value={articleForm?.text || ""}
                 setValue={(newText) =>
-                  setArticleForm({ ...articleForm, text: newText })
+                  setArticleForm({ ...articleForm, text: newText, id: articleForm?.id || 0, title: articleForm?.title || "" })
                 }
                 as={Textarea}
                 className="mt-4"
@@ -237,7 +238,7 @@ export default function Module({
                 label="Title"
                 value={videoForm?.title}
                 setValue={(newTitle) =>
-                  setVideoForm({ ...videoForm, title: newTitle })
+                  setVideoForm({ ...videoForm, title: newTitle, id: videoForm?.id || 0, videoUrl: videoForm?.videoUrl || "" })
                 }
                 labelPlacement="inside"
               />
@@ -245,7 +246,7 @@ export default function Module({
                 label="Video URL"
                 value={videoForm?.videoUrl}
                 setValue={(newVideoUrl) =>
-                  setVideoForm({ ...videoForm, videoUrl: newVideoUrl })
+                  setVideoForm({ ...videoForm, videoUrl: newVideoUrl, id: videoForm?.id || 0, title: videoForm?.title || "" })
                 }
                 labelPlacement="inside"
                 className="mt-4"
