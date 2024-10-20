@@ -4,18 +4,45 @@ import NewFlashcard from "@/components/NewFlashcard";
 import TextField from "@/components/TextField";
 import { Button } from "@nextui-org/react";
 import { useState } from "react";
+import { FlashcardSetForm, FlashcardForm } from "@/interfaces";
+import { updateDocument, getDocumentById } from "@/lib/firestoreHelpers";
+import { redirect } from "next/navigation";
 
 const NewFlashcardSet = ({ params }: { params: { module: number } }) => {
   const [title, setTitle] = useState("");
-  const [flashcards, setFlashcards] = useState<Flashcard[]>([
-    { term: "", definition: "" },
-  ]);
+  const [flashcards, setFlashcards] = useState<FlashcardForm[]>([]);
 
   const addFlashcard = () => {
     setFlashcards([...flashcards, { term: "", definition: "" }]);
   };
 
-  const createFlashcardSet = () => {};
+  const createFlashcardSet = () => {
+    const defaultFlashcardSetForm: FlashcardSetForm = {
+      id: 0,
+      title: "",
+      flashcards: []
+    };
+
+    
+
+    const modules = getDocumentById('modules', params.module);
+
+    modules.then((data) => {
+      console.log(data?.flashcards);
+      const newFlashcardSet: FlashcardSetForm = {
+        ...defaultFlashcardSetForm,
+        id: data?.flashcards.length,
+        title: title,
+        flashcards: flashcards
+      };
+      updateDocument('modules', params.module, {flashcards: [...data?.flashcards, newFlashcardSet]});
+    });
+
+
+    setTitle("");
+    setFlashcards([]);
+    redirect(`/dashboard`); // doesnt work for some reason
+  };
 
   return (
     <div className="mb-12">

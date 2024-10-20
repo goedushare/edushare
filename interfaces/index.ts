@@ -10,7 +10,13 @@ export interface ArticleForm {
   text: string;
 }
 
-interface Flashcard {
+export interface FlashcardSetForm {
+  id: number;
+  title: string;
+  flashcards: FlashcardForm[];
+}
+
+export interface FlashcardForm {
   term: string;
   definition: string;
 }
@@ -22,6 +28,7 @@ export interface ModuleForm {
   articles: ArticleForm[];
   videos: VideoForm[];
   quizzes: QuizForm[];
+  flashcards: FlashcardSetForm[];
 }
 
 export interface QuizForm {

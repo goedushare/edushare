@@ -34,6 +34,7 @@ const Dashboard = () => {
       articles: [],
       quizzes: [],
       videos: [],
+      flashcards: [],
     };
 
     const newModule: ModuleForm = {

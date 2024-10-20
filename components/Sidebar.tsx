@@ -4,6 +4,7 @@ import React from "react";
 import video from "../assets/video.svg";
 import article from "../assets/article.svg";
 import quiz from "../assets/quiz.svg";
+import flashcard from "../assets/flashcard.svg";
 import { ScrollShadow } from "@nextui-org/scroll-shadow";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import modules from "../assets/modules.json";
@@ -70,6 +71,16 @@ export default function Sidebar() {
                       <img src={article.src} className="w-10 h-10" />
                       <p className="ml-4 leading-5 text-sm group-hover:text-primary-green transition-all duration-200">
                         {article1.title}
+                      </p>
+                    </div>
+                  </Link>
+                  ))}
+                  {module["flashcards"].map((flashcard1, index) => (
+                  <Link key={index} href={`/learn/${module["id"]}/flashcards/${flashcard1.id}`}>
+                    <div className="group flex flex-row items-center py-4 pl-8 w-full border-b-1 hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
+                      <img src={flashcard.src} className="w-10 h-10" />
+                      <p className="ml-4 leading-5 text-sm group-hover:text-primary-green transition-all duration-200">
+                        {flashcard1.title}
                       </p>
                     </div>
                   </Link>
