@@ -54,30 +54,36 @@ export default function Sidebar() {
                 className="px-6 py-2"
               >
                 <div className="flex flex-col">
-                  <Link href={`/learn/${module["id"]}/video`}>
+                  {module["videos"].map((video1, index) => (
+                  <Link key={index} href={`/learn/${module["id"]}/video/${video1.id}`}>
                     <div className="group flex flex-row items-center py-4 pl-8 w-full border-b-1 hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
                       <img src={video.src} className="w-10 h-10" />
                       <p className="ml-4 leading-5 text-sm group-hover:text-primary-green transition-all duration-200">
-                        {module["title"]}
+                        {video1.title}
                       </p>
                     </div>
                   </Link>
-                  <Link href={`/learn/${module["id"]}/article`}>
-                    <div className="group flex flex-row  items-center py-4 pl-8 w-full border-b-1 hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
+                  ))}
+                  {module["articles"].map((article1, index) => (
+                  <Link key={index} href={`/learn/${module["id"]}/article/${article1.id}`}>
+                    <div className="group flex flex-row items-center py-4 pl-8 w-full border-b-1 hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
                       <img src={article.src} className="w-10 h-10" />
                       <p className="ml-4 leading-5 text-sm group-hover:text-primary-green transition-all duration-200">
-                        {module["title"]}
+                        {article1.title}
                       </p>
                     </div>
                   </Link>
-                  <Link href={`/learn/${module["id"]}/quiz`}>
-                    <div className="flex flex-row items-center py-4 pl-8 w-full group hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
+                  ))}
+                  {module["quizzes"].map((quiz1, index) => (
+                  <Link key={index} href={`/learn/${module["id"]}/quiz/${quiz1.id}`}>
+                    <div className="group flex flex-row items-center py-4 pl-8 w-full border-b-1 hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
                       <img src={quiz.src} className="w-10 h-10" />
                       <p className="ml-4 leading-5 text-sm group-hover:text-primary-green transition-all duration-200">
-                        Quiz
+                        {quiz1.title}
                       </p>
                     </div>
                   </Link>
+                  ))}
                 </div>
               </AccordionItem>
             );
