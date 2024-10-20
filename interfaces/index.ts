@@ -27,10 +27,10 @@ export interface ModuleForm {
 export interface QuizForm {
   id: string;
   title: string;
-  questions: Question[];
+  questions: QuestionForm[];
 }
 
-interface Question {
+export interface QuestionForm {
   question: string;
   answers: string[];
   correct: number;

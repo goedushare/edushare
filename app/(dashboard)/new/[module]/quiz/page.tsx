@@ -4,20 +4,44 @@ import NewQuestion from "@/components/NewQuestion";
 import TextField from "@/components/TextField";
 import { Button } from "@nextui-org/react";
 import { useState } from "react";
+import { QuestionForm, QuizForm } from "@/interfaces";
+import { updateDocument, getDocumentById } from "@/lib/firestoreHelpers"; 
+import { redirect } from "next/navigation";
 
-const NewQuiz = ({ params }: { params: { module: number } }) => {
+
+const NewQuiz = ({ params }: { params: { module: string } }) => {
   const [title, setTitle] = useState("");
-  const [questions, setQuestions] = useState<Question[]>([
-    { question: "", answers: [""], correct: 0 },
-  ]);
+  const [questions, setQuestions] = useState<QuestionForm[]>([]);
 
   const addQuestion = () => {
     setQuestions([...questions, { question: "", answers: [""], correct: 0 }]);
   };
 
   const createQuiz = () => {
-    console.log("Creating quiz...");
-    console.log({ title, questions });
+
+    const defaultQuizForm: QuizForm = {
+      id : "0",
+      title: "",
+      questions: []
+    };
+
+    const newQuiz: QuizForm = {
+      ...defaultQuizForm,
+      title: title,
+      questions: questions
+    };
+
+    const modules = getDocumentById('modules', params.module);
+
+    modules.then((data) => {
+      console.log(data?.quizzes);
+      updateDocument('modules', params.module, {quizzes: [...data?.quizzes, newQuiz]});
+    });
+
+
+    setTitle("");
+    setQuestions([]);
+    redirect(`/dashboard`); // doesnt work for some reason
   };
 
   return (

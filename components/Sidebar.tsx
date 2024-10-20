@@ -1,3 +1,5 @@
+'use client';
+
 import React from "react";
 import video from "../assets/video.svg";
 import article from "../assets/article.svg";
@@ -7,9 +9,30 @@ import { Accordion, AccordionItem } from "@nextui-org/react";
 import modules from "../assets/modules.json";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ModuleForm } from "../interfaces";
+import { useEffect, useState } from "react";
+import { fetchCollectionData } from "../lib/firestoreHelpers";
+
 
 export default function Sidebar() {
   const path = usePathname();
+
+  const [modules, setModules] = useState<ModuleForm[]>([]);
+  useEffect(() => {
+    const getModules = async () => {
+      try {
+        const moduleData = await fetchCollectionData('modules'); 
+        console.log('Module Data:', moduleData); 
+        setModules(moduleData);
+        console.log('Modules:', modules);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+
+    getModules();
+  }, []);
+
   return (
     <div className="w-1/4 pt-4 flex flex-col sticky top-[10vh] h-[calc(100vh-64px)] border-r-1 border-gray-100">
       <h1 className="font-bold text-center mb-4">
@@ -22,12 +45,12 @@ export default function Sidebar() {
           className="p-0 flex flex-col w-full"
           defaultExpandedKeys={path?.split("/").slice(1) || []}
         >
-          {modules["modules"].map((module) => {
+          {modules.map((module) => {
             return (
               <AccordionItem
                 key={module["id"]}
-                aria-label={module["moduleName"]}
-                title={module["moduleName"]}
+                aria-label={module["title"]}
+                title={module["title"]}
                 className="px-6 py-2"
               >
                 <div className="flex flex-col">
@@ -35,7 +58,7 @@ export default function Sidebar() {
                     <div className="group flex flex-row items-center py-4 pl-8 w-full border-b-1 hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
                       <img src={video.src} className="w-10 h-10" />
                       <p className="ml-4 leading-5 text-sm group-hover:text-primary-green transition-all duration-200">
-                        {module["videoName"]}
+                        {module["title"]}
                       </p>
                     </div>
                   </Link>
@@ -43,7 +66,7 @@ export default function Sidebar() {
                     <div className="group flex flex-row  items-center py-4 pl-8 w-full border-b-1 hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
                       <img src={article.src} className="w-10 h-10" />
                       <p className="ml-4 leading-5 text-sm group-hover:text-primary-green transition-all duration-200">
-                        {module["articleName"]}
+                        {module["title"]}
                       </p>
                     </div>
                   </Link>

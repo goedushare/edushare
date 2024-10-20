@@ -17,6 +17,7 @@ import Modal from "./Modal";
 import { useState } from "react";
 import TextField from "./TextField";
 import { ModuleForm, ArticleForm, VideoForm, QuizForm } from "../interfaces";
+import { updateDocument } from "@/lib/firestoreHelpers";
 
 export default function Module({
   module,
@@ -26,7 +27,7 @@ export default function Module({
   isEditable?: boolean;
 }) {
 
-  console.log(module);
+  // console.log(module);
   const {
     isOpen: isArticleModalOpen,
     onOpen: onArticleModalOpen,
@@ -39,7 +40,7 @@ export default function Module({
     onOpenChange: onVideoModalOpenChange,
   } = useDisclosure();
 
-  const [currentModule, setCurrentModule] = useState(0);
+  const [currentModule, setCurrentModule] = useState("");
 
   const [videoForm, setVideoForm] = useState<VideoForm>()
 
@@ -58,13 +59,29 @@ export default function Module({
       text: articleForm?.text || "",
     };
 
-    addDocument('modules', newModule);
+    updateDocument('modules', currentModule, {articles: [...module.articles, newArticle]});
 
     onClose();
     setArticleForm({ id: "", title: "", text: "" });
+    setCurrentModule("");
   };
 
   const onCreateVideo = (onClose: () => void) => {
+
+    const defaultVideoForm: VideoForm = {
+      id : "0",
+      title: "",
+      videoUrl: ""
+    };
+
+    const newVideo: VideoForm = {
+      ...defaultVideoForm,
+      title: videoForm?.title || "",
+      videoUrl: videoForm?.videoUrl || "",
+    };
+
+    updateDocument('modules', currentModule, {videos: [...module.videos, newVideo]});
+
     onClose();
     setVideoForm({ id: "", title: "", videoUrl: "" });
   };
