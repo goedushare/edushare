@@ -4,13 +4,37 @@ import NewFlashcard from "@/components/NewFlashcard";
 import TextField from "@/components/TextField";
 import { Button } from "@nextui-org/react";
 import { useState } from "react";
-import { FlashcardSetForm, FlashcardForm } from "@/interfaces";
+import { FlashcardSetForm, FlashcardForm, ModuleForm } from "@/interfaces";
 import { updateDocument, getDocumentById } from "@/lib/firestoreHelpers";
 import { redirect } from "next/navigation";
+import { useEffect } from "react"; 
 
-const NewFlashcardSet = ({ params }: { params: { module: string } }) => {
+const NewFlashcardSet = ({ params }: { params: { module: string, submodule: number } }) => {
   const [title, setTitle] = useState("");
   const [flashcards, setFlashcards] = useState<FlashcardForm[]>([]);
+
+  const [modules, setModules] = useState<ModuleForm>();
+  useEffect(() => {
+    const getModules = async () => {
+      try {
+        const moduleData = await getDocumentById('modules', params.module); 
+        console.log('Module Data:', moduleData); 
+        if (!moduleData) return;
+        setModules(moduleData as ModuleForm);
+        console.log('Modules:', modules);
+
+        if (moduleData?.flashcards) {
+          setFlashcards(moduleData.flashcards[params.submodule]["flashcards"]);
+          setTitle(moduleData.flashcards[params.submodule]["title"]);
+        }
+
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+
+    getModules();
+  }, []);
 
 
   const addFlashcard = () => {
@@ -18,25 +42,22 @@ const NewFlashcardSet = ({ params }: { params: { module: string } }) => {
   };
 
   const createFlashcardSet = () => {
-    const defaultFlashcardSetForm: FlashcardSetForm = {
-      id: 0,
-      title: "",
-      flashcards: []
-    };
-
     
 
     const modules = getDocumentById('modules', params.module);
 
     modules.then((data) => {
       console.log(data?.flashcards);
-      const newFlashcardSet: FlashcardSetForm = {
-        ...defaultFlashcardSetForm,
-        id: data?.flashcards.length,
+      const updatedFlashcardSet: FlashcardSetForm = {
+        ...data?.flashcards[params.submodule],
         title: title,
         flashcards: flashcards
       };
-      updateDocument('modules', params.module, {flashcards: [...data?.flashcards, newFlashcardSet]});
+      console.log(flashcards)
+      let currentFlashcards = data?.flashcards;
+      currentFlashcards[params.submodule || 0] = updatedFlashcardSet;
+
+      updateDocument('modules', params.module, {flashcards: currentFlashcards});
     });
 
 
@@ -53,7 +74,7 @@ const NewFlashcardSet = ({ params }: { params: { module: string } }) => {
           className="bg-[#0E793C] text-white"
           onPress={createFlashcardSet}
         >
-          Create Set
+          Save Set
         </Button>
       </div>
       <div className="mt-12">

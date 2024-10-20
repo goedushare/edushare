@@ -21,7 +21,7 @@ import { ModuleForm, ArticleForm, VideoForm, QuizForm, FlashcardSetForm } from "
 import { updateDocument, getDocumentById, deleteDocument } from "@/lib/firestoreHelpers";
 import { doc, collection, onSnapshot } from 'firebase/firestore';
 import { db } from "@/lib/firebaseConfig";
-
+import { redirect } from "next/navigation";
 
 export default function Module({
   module,
@@ -44,11 +44,34 @@ export default function Module({
     onOpenChange: onVideoModalOpenChange,
   } = useDisclosure();
 
+  const {
+    isOpen: isEditModuleModalOpen,
+    onOpen: onEditModuleModalOpen,
+    onOpenChange: onEditModuleModalOpenChange,
+  } = useDisclosure();
+
+  const {
+    isOpen: isEditArticleModalOpen,
+    onOpen: onEditArticleModalOpen,
+    onOpenChange: onEditArticleModalOpenChange,
+  } = useDisclosure();
+
+  const {
+    isOpen: isEditVideoModalOpen,
+    onOpen: onEditVideoModalOpen,
+    onOpenChange: onEditVideoModalOpenChange,
+  } = useDisclosure();
+
+
+
   const [currentModule, setCurrentModule] = useState("");
 
   const [videoForm, setVideoForm] = useState<VideoForm>()
 
   const [articleForm, setArticleForm] = useState<ArticleForm>()
+
+  const [moduleName, setModuleName] = useState("");
+  const [authors, setAuthors] = useState("");
 
   const [videos, setVideos] = useState(module["videos"]);
   const [articles, setArticles] = useState(module["articles"]);
@@ -82,7 +105,6 @@ export default function Module({
       }
     });
 
-    // Cleanup function to unsubscribe from the listener when component unmounts
     return () => unsubscribe();
   }, [module["id"]]);
 
@@ -171,6 +193,48 @@ export default function Module({
     setCurrentModule("");
   };
 
+  const onEditArticle = (onClose: () => void) => {
+    console.log("Edit Article");
+
+    const modules = getDocumentById('modules', currentModule);
+
+    modules.then((data) => {
+      const updatedArticle: ArticleForm = {
+        ...data?.articles[articleForm?.id || 0],
+        title: articleForm?.title || "",
+        text: articleForm?.text || "",
+      };
+      let currentArticles = data?.articles;
+      currentArticles[articleForm?.id || 0] = updatedArticle;
+      updateDocument('modules', currentModule, {articles: currentArticles});
+    });
+
+    onClose();
+    setArticleForm({ id: 0, title: "", text: "" });
+    setCurrentModule("");
+  }
+
+  const onEditVideo = (onClose: () => void) => {
+    console.log("Edit Video");
+
+    const modules = getDocumentById('modules', currentModule);
+
+    modules.then((data) => {
+      const updatedVideo: VideoForm = {
+        ...data?.videos[videoForm?.id || 0],
+        title: videoForm?.title || "",
+        videoUrl: videoForm?.videoUrl || "",
+      };
+      let currentVideos = data?.videos;
+      currentVideos[videoForm?.id || 0] = updatedVideo;
+      updateDocument('modules', currentModule, {videos: currentVideos});
+    });
+
+    onClose();
+    setVideoForm({ id: 0, title: "", videoUrl: "" });
+    setCurrentModule("");
+  }
+
   const onCreateVideo = (onClose: () => void) => {
 
     const defaultVideoForm: VideoForm = {
@@ -197,32 +261,83 @@ export default function Module({
     setCurrentModule("");
   };
 
+
+  const onCreateEditModule = (onClose: () => void) => {
+    console.log("Edit Module"); 
+    const modules = getDocumentById('modules', module["id"]);
+
+    modules.then((data) => {
+      const updatedModule = {
+        ...data,
+        title: moduleName,
+        authors: authors,
+      };
+      updateDocument('modules', module["id"], updatedModule);
+    });
+
+
+    onClose();
+    // setArticleForm({ id: 0, title: "", text: "" });
+    setCurrentModule("");
+    setModuleName("");
+    setAuthors("");
+  };
+
   return (
     // TODO: Fix positioning of module component (causes page to shift in x-axis)
     <div id={`${module["id"]}moduleDiv`} className="relative bg-green-50 rounded-lg p-8 mt-8">
-      
-      <button
-        className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition-all duration-200"
-        onClick={() => {
-            // document.getElementById(`${module["id"]}moduleDiv`)?.remove();
-            deleteDocument('modules', module["id"]);
-        }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-6 h-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+      <div className="absolute top-4 right-4">
+        <button
+          className="text-gray-500 hover:text-blue-500 transition-all duration-200"
+          onClick={() => {
+              // document.getElementById(`${module["id"]}moduleDiv`)?.remove();
+              // deleteDocument('modules', module["id"]);
+              setCurrentModule(module["id"]);
+              setModuleName(module["title"]);
+              setAuthors(module["authors"]);
+              onEditModuleModalOpen();
+          }}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-6 h-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M16 4l4 4-12 12H4v-4L16 4z"
+            />
+          </svg>
+        </button>
+        <button
+          className="text-gray-500 hover:text-red-500 transition-all duration-200"
+          onClick={() => {
+              // document.getElementById(`${module["id"]}moduleDiv`)?.remove();
+              deleteDocument('modules', module["id"]);
+          }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-6 h-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+      
+      
       <div>
         <h2 className="text-2xl">{module["title"]}</h2>
         <p>By: {module["authors"]}</p>
@@ -240,17 +355,46 @@ export default function Module({
                   </p>
                 </div>
                 
-                <button onClick={(e) => {
-                  console.log(module["videos"])
-                  e.preventDefault();
-                  e.stopPropagation();
-                  deleteVideo(video1.id);
-                }}
-                  className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
+                <div>
+                  <button
+                    className="invisible group-hover:visible text-gray-500 hover:text-blue-500 transition-all duration-100"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setCurrentModule(module["id"]);
+
+                        setVideoForm({ id: video1.id, title: video1.title, videoUrl: video1.videoUrl });
+
+                        onEditVideoModalOpen();
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-6 h-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M16 4l4 4-12 12H4v-4L16 4z"
+                      />
+                    </svg>
+                  </button>
+                  <button onClick={(e) => {
+                    console.log(module["videos"])
+                    e.preventDefault();
+                    e.stopPropagation();
+                    deleteVideo(video1.id);
+                  }}
+                    className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </Link>
             ))}
@@ -264,16 +408,46 @@ export default function Module({
                   </p>
                 </div>
                 
-                <button onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  deleteArticle(article1.id);
-                }}
-                  className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
+                <div>
+                  <button
+                    className="invisible group-hover:visible text-gray-500 hover:text-blue-500 transition-all duration-100"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setCurrentModule(module["id"]);
+
+                        setArticleForm({ id: article1.id, title: article1.title, text: article1.text });
+
+                        onEditArticleModalOpen();
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-6 h-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M16 4l4 4-12 12H4v-4L16 4z"
+                      />
+                    </svg>
+                  </button>
+                  <button onClick={(e) => {
+                    console.log(module["videos"])
+                    e.preventDefault();
+                    e.stopPropagation();
+                    deleteArticle(article1.id);
+                  }}
+                    className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </Link>
             ))}
@@ -287,16 +461,40 @@ export default function Module({
                   </p>
                 </div>
                 
-                <button onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  deleteFlashcards(flashcard1.id);
-                }}
-                  className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
+                <div>
+                  <Link href={`/edit/${module["id"]}/flashcard/${flashcard1.id}`}>
+                    <button
+                      className="invisible group-hover:visible text-gray-500 hover:text-blue-500 transition-all duration-100"
+                     
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-6 h-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M16 4l4 4-12 12H4v-4L16 4z"
+                        />
+                      </svg>
+                    </button>
+                  </Link>
+                  <button onClick={(e) => {
+                    console.log(module["videos"])
+                    e.preventDefault();
+                    e.stopPropagation();
+                    deleteFlashcards(flashcard1.id);
+                  }}
+                    className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </Link>
             ))}
@@ -314,16 +512,39 @@ export default function Module({
                   </p>
                 </div>
                 
-                <button onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  deleteQuiz(quiz1.id);
-                }}
-                  className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
+                <div>
+                  <Link href={`/edit/${module["id"]}/quiz/${quiz1.id}`}>
+                    <button
+                      className="invisible group-hover:visible text-gray-500 hover:text-blue-500 transition-all duration-100"
+                     
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-6 h-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M16 4l4 4-12 12H4v-4L16 4z"
+                        />
+                      </svg>
+                    </button>
+                  </Link>
+                  <button onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    deleteQuiz(quiz1.id);
+                  }}
+                    className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </Link>
           ))}
@@ -371,7 +592,7 @@ export default function Module({
             title="Add Article"
             actionText="Create"
             onAction={onCreateArticle}
-            onCloseModal={() => setArticleForm({ id: 9, title: "", text: "" })}
+            onCloseModal={() => setArticleForm({ id: 0, title: "", text: "" })}
           >
             <div>
               <TextField
@@ -400,6 +621,96 @@ export default function Module({
             title="Add Video"
             actionText="Create"
             onAction={onCreateVideo}
+            onCloseModal={() => setVideoForm({ id: 0, title: "", videoUrl: "" })}
+          >
+            <div>
+              <TextField
+                label="Title"
+                value={videoForm?.title}
+                setValue={(newTitle) =>
+                  setVideoForm({ ...videoForm, title: newTitle, id: videoForm?.id || 0, videoUrl: videoForm?.videoUrl || "" })
+                }
+                labelPlacement="inside"
+              />
+              <TextField
+                label="Video URL"
+                value={videoForm?.videoUrl}
+                setValue={(newVideoUrl) =>
+                  setVideoForm({ ...videoForm, videoUrl: newVideoUrl, id: videoForm?.id || 0, title: videoForm?.title || "" })
+                }
+                labelPlacement="inside"
+                className="mt-4"
+              />
+            </div>
+          </Modal>
+          <Modal
+            isOpen={isEditModuleModalOpen}
+            onOpenChange={onEditModuleModalOpenChange}
+            title="Edit Module"
+            actionText="Save"
+            onAction={onCreateEditModule}
+            onCloseModal={() => {
+              setAuthors("")
+              setModuleName("")
+            }}
+          >
+            <div>
+              <TextField
+                label="Title"
+                value={moduleName || ""}
+                setValue={(newTitle) =>
+                  setModuleName(newTitle)
+                  // setArticleForm({ ...articleForm, title: newTitle, id: articleForm?.id || 0, text: articleForm?.text || "" })
+                }
+                labelPlacement="inside"
+              />
+              <TextField
+                label="Authors"
+                value={authors || ""}
+                setValue={(newAuthors) =>
+                  setAuthors(newAuthors)
+                  // setVideoForm({ ...videoForm, videoUrl: newVideoUrl, id: videoForm?.id || 0, title: videoForm?.title || "" })
+                }
+                labelPlacement="inside"
+                className="mt-4"
+              />
+            </div>
+          </Modal>
+          <Modal
+            isOpen={isEditArticleModalOpen}
+            onOpenChange={onEditArticleModalOpenChange}
+            title="Edit Article"
+            actionText="Save"
+            onAction={onEditArticle} 
+            onCloseModal={() => setArticleForm({ id: 0, title: "", text: "" })}
+          >
+            <div>
+              <TextField
+                label="Title"
+                value={articleForm?.title || ""}
+                setValue={(newTitle) =>
+        
+                  setArticleForm({ ...articleForm, title: newTitle, id: articleForm?.id || 0, text: articleForm?.text || "" })
+                }
+                labelPlacement="inside"
+              />
+              <TextField
+                placeholder="Article Text"
+                value={articleForm?.text || ""}
+                setValue={(newText) =>
+                  setArticleForm({ ...articleForm, text: newText, id: articleForm?.id || 0, title: articleForm?.title || "" })
+                }
+                as={Textarea}
+                className="mt-4"
+              />
+            </div>
+          </Modal>
+          <Modal
+            isOpen={isEditVideoModalOpen}
+            onOpenChange={onEditVideoModalOpenChange}
+            title="Edit Video"
+            actionText="Save"
+            onAction={onEditVideo}
             onCloseModal={() => setVideoForm({ id: 0, title: "", videoUrl: "" })}
           >
             <div>
