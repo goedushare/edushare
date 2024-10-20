@@ -10,6 +10,8 @@ import withAuth from "@/lib/withAuth";
 import { useEffect } from "react";
 import { addDocument, fetchCollectionData } from "@/lib/firestoreHelpers";
 import { ModuleForm } from "@/interfaces";
+import { collection, onSnapshot } from 'firebase/firestore';
+import { db } from '@/lib/firebaseConfig';
 
 
 
@@ -47,6 +49,7 @@ const Dashboard = () => {
 
     onClose();
     setModuleName("");
+    setAuthors("");
   };
 
   useEffect(() => {
@@ -57,12 +60,25 @@ const Dashboard = () => {
         setModules(moduleData);
         console.log('Modules:', modules);
       } catch (error) {
-        console.error('Error fetching posts:', error);
+        console.error('Error fetching modules:', error);
       }
     };
 
     getModules();
   }, []);
+
+  useEffect(() => {
+    // Set up a real-time listener for the 'modules' collection
+    const unsubscribe = onSnapshot(collection(db, 'modules'), (snapshot) => {
+      const modulesData = snapshot.docs.map((doc) => (doc.data() as ModuleForm));
+      
+      setModules(modulesData);
+    });
+
+    // Cleanup the listener when the component unmounts
+    return () => unsubscribe();
+  }, []);
+
 
   const [moduleName, setModuleName] = useState("");
   const [authors, setAuthors] = useState("");

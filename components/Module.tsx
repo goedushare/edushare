@@ -15,11 +15,12 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import Modal from "./Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TextField from "./TextField";
-import { ModuleForm, ArticleForm, VideoForm, QuizForm } from "../interfaces";
-import { updateDocument, getDocumentById } from "@/lib/firestoreHelpers";
-
+import { ModuleForm, ArticleForm, VideoForm, QuizForm, FlashcardSetForm } from "../interfaces";
+import { updateDocument, getDocumentById, deleteDocument } from "@/lib/firestoreHelpers";
+import { doc, collection, onSnapshot } from 'firebase/firestore';
+import { db } from "@/lib/firebaseConfig";
 
 
 export default function Module({
@@ -48,6 +49,99 @@ export default function Module({
   const [videoForm, setVideoForm] = useState<VideoForm>()
 
   const [articleForm, setArticleForm] = useState<ArticleForm>()
+
+  const [videos, setVideos] = useState(module["videos"]);
+  const [articles, setArticles] = useState(module["articles"]);
+  const [flashcards, setFlashcard] = useState(module["flashcards"]);
+  const [quizzes, setQuizzes] = useState(module["quizzes"]);
+
+
+
+  // useEffect(() => {
+  //   const fetchModule = async () => {
+  //     const fetchedModule = await getDocumentById('modules', module["id"]);
+  //     setVideos(fetchedModule?.videos || []);
+  //   };
+    
+  //   fetchModule();
+  // }, [module["id"]]);
+
+  useEffect(() => {
+    const moduleRef = doc(db, 'modules', module["id"]);
+
+    const unsubscribe = onSnapshot(moduleRef, (doc) => {
+      if (doc.exists()) {
+        const updatedModule = doc.data();
+        setVideos(updatedModule?.videos || []);
+        setArticles(updatedModule?.articles || []);
+        setFlashcard(updatedModule?.flashcards || []);
+        setQuizzes(updatedModule?.quizzes || []);
+      } else {
+        console.error("Document does not exist");
+        // document.getElementById(`${module["id"]}moduleDiv`)?.remove();
+      }
+    });
+
+    // Cleanup function to unsubscribe from the listener when component unmounts
+    return () => unsubscribe();
+  }, [module["id"]]);
+
+  const deleteVideo = async (videoId: number) => {
+    try {
+
+      const modules = getDocumentById('modules', module["id"]);
+      modules.then((data) => {
+        const newVideos: VideoForm[] = data?.videos.filter((video: VideoForm) => video.id !== videoId);
+        updateDocument('modules', module["id"], {videos: newVideos});
+      });
+
+    } catch (error) {
+      console.error("Error deleting video: ", error);
+    }
+  };
+
+  const deleteArticle = async (articleId: number) => {
+    try {
+
+      const modules = getDocumentById('modules', module["id"]);
+      modules.then((data) => {
+        const newArticles: ArticleForm[] = data?.articles.filter((article: ArticleForm) => article.id !== articleId);
+        updateDocument('modules', module["id"], {articles: newArticles});
+      });
+
+    } catch (error) {
+      console.error("Error deleting article: ", error);
+    }
+  };
+
+  const deleteFlashcards = async (flashcardId: number) => {
+    try {
+
+      const modules = getDocumentById('modules', module["id"]);
+      modules.then((data) => {
+        const newFlashcards: FlashcardSetForm[] = data?.flashcards.filter((flashcard: FlashcardSetForm) => flashcard.id !== flashcardId);
+        updateDocument('modules', module["id"], {flashcards: newFlashcards});
+      });
+
+    } catch (error) {
+      console.error("Error deleting article: ", error);
+    }
+  };
+
+  const deleteQuiz = async (quizId: number) => {
+    try {
+
+      const modules = getDocumentById('modules', module["id"]);
+      modules.then((data) => {
+        const newQuizzes: QuizForm[] = data?.quizzes.filter((quiz: QuizForm) => quiz.id !== quizId);
+        updateDocument('modules', module["id"], {quizzes: newQuizzes});
+      });
+
+    } catch (error) {
+      console.error("Error deleting article: ", error);
+    }
+  };
+
 
   const onCreateArticle = (onClose: () => void) => {
     const defaultArticleForm: ArticleForm = {
@@ -105,7 +199,30 @@ export default function Module({
 
   return (
     // TODO: Fix positioning of module component (causes page to shift in x-axis)
-    <div className="bg-green-50 rounded-lg p-8 mt-8">
+    <div id={`${module["id"]}moduleDiv`} className="relative bg-green-50 rounded-lg p-8 mt-8">
+      
+      <button
+        className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition-all duration-200"
+        onClick={() => {
+            // document.getElementById(`${module["id"]}moduleDiv`)?.remove();
+            deleteDocument('modules', module["id"]);
+        }}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-6 h-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
       <div>
         <h2 className="text-2xl">{module["title"]}</h2>
         <p>By: {module["authors"]}</p>
@@ -113,50 +230,102 @@ export default function Module({
       <div className="flex flex-row mt-4 gap-12">
         <div className="flex flex-col w-full">
           <h3 className="font-semibold">Learn</h3>
-          {module["videos"].map((video1, index) => (
-          <Link key={index} href={`/learn/${module["id"]}/video/${video1.id}`}>
-            <div className="group flex flex-row items-center py-4 pl-8 w-full border-b-1 hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
-              <img src={video.src} className="w-10 h-10" />
-              <p className="ml-4 leading-5 text-sm group-hover:text-primary-green transition-all duration-200">
-                {video1.title}
-              </p>
-            </div>
-          </Link>
-          ))}
-          {module["articles"].map((article1, index) => (
-          <Link key={index} href={`/learn/${module["id"]}/article/${article1.id}`}>
-            <div className="group flex flex-row items-center py-4 pl-8 w-full border-b-1 hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
-              <img src={article.src} className="w-10 h-10" />
-              <p className="ml-4 leading-5 text-sm group-hover:text-primary-green transition-all duration-200">
-                {article1.title}
-              </p>
-            </div>
-          </Link>
-          ))}
-          {module["flashcards"].map((flashcard1, index) => (
-          <Link key={index} href={`/learn/${module["id"]}/flashcards/${flashcard1.id}`}>
-            <div className="group flex flex-row items-center py-4 pl-8 w-full border-b-1 hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
-              <img src={flashcard.src} className="w-10 h-10" />
-              <p className="ml-4 leading-5 text-sm group-hover:text-primary-green transition-all duration-200">
-                {flashcard1.title}
-              </p>
-            </div>
-          </Link>
-          ))}
+            {videos.map((video1, index) => (
+            <Link key={index} href={`/learn/${module["id"]}/video/${video1.id}`}>
+              <div className="group flex items-center justify-between py-4 pl-8 pr-4 w-full border-b hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
+                <div className="flex items-center">
+                  <img src={video.src} className="w-10 h-10" />
+                  <p className="ml-4 text-sm leading-5 transition-all duration-200 group-hover:text-primary-green">
+                    {video1.title}
+                  </p>
+                </div>
+                
+                <button onClick={(e) => {
+                  console.log(module["videos"])
+                  e.preventDefault();
+                  e.stopPropagation();
+                  deleteVideo(video1.id);
+                }}
+                  className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </Link>
+            ))}
+            {articles.map((article1, index) => (
+            <Link key={index} href={`/learn/${module["id"]}/article/${article1.id}`}>
+              <div className="group flex items-center justify-between py-4 pl-8 pr-4 w-full border-b hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
+                <div className="flex items-center">
+                  <img src={article.src} className="w-10 h-10" />
+                  <p className="ml-4 text-sm leading-5 transition-all duration-200 group-hover:text-primary-green">
+                    {article1.title}
+                  </p>
+                </div>
+                
+                <button onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  deleteArticle(article1.id);
+                }}
+                  className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </Link>
+            ))}
+            {flashcards.map((flashcard1, index) => (
+            <Link key={index} href={`/learn/${module["id"]}/flashcards/${flashcard1.id}`}>
+              <div className="group flex items-center justify-between py-4 pl-8 pr-4 w-full border-b hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
+                <div className="flex items-center">
+                  <img src={flashcard.src} className="w-10 h-10" />
+                  <p className="ml-4 text-sm leading-5 transition-all duration-200 group-hover:text-primary-green">
+                    {flashcard1.title}
+                  </p>
+                </div>
+                
+                <button onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  deleteFlashcards(flashcard1.id);
+                }}
+                  className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </Link>
+            ))}
         
         </div>
         <div className="flex flex-col w-full">
           <h3 className="font-semibold">Practice</h3>
-          
-          {module["quizzes"].map((quiz1, index) => (
-          <Link key={index} href={`/learn/${module["id"]}/quiz/${quiz1.id}`}>
-            <div className="group flex flex-row items-center py-4 pl-8 w-full border-b-1 hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
-              <img src={quiz.src} className="w-10 h-10" />
-              <p className="ml-4 leading-5 text-sm group-hover:text-primary-green transition-all duration-200">
-                {quiz1.title}
-              </p>
-            </div>
-          </Link>
+          {quizzes.map((quiz1, index) => (
+            <Link key={index} href={`/learn/${module["id"]}/quiz/${quiz1.id}`}>
+              <div className="group flex items-center justify-between py-4 pl-8 pr-4 w-full border-b hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
+                <div className="flex items-center">
+                  <img src={quiz.src} className="w-10 h-10" />
+                  <p className="ml-4 text-sm leading-5 transition-all duration-200 group-hover:text-primary-green">
+                    {quiz1.title}
+                  </p>
+                </div>
+                
+                <button onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  deleteQuiz(quiz1.id);
+                }}
+                  className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </Link>
           ))}
         </div>
       </div>
