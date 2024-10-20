@@ -30,7 +30,7 @@ export default function Home() {
         
         <div className="h-full w-[60%] flex flex-col justify-center items-start">
           <p className="w-full text-left font-montserrat font-bold text-[32px] text-[#444444]">Join our collaborative learning platform!</p>
-          <p className="text-left font-raleway text-[16px] text-[#6B7280] w-[80%] mt-[10px]">Our platform is designed to make studying more accessible and collaborative. Whether you're preparing for exams or tackling a tough subject, you can find a wealth of student-shared resources to support your learning. Together, we make learning easier and more engaging.</p>
+          <p className="text-left font-raleway text-[16px] text-[#6B7280] w-[80%] mt-[10px]">Our platform is designed to make studying more accessible and collaborative. Whether you&apos;re preparing for exams or tackling a tough subject, you can find a wealth of student-shared resources to support your learning. Together, we make learning easier and more engaging.</p>
           <Button className="bg-[white] text-[#0E793C] border-1 border-[#0E793C] font-raleway font-bold mt-[12px]" as={Link} href="/learn">
             Start Learning  →
           </Button>
@@ -72,7 +72,7 @@ export default function Home() {
         <div className="h-full w-[60%] flex flex-col justify-center items-start">
           <div className="flex flex-col justify-center items-start">
             <p className="text-[16px] font-montserrat font-bold text-[#6B7280]">Easy and Fast</p>
-            <p className="text-[32px] font-montserrat font-bold text-[#444444]">Transform Your Learning In Three Steps</p>
+            <p className="text-[32px] font-montserrat font-bold text-[#444444] w-[50%]">Transform Your Learning In Three Steps</p>
           </div>
 
           <div className="grid grid-rows-3 grid-flow-col justify-start items-start gap-x-[24px] gap-y-[16px] mt-[20px] w-full">

@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@convex-dev/convex-lucia-auth": "^0.0.5",
+    "@firebase/app": "^0.10.13",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@nextui-org/react": "^2.4.8",
     "axios": "^1.7.7",
