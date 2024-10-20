@@ -114,6 +114,9 @@ export default function Module({
       const modules = getDocumentById('modules', module["id"]);
       modules.then((data) => {
         const newVideos: VideoForm[] = data?.videos.filter((video: VideoForm) => video.id !== videoId);
+        for (let i = 0; i < newVideos.length; i++) {
+          newVideos[i].id = i;
+        }
         updateDocument('modules', module["id"], {videos: newVideos});
       });
 
@@ -128,6 +131,9 @@ export default function Module({
       const modules = getDocumentById('modules', module["id"]);
       modules.then((data) => {
         const newArticles: ArticleForm[] = data?.articles.filter((article: ArticleForm) => article.id !== articleId);
+        for (let i = 0; i < newArticles.length; i++) {
+          newArticles[i].id = i;
+        }
         updateDocument('modules', module["id"], {articles: newArticles});
       });
 
@@ -142,6 +148,9 @@ export default function Module({
       const modules = getDocumentById('modules', module["id"]);
       modules.then((data) => {
         const newFlashcards: FlashcardSetForm[] = data?.flashcards.filter((flashcard: FlashcardSetForm) => flashcard.id !== flashcardId);
+        for (let i = 0; i < newFlashcards.length; i++) {
+          newFlashcards[i].id = i;
+        }
         updateDocument('modules', module["id"], {flashcards: newFlashcards});
       });
 
@@ -156,6 +165,9 @@ export default function Module({
       const modules = getDocumentById('modules', module["id"]);
       modules.then((data) => {
         const newQuizzes: QuizForm[] = data?.quizzes.filter((quiz: QuizForm) => quiz.id !== quizId);
+        for (let i = 0; i < newQuizzes.length; i++) {
+          newQuizzes[i].id = i;
+        }
         updateDocument('modules', module["id"], {quizzes: newQuizzes});
       });
 
