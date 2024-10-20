@@ -2,7 +2,7 @@ name: Deploy to Vercel
 on:
   # push:
   #   branches:
-  #     - main
+  #     - pre-firebase
   # pull_request_target:
   workflow_dispatch
 
@@ -42,7 +42,7 @@ jobs:
       - name: production or not
         id: prod_or_not
         run: |
-          if [ "$REF" == 'refs/heads/main' ]
+          if [ "$REF" == 'refs/heads/pre-firebase' ]
           then
               echo "vercel-args=--prod --prebuilt" >> $GITHUB_OUTPUT
           else
