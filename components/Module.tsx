@@ -327,7 +327,7 @@ export default function Module({
   return (
     // TODO: Fix positioning of module component (causes page to shift in x-axis)
     <div id={`${module["id"]}moduleDiv`} className="relative bg-green-50 rounded-lg p-8 mt-8">
-      <div className="absolute top-4 right-4">
+      {isEditable && (<div className="absolute top-4 right-4">
         <button
           className="text-gray-500 hover:text-blue-500 transition-all duration-200"
           onClick={() => {
@@ -380,6 +380,7 @@ export default function Module({
           </svg>
         </button>
       </div>
+      )}
       
       
       <div>
@@ -399,7 +400,7 @@ export default function Module({
                   </p>
                 </div>
                 
-                <div>
+                {isEditable && (<div>
                   <button
                     className="invisible group-hover:visible text-gray-500 hover:text-blue-500 transition-all duration-100"
                     onClick={(e) => {
@@ -442,6 +443,7 @@ export default function Module({
                     </svg>
                   </button>
                 </div>
+                )}
               </div>
             </Link>
             ))}
@@ -455,7 +457,7 @@ export default function Module({
                   </p>
                 </div>
                 
-                <div>
+                {isEditable && (<div>
                   <button
                     className="invisible group-hover:visible text-gray-500 hover:text-blue-500 transition-all duration-100"
                     onClick={(e) => {
@@ -499,6 +501,7 @@ export default function Module({
                     </svg>
                   </button>
                 </div>
+                )}
               </div>
             </Link>
             ))}
@@ -512,7 +515,7 @@ export default function Module({
                   </p>
                 </div>
                 
-                <div>
+                {isEditable && (<div>
                   <Link href={`/edit/${module["id"]}/flashcard/${flashcard1.id}`}>
                     <button
                       className="invisible group-hover:visible text-gray-500 hover:text-blue-500 transition-all duration-100"
@@ -550,6 +553,7 @@ export default function Module({
                     </svg>
                   </button>
                 </div>
+                )}
               </div>
             </Link>
             ))}
@@ -567,7 +571,7 @@ export default function Module({
                   </p>
                 </div>
                 
-                <div>
+                {isEditable && (<div>
                   <Link href={`/edit/${module["id"]}/quiz/${quiz1.id}`}>
                     <button
                       className="invisible group-hover:visible text-gray-500 hover:text-blue-500 transition-all duration-100"
@@ -604,6 +608,7 @@ export default function Module({
                     </svg>
                   </button>
                 </div>
+                )}
               </div>
             </Link>
           ))}
