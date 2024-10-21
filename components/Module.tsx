@@ -22,6 +22,7 @@ import { updateDocument, getDocumentById, deleteDocument } from "@/lib/firestore
 import { doc, collection, onSnapshot } from 'firebase/firestore';
 import { db } from "@/lib/firebaseConfig";
 import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/lib/authHelpers";
 
 export default function Module({
   module,
@@ -215,6 +216,7 @@ export default function Module({
 
   const onEditArticle = (onClose: () => void) => {
     console.log("Edit Article");
+    // console.log(currentUser())
 
     const modules = getDocumentById('modules', currentModule);
 

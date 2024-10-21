@@ -12,6 +12,8 @@ import { addDocument, fetchCollectionData } from "@/lib/firestoreHelpers";
 import { ModuleForm } from "@/interfaces";
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '@/lib/firebaseConfig';
+import { getCurrentUser } from "@/lib/authHelpers";
+
 
 const Dashboard = () => {
   
@@ -32,12 +34,14 @@ const Dashboard = () => {
       quizzes: [],
       videos: [],
       flashcards: [],
+      owner: ""
     };
 
     const newModule: ModuleForm = {
       ...defaultModuleForm,
       title: moduleName,
       authors: authors,
+      owner: getCurrentUser()?.uid || ""
     };
 
     addDocument('modules', newModule);
@@ -112,7 +116,7 @@ const Dashboard = () => {
       </div>
       <div className="mt-4 mb-8">
         {modules.map((module) => {
-          return <Module module={module} isEditable={true} key={module.id} />;
+          return module.owner === getCurrentUser()?.uid &&  <Module module={module} isEditable={true} key={module.id} />;
         })}
       </div>
     </div>
