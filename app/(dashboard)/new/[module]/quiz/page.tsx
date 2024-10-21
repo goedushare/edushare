@@ -6,12 +6,13 @@ import { Button } from "@nextui-org/react";
 import { useState } from "react";
 import { QuestionForm, QuizForm } from "@/interfaces";
 import { updateDocument, getDocumentById } from "@/lib/firestoreHelpers"; 
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 
 const NewQuiz = ({ params }: { params: { module: string } }) => {
   const [title, setTitle] = useState("");
-  const [questions, setQuestions] = useState<QuestionForm[]>([]);
+  const [questions, setQuestions] = useState<QuestionForm[]>([])
+  const router = useRouter();
 
   const addQuestion = () => {
     setQuestions([...questions, { question: "", answers: [""], correct: 0 }]);
@@ -43,7 +44,7 @@ const NewQuiz = ({ params }: { params: { module: string } }) => {
 
     setTitle("");
     setQuestions([]);
-    redirect(`/dashboard`); // doesnt work for some reason
+    router.push(`/dashboard`);
   };
 
   return (

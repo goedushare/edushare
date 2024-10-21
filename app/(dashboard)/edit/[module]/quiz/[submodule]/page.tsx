@@ -6,13 +6,15 @@ import { Button } from "@nextui-org/react";
 import { useState } from "react";
 import { QuestionForm, QuizForm, ModuleForm } from "@/interfaces";
 import { updateDocument, getDocumentById } from "@/lib/firestoreHelpers"; 
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 
 const NewQuiz = ({ params }: { params: { module: string, submodule: number } }) => {
   const [title, setTitle] = useState("");
   const [questions, setQuestions] = useState<QuestionForm[]>([]);
+
+  const router = useRouter();
 
 
   const [modules, setModules] = useState<ModuleForm>();
@@ -61,13 +63,13 @@ const NewQuiz = ({ params }: { params: { module: string, submodule: number } }) 
 
     setTitle("");
     setQuestions([]);
-    redirect(`/dashboard`); // doesnt work for some reason
+    router.push(`/dashboard`);
   };
 
   return (
     <div className="mb-12">
       <div className="flex flex-row justify-between">
-        <h1 className="text-4xl">New Quiz</h1>
+        <h1 className="text-4xl">Edit Quiz</h1>
         <Button className="bg-[#0E793C] text-white" onPress={createQuiz}>
           Save Quiz
         </Button>

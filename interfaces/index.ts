@@ -25,6 +25,7 @@ export interface ModuleForm {
   id: string;
   title: string;
   authors: string;
+  owner: string;
   articles: ArticleForm[];
   videos: VideoForm[];
   quizzes: QuizForm[];
