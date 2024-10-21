@@ -68,28 +68,40 @@ export default function Header() {
         </NavbarItem>
         {!isLoggedIn && (
         <NavbarItem>
-          <Link color="foreground" href="/login">
-            <p className="relative group text-base">
-              <span>Login</span>
-            </p>
-          </Link>
+          <Button
+            as={Link}
+            className="bg-[#0E793C] text-white font-semibold"
+            href="/login"
+            variant="flat"
+          >
+            Login
+          </Button>
         </NavbarItem>
         )}
         {!isLoggedIn && (
         <NavbarItem>
-          <Link color="foreground" href="/register">
-            <p className="relative group text-base">
-              <span>Register</span>
-            </p>
-          </Link>
+          <Button
+            as={Link}
+            className="bg-white text-[#0E793C] border-1 border-[#0E793C] font-semibold"
+            href="/register"
+            variant="flat"
+          >
+            Register
+          </Button>
         </NavbarItem>
         )}
         {isLoggedIn && (
           <NavbarItem>
-            <Link legacyBehavior color="foreground" href="/">
-              <a onClick={handleLogout}>Logout</a>
-            </Link>
-          </NavbarItem>
+          <Button
+            as={Link}
+            className="bg-[#0E793C] text-white font-semibold"
+            href="/"
+            variant="flat"
+            onClick={handleLogout}
+          >
+            Logout
+          </Button>
+        </NavbarItem>
         )}
         {/* <NavbarItem>
           <Button

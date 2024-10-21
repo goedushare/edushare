@@ -27,7 +27,7 @@ const Register = () => {
 
   return (
     <div className="h-screen flex flex-row justify-center">
-      <div className="w-96 h-96 mt-24 px-4 py-4 bg-gray-50 rounded-lg shadow-md">
+      <div className="w-96 h-96 mt-24 p-8 bg-gray-50 rounded-lg shadow-md">
         <h1 className="text-3xl font-bold">Register</h1>
         <form
           className="flex flex-col h-5/6 mt-4"
@@ -55,12 +55,12 @@ const Register = () => {
           />
           <div className="basis-1/2 flex flex-col justify-end">
             <div className="flex flex-row justify-between items-end">
-              <Button onClick={handleRegister} type="submit" className="bg-[#0E793C] text-white">
+              <Button onClick={handleRegister} type="submit" className="bg-[#0E793C] text-white font-semibold">
                 Register
               </Button>
               <p>
                 <Link href="/login" className="hover:underline text-[#0E793C]">
-                  Log In Here
+                  Login Here
                 </Link>
               </p>
             </div>

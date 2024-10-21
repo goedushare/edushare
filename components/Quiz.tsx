@@ -100,7 +100,7 @@ export default function Quiz({
   return (
     <div className="w-3/4 h-[calc(100vh-64px)] overflow-y-scroll overflow-scroll flex flex-col">
       <div className="flex flex-col items-center">
-        <h1 className="font-semibold text-3xl mt-6">{quizName}</h1>
+        <h1 className="font-semibold text-3xl mt-6 font-montserrat">{quizName}</h1>
         <h2 className="font-normal text-xl mt-2 mb-12">By: {authors}</h2>
       </div>
       <div className="flex flex-1">

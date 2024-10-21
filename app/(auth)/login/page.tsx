@@ -36,8 +36,8 @@ const Login = () => {
 
   return (
     <div className="h-screen flex flex-row justify-center">
-      <div className="w-96 h-80 mt-24 px-4 py-4 bg-gray-50 rounded-lg shadow-md">
-        <h1 className="text-3xl font-bold">Login</h1>
+      <div className="w-96 h-96 mt-24 p-10 bg-gray-50 rounded-lg shadow-md">
+        <h1 className="text-3xl font-bold font-montserrat">Login</h1>
         <form
           className="flex flex-col h-5/6 mt-4"
           onSubmit={(e) => e.preventDefault()}
@@ -58,8 +58,8 @@ const Login = () => {
           />
           <div className="basis-1/2 flex flex-col justify-end">
             <div className="flex flex-row justify-between items-end">
-              <Button onClick={handleLogin} type="submit" className="bg-[#0E793C] text-white">
-                Log In
+              <Button onClick={handleLogin} type="submit" className="bg-[#0E793C] text-white font-semibold">
+                Login
               </Button>
               <p>
                 <Link

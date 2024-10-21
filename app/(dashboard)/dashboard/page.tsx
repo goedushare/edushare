@@ -13,11 +13,6 @@ import { ModuleForm } from "@/interfaces";
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '@/lib/firebaseConfig';
 
-
-
-
-
-
 const Dashboard = () => {
   
   const [modules, setModules] = useState<ModuleForm[]>([]);
@@ -86,7 +81,7 @@ const Dashboard = () => {
   return (
     <div>
       <div className="flex flex-row justify-between">
-        <h1 className="text-4xl">My Modules</h1>
+        <h1 className="text-4xl font-montserrat font-bold">Dashboard</h1>
         <Button className="bg-[#0E793C] text-white" onPress={onModalOpen}>
           Create New
         </Button>

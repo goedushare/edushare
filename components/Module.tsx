@@ -384,12 +384,12 @@ export default function Module({
       
       
       <div>
-        <h2 className="text-2xl">{module["title"]}</h2>
-        <p>By: {module["authors"]}</p>
+        <h2 className="text-2xl font-montserrat font-bold">{module["title"]}</h2>
+        <p className="">By: {module["authors"]}</p>
       </div>
       <div className="flex flex-row mt-4 gap-12">
         <div className="flex flex-col w-full">
-          <h3 className="font-semibold">Learn</h3>
+          <h3 className="font-semibold font-montserrat">Learn</h3>
             {videos.map((video1, index) => (
             <Link key={index} href={`/learn/${module["id"]}/video/${video1.id}`}>
               <div className="group flex items-center justify-between py-4 pl-8 pr-4 w-full border-b hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
@@ -560,7 +560,7 @@ export default function Module({
         
         </div>
         <div className="flex flex-col w-full">
-          <h3 className="font-semibold">Practice</h3>
+          <h3 className="font-semibold ">Practice</h3>
           {quizzes.map((quiz1, index) => (
             <Link key={index} href={`/learn/${module["id"]}/quiz/${quiz1.id}`}>
               <div className="group flex items-center justify-between py-4 pl-8 pr-4 w-full border-b hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
@@ -618,7 +618,7 @@ export default function Module({
         <div className="mt-6">
           <Dropdown>
             <DropdownTrigger>
-              <Button className="bg-[#0E793C] text-white">Add Resource</Button>
+              <Button className="bg-[#0E793C] text-white font-semibold font-montserrat">Add Resource</Button>
             </DropdownTrigger>
             <DropdownMenu>
               <DropdownItem key="quiz" href={`/new/${module.id}/quiz`}>
