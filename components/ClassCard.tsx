@@ -21,7 +21,7 @@ import { ClassForm, ModuleForm, ArticleForm, VideoForm, QuizForm, FlashcardSetFo
 import { updateDocument, getDocumentById, deleteDocument } from "@/lib/firestoreHelpers";
 import { doc, collection, onSnapshot } from 'firebase/firestore';
 import { db } from "@/lib/firebaseConfig";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { getCurrentUser, getUserById } from "@/lib/authHelpers";
 
 export default function ClassCard({
@@ -34,22 +34,31 @@ export default function ClassCard({
 
   const [teacher, setTeacher ] = useState("")
 
+  const router = useRouter();
 
 
-  useEffect(() => {
-    const classesRef = doc(db, 'classes', class1["id"]);
 
-    const unsubscribe = onSnapshot(classesRef, (doc) => {
-      if (doc.exists()) {
-        const updatedClass = doc.data();
-      } else {
-        console.error("Document does not exist");
-        // document.getElementById(`${module["id"]}moduleDiv`)?.remove();
-      }
-    });
+  // useEffect(() => {
+  //   const classesRef = doc(db, 'classes', class1["id"]);
+  //   console.log(class1["id"]);
+  //   if (!classesRef) {
+  //     console.error("Document does not exist");
+  //     return;
+  //   }
 
-    return () => unsubscribe();
-  }, [class1["id"]]);
+  //   const unsubscribe = onSnapshot(classesRef, (doc) => {
+  //     console.log("Class updated");
+  //     if (doc.exists()) {
+  //       const updatedClass = doc.data();
+  //       console.log(updatedClass);
+  //     } else {
+  //       console.error("Document does not exist");
+  //       // document.getElementById(`${module["id"]}moduleDiv`)?.remove();
+  //     }
+  //   });
+
+  //   return () => unsubscribe();
+  // }, [class1["id"]]);
 
   useEffect(() => {
     const userRef = doc(db, 'users', class1["owner"]);
@@ -77,6 +86,16 @@ export default function ClassCard({
       <div>
         <h2 className="text-2xl font-montserrat font-bold">{class1["title"]}</h2>
         <p className="">Teacher: {teacher}</p>
+      </div>
+      <div className="flex flex-row gap-x-4 mt-4">
+        <Button className="bg-[#0E793C] text-white" onPress={() => router.push(`/dashboard/${class1["id"]}`)}>
+          View Class
+        </Button>
+        {isEditable && (
+          <Button className="bg-[#0E793C] text-white" onPress={() => deleteDocument('classes', class1["id"])}>
+            Delete Class
+          </Button>
+        )}
       </div>
     </div>
   );

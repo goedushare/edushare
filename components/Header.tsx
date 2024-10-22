@@ -171,16 +171,18 @@ export default function Header() {
       >
         {getCurrentUser() ? (
           <div>
-            <Avatar
-              as="button"
-              size="md"
-              src={
-                getCurrentUser()?.photoURL ||
-                "/images/default-profile-picture.png"
-              }
-              color="primary"
-              isBordered
-            />
+            <div className="flex justify-center">
+              <Avatar
+                as="button"
+                size="md"
+                src={
+                  getCurrentUser()?.photoURL ||
+                  "/images/default-profile-picture.png"
+                }
+                color="primary"
+                isBordered
+              />
+            </div>
             <div className="mt-4  ">
               <p>
                 <strong>Email:</strong> {getCurrentUser()?.email}

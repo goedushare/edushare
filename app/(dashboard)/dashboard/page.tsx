@@ -12,6 +12,7 @@ import {
   addClass,
   fetchCollectionData,
   updateDocument,
+  addDocument
 } from "@/lib/firestoreHelpers";
 import { ModuleForm, ClassForm } from "@/interfaces";
 import { collection, onSnapshot, updateDoc } from "firebase/firestore";
@@ -56,7 +57,7 @@ const Dashboard = () => {
       owner: getCurrentUser()?.uid || "",
     };
 
-    addClass("classes1", newClass);
+    addClass("classes", newClass);
 
     onClose();
     setClassName("");
@@ -78,9 +79,9 @@ const Dashboard = () => {
     //   owner: getCurrentUser()?.uid || "",
     // };
 
-    const classes = fetchCollectionData("classes1");
+    const classes1 = fetchCollectionData("classes");
 
-    classes.then((data) => {
+    classes1.then((data) => {
       console.log("Classes:", data);
       const currentClass = data?.find((c) => c.joinCode === joinCode);
 
@@ -106,7 +107,7 @@ const Dashboard = () => {
   useEffect(() => {
     const getClasses = async () => {
       try {
-        const classData = await fetchCollectionData("classes1");
+        const classData = await fetchCollectionData("classes");
         console.log("Class Data:", classData);
         setClasses(classData);
         console.log("Classes:", modules);
@@ -118,8 +119,25 @@ const Dashboard = () => {
     getClasses();
   }, []);
 
+  useEffect(() => {
+    // Set up a real-time listener for the 'modules' collection
+    const unsubscribe = onSnapshot(collection(db, 'classes'), (snapshot) => {
+      
+      console.log("Unsubscribed");
+      const modulesData = snapshot.docs.map((doc) => (doc.data() as ClassForm));
+      console.log("Modules Data:", modulesData);  
+
+      // const modulesData = snapshot.docs.map((doc) => (doc.data() as ClassForm));
+      
+      setClasses(modulesData);
+    });
+
+    // Cleanup the listener when the component unmounts
+    return () => unsubscribe();
+  }, []);
+
   // useEffect(() => {
-  //   const unsubscribe = onSnapshot(collection(db, 'classes1'), (snapshot) => {
+  //   const unsubscribe = onSnapshot(collection(db, 'classes'), (snapshot) => {
   //     const classesData = snapshot.docs.map((doc) => (doc.data() as ClassForm));
 
   //     setClasses(classesData);
