@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Navbar,
@@ -6,21 +6,27 @@ import {
   NavbarContent,
   NavbarItem,
   Button,
-  useDisclosure
+  useDisclosure,
 } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
 
-import { redirect } from 'next/navigation';
-import { logout } from '@/lib/authHelpers';
-import { auth } from '@/lib/firebaseConfig';
-import { useState, useEffect } from 'react';
-import { Avatar, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
+import { redirect } from "next/navigation";
+import { logout } from "@/lib/authHelpers";
+import { auth } from "@/lib/firebaseConfig";
+import { useState, useEffect } from "react";
+import {
+  Avatar,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+} from "@nextui-org/react";
 import ProfileModal from "./ProfileModal";
 import { getCurrentUser } from "@/lib/authHelpers";
+import Image from "next/image";
 
 export default function Header() {
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const {
@@ -39,14 +45,12 @@ export default function Header() {
     });
   }, []);
 
-
-
   const handleLogout = async () => {
     try {
-      await logout();  // Call the logout function
-      redirect('/login');  // Redirect to login page after logout
+      await logout(); // Call the logout function
+      redirect("/login"); // Redirect to login page after logout
     } catch (error) {
-      console.error('Error logging out:', error);
+      console.error("Error logging out:", error);
     }
   };
 
@@ -78,28 +82,28 @@ export default function Header() {
             </Link>
           </NavbarItem>
           {!isLoggedIn && (
-          <NavbarItem>
-            <Button
-              as={Link}
-              className="bg-[#0E793C] text-white font-semibold"
-              href="/login"
-              variant="flat"
-            >
-              Login
-            </Button>
-          </NavbarItem>
+            <NavbarItem>
+              <Button
+                as={Link}
+                className="bg-[#0E793C] text-white font-semibold"
+                href="/login"
+                variant="flat"
+              >
+                Login
+              </Button>
+            </NavbarItem>
           )}
           {!isLoggedIn && (
-          <NavbarItem>
-            <Button
-              as={Link}
-              className="bg-white text-[#0E793C] border-1 border-[#0E793C] font-semibold"
-              href="/register"
-              variant="flat"
-            >
-              Register
-            </Button>
-          </NavbarItem>
+            <NavbarItem>
+              <Button
+                as={Link}
+                className="bg-white text-[#0E793C] border-1 border-[#0E793C] font-semibold"
+                href="/register"
+                variant="flat"
+              >
+                Register
+              </Button>
+            </NavbarItem>
           )}
           {/* {isLoggedIn && (
             <NavbarItem>
@@ -115,30 +119,36 @@ export default function Header() {
           </NavbarItem>
           )} */}
 
-          {isLoggedIn && (<NavbarItem>
-            <Dropdown>
-              <DropdownTrigger>
-                <Avatar
-                  as="button"
-                  size="sm"
-                  src="https://w7.pngwing.com/pngs/177/551/png-transparent-user-interface-design-computer-icons-default-stephen-salazar-graphy-user-interface-design-computer-wallpaper-sphere-thumbnail.png"
-                  color="primary"
-                  isBordered
-                />
-              </DropdownTrigger>
-              <DropdownMenu aria-label="Profile Actions">
-                <DropdownItem key="profile" 
-                  onPress={() => {
-                    onProfileModalOpen();
-                  }}> 
-                  Profile
-                </DropdownItem>
-                <DropdownItem key="logout" onClick={handleLogout}>
-                  Logout
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </NavbarItem>
+          {isLoggedIn && (
+            <NavbarItem>
+              <Dropdown>
+                <DropdownTrigger>
+                  <Avatar
+                    as="button"
+                    size="sm"
+                    src={
+                      getCurrentUser()?.photoURL ||
+                      "/images/default-profile-picture.png"
+                    }
+                    color="primary"
+                    isBordered
+                  />
+                </DropdownTrigger>
+                <DropdownMenu aria-label="Profile Actions">
+                  <DropdownItem
+                    key="profile"
+                    onPress={() => {
+                      onProfileModalOpen();
+                    }}
+                  >
+                    Profile
+                  </DropdownItem>
+                  <DropdownItem key="logout" onClick={handleLogout}>
+                    Logout
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </NavbarItem>
           )}
 
           {/* <NavbarItem>
@@ -164,14 +174,33 @@ export default function Header() {
       >
         {getCurrentUser() ? (
           <div>
-            <p><strong>Email:</strong> {getCurrentUser()?.email}</p>
-            <p><strong>UID:</strong> {getCurrentUser()?.uid}</p>
+            <Avatar
+              as="button"
+              size="md"
+              src={
+                getCurrentUser()?.photoURL ||
+                "/images/default-profile-picture.png"
+              }
+              color="primary"
+              isBordered
+            />
+            <div className="mt-4  ">
+              <p>
+                <strong>Email:</strong> {getCurrentUser()?.email}
+              </p>
+              <p>
+                <strong>Username:</strong> {getCurrentUser()?.displayName}
+              </p>
+
+              <p>
+                <strong>UID:</strong> {getCurrentUser()?.uid}
+              </p>
+            </div>
           </div>
         ) : (
-          <p>no user</p>
+          <p>No User Found</p>
         )}
       </ProfileModal>
     </>
-    
   );
 }

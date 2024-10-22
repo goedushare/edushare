@@ -4,10 +4,9 @@ import TextField from "@/components/TextField";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import { useState } from "react";
-import { auth } from '@/lib/firebaseConfig';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { useRouter } from 'next/navigation';
-
+import { auth } from "@/lib/firebaseConfig";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -21,11 +20,19 @@ const Register = () => {
   const handleRegister = async () => {
     setError("");
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      setSuccess(true);
-      console.log('User registered:', userCredential.user);
-      router.push('/login');
-
+      const userCredential = createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      userCredential.then((res) => {
+        updateProfile(res.user, { displayName: name });
+        setSuccess(true);
+        router.push("/login");
+      });
+      userCredential.then((res) => {
+        console.log("User registered:", res.user);
+      });
     } catch (error) {
       // Handle different Firebase auth errors
       const firebaseError = error as { code: string };
@@ -74,7 +81,11 @@ const Register = () => {
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
           <div className="basis-1/2 flex flex-col justify-end">
             <div className="flex flex-row justify-between items-end">
-              <Button onClick={handleRegister} type="submit" className="bg-[#0E793C] text-white font-semibold">
+              <Button
+                onClick={handleRegister}
+                type="submit"
+                className="bg-[#0E793C] text-white font-semibold"
+              >
                 Register
               </Button>
               <p>
