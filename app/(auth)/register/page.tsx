@@ -1,18 +1,20 @@
 "use client";
 
 import TextField from "@/components/TextField";
-import { Button } from "@nextui-org/react";
+import { Button, DropdownItem, DropdownTrigger, Dropdown } from "@nextui-org/react";
 import Link from "next/link";
 import { useState } from "react";
 import { auth } from '@/lib/firebaseConfig';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
+import { onRegister } from "@/lib/firestoreHelpers";
 
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("student");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
@@ -22,8 +24,13 @@ const Register = () => {
     setError("");
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(userCredential.user, {
+        displayName: name
+      });
       setSuccess(true);
+      onRegister(userCredential.user, name, role);
       console.log('User registered:', userCredential.user);
+      console.log('User registered:', userCredential); 
       router.push('/login');
 
     } catch (error) {
@@ -70,7 +77,8 @@ const Register = () => {
             label="Password"
             className="basis-1/6"
           />
-
+         
+            
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
           <div className="basis-1/2 flex flex-col justify-end">
             <div className="flex flex-row justify-between items-end">

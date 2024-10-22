@@ -164,6 +164,7 @@ export default function Header() {
       >
         {getCurrentUser() ? (
           <div>
+            <p><strong>Name:</strong> {getCurrentUser()?.displayName}</p>
             <p><strong>Email:</strong> {getCurrentUser()?.email}</p>
             <p><strong>UID:</strong> {getCurrentUser()?.uid}</p>
           </div>
