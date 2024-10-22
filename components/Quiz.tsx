@@ -6,6 +6,7 @@ import Score from "./Score";
 import Question from "./Question";
 import QuizProgress from "./QuizProgress";
 import { QuestionForm } from "../interfaces";
+import { usePathname } from "next/navigation";
 
 export default function Quiz({
   quizName,
@@ -16,20 +17,25 @@ export default function Quiz({
   questions: QuestionForm[];
   authors: string;
 }) {
+  const quizIdentifier = usePathname();
   let lsCurrQuestion;
   let lsAnswers;
   let lsEnd;
-  if (typeof window !== "undefined") {
-    lsCurrQuestion = localStorage.getItem("currQuestion")
-      ? JSON.parse(localStorage.getItem("currQuestion")!)
+  if (typeof window !== "undefined" && quizIdentifier) {
+    lsCurrQuestion = localStorage.getItem(
+      "currQuestion_".concat(quizIdentifier)
+    )
+      ? JSON.parse(
+          localStorage.getItem("currQuestion_".concat(quizIdentifier))!
+        )
       : 0;
 
-    lsAnswers = localStorage.getItem("answers")
-      ? JSON.parse(localStorage.getItem("answers")!)
+    lsAnswers = localStorage.getItem("answers_".concat(quizIdentifier))
+      ? JSON.parse(localStorage.getItem("answers_".concat(quizIdentifier))!)
       : new Array<number>(questions.length).fill(-1);
 
-    lsEnd = localStorage.getItem("end")
-      ? JSON.parse(localStorage.getItem("end")!)
+    lsEnd = localStorage.getItem("end_".concat(quizIdentifier))
+      ? JSON.parse(localStorage.getItem("end_".concat(quizIdentifier))!)
       : false;
   } else {
     lsCurrQuestion = 0;
@@ -86,21 +92,35 @@ export default function Quiz({
   };
 
   useEffect(() => {
-    localStorage.setItem("answers", JSON.stringify(answers));
+    if (quizIdentifier) {
+      localStorage.setItem(
+        "answers_".concat(quizIdentifier),
+        JSON.stringify(answers)
+      );
+    }
   }, [answers]);
 
   useEffect(() => {
-    localStorage.setItem("currQuestion", JSON.stringify(currQuestion));
+    if (quizIdentifier) {
+      localStorage.setItem(
+        "currQuestion_".concat(quizIdentifier),
+        JSON.stringify(currQuestion)
+      );
+    }
   }, [currQuestion]);
 
   useEffect(() => {
-    localStorage.setItem("end", JSON.stringify(end));
+    if (quizIdentifier) {
+      localStorage.setItem("end_".concat(quizIdentifier), JSON.stringify(end));
+    }
   }, [end]);
 
   return (
     <div className="w-3/4 h-[calc(100vh-64px)] overflow-y-scroll overflow-scroll flex flex-col">
       <div className="flex flex-col items-center">
-        <h1 className="font-semibold text-3xl mt-6 font-montserrat">{quizName}</h1>
+        <h1 className="font-semibold text-3xl mt-6 font-montserrat">
+          {quizName}
+        </h1>
         <h2 className="font-normal text-xl mt-2 mb-12">By: {authors}</h2>
       </div>
       <div className="flex flex-1">
