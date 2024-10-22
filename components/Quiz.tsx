@@ -98,7 +98,7 @@ export default function Quiz({
         JSON.stringify(answers)
       );
     }
-  }, [answers]);
+  }, [answers, quizIdentifier]);
 
   useEffect(() => {
     if (quizIdentifier) {
@@ -107,13 +107,13 @@ export default function Quiz({
         JSON.stringify(currQuestion)
       );
     }
-  }, [currQuestion]);
+  }, [currQuestion, quizIdentifier]);
 
   useEffect(() => {
     if (quizIdentifier) {
       localStorage.setItem("end_".concat(quizIdentifier), JSON.stringify(end));
     }
-  }, [end]);
+  }, [end, quizIdentifier]);
 
   return (
     <div className="w-3/4 h-[calc(100vh-64px)] overflow-y-scroll overflow-scroll flex flex-col">

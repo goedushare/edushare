@@ -196,7 +196,7 @@ const Dashboard = () => {
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </Modal>
       </div>
-      <div className="mt-4 mb-8">
+      <div className="mt-4 mb-8 flex flex-row gap-x-8">
         {classes.map((class1) => {
           return (
             (class1.owner === getCurrentUser()?.uid ||
