@@ -8,16 +8,18 @@ import TextField from "@/components/TextField";
 import { useState } from "react";
 import withAuth from "@/lib/withAuth";
 import { useEffect } from "react";
-import { addClass, fetchCollectionData, updateDocument } from "@/lib/firestoreHelpers";
+import {
+  addClass,
+  fetchCollectionData,
+  updateDocument,
+} from "@/lib/firestoreHelpers";
 import { ModuleForm, ClassForm } from "@/interfaces";
-import { collection, onSnapshot, updateDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebaseConfig';
+import { collection, onSnapshot, updateDoc } from "firebase/firestore";
+import { db } from "@/lib/firebaseConfig";
 import { getCurrentUser } from "@/lib/authHelpers";
 import ClassCard from "@/components/ClassCard";
 
-
 const Dashboard = () => {
-  
   const [classes, setClasses] = useState<ClassForm[]>([]);
 
   const [className, setClassName] = useState("");
@@ -25,7 +27,6 @@ const Dashboard = () => {
   const [joinCode, setJoinCode] = useState("");
 
   const [error, setError] = useState("");
-
 
   const {
     isOpen: isCreateClassModalOpen,
@@ -46,7 +47,7 @@ const Dashboard = () => {
       owner: "",
       joinCode: "",
       modules: [],
-      students: []
+      students: [],
     };
 
     const newClass: ClassForm = {
@@ -55,7 +56,7 @@ const Dashboard = () => {
       owner: getCurrentUser()?.uid || "",
     };
 
-    addClass('classes1', newClass);
+    addClass("classes1", newClass);
 
     onClose();
     setClassName("");
@@ -77,13 +78,13 @@ const Dashboard = () => {
     //   owner: getCurrentUser()?.uid || "",
     // };
 
-    const classes = fetchCollectionData('classes1');
+    const classes = fetchCollectionData("classes1");
 
     classes.then((data) => {
-      console.log('Classes:', data);
+      console.log("Classes:", data);
       const currentClass = data?.find((c) => c.joinCode === joinCode);
 
-      console.log(currentClass)
+      console.log(currentClass);
 
       if (!currentClass) {
         setError("Class not found.");
@@ -92,26 +93,25 @@ const Dashboard = () => {
         setError("You are already in this class.");
         // return;
       } else {
-        updateDocument('classes', currentClass.id, {students: [...currentClass.students, getCurrentUser()?.uid || ""]});
+        updateDocument("classes", currentClass.id, {
+          students: [...currentClass.students, getCurrentUser()?.uid || ""],
+        });
         onClose();
         setJoinCode("");
         setError("");
       }
-
-      
     });
-
   };
 
   useEffect(() => {
     const getClasses = async () => {
       try {
-        const classData = await fetchCollectionData('classes1'); 
-        console.log('Class Data:', classData); 
+        const classData = await fetchCollectionData("classes1");
+        console.log("Class Data:", classData);
         setClasses(classData);
-        console.log('Classes:', modules);
+        console.log("Classes:", modules);
       } catch (error) {
-        console.error('Error fetching classes:', error);
+        console.error("Error fetching classes:", error);
       }
     };
 
@@ -121,7 +121,7 @@ const Dashboard = () => {
   // useEffect(() => {
   //   const unsubscribe = onSnapshot(collection(db, 'classes1'), (snapshot) => {
   //     const classesData = snapshot.docs.map((doc) => (doc.data() as ClassForm));
-      
+
   //     setClasses(classesData);
   //     console.log('REAL CLASSES:', classesData);
   //   });
@@ -130,16 +130,23 @@ const Dashboard = () => {
   //   return () => unsubscribe();
   // }, []);
 
-
   return (
     <div>
       <div className="flex flex-row justify-between">
-        <h1 className="text-4xl font-montserrat font-bold">Dashboard</h1>
-        <div>
-          <Button className="bg-[#0E793C] text-white" onPress={onCreateClassModalOpen}>
+        <h1 className="text-4xl font-montserrat font-bold">
+          Welcome, {getCurrentUser()?.displayName}!
+        </h1>
+        <div className="flex flex-row gap-x-6">
+          <Button
+            className="bg-[#0E793C] text-white"
+            onPress={onCreateClassModalOpen}
+          >
             Create Class
           </Button>
-          <Button className="bg-[#0E793C] text-white" onPress={onJoinClassModalOpen}>
+          <Button
+            className="bg-[#0E793C] text-white"
+            onPress={onJoinClassModalOpen}
+          >
             Join Class
           </Button>
         </div>
@@ -159,7 +166,7 @@ const Dashboard = () => {
             />
           </div>
           <div>
-          <TextField
+            <TextField
               label="Teacher"
               value={teacher}
               setValue={setTeacher}
@@ -187,12 +194,16 @@ const Dashboard = () => {
             />
           </div>
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-
         </Modal>
       </div>
       <div className="mt-4 mb-8">
         {classes.map((class1) => {
-          return (class1.owner === getCurrentUser()?.uid || class1.students.includes(getCurrentUser()?.uid || "")) &&  <ClassCard class1={class1} isEditable={true} key={class1.id} />;
+          return (
+            (class1.owner === getCurrentUser()?.uid ||
+              class1.students.includes(getCurrentUser()?.uid || "")) && (
+              <ClassCard class1={class1} isEditable={true} key={class1.id} />
+            )
+          );
         })}
       </div>
     </div>

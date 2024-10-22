@@ -7,6 +7,7 @@ import {
   NavbarItem,
   Button,
   useDisclosure,
+  Spacer,
 } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
@@ -62,10 +63,6 @@ export default function Header() {
             <p className="font-bold text-inherit text-xl">NSL Forever!</p>
           </Link>
         </NavbarBrand>
-        <NavbarContent
-          className="hidden sm:flex gap-4"
-          justify="end"
-        ></NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem>
             <Link color="foreground" href="/dashboard">
@@ -122,7 +119,7 @@ export default function Header() {
           {isLoggedIn && (
             <NavbarItem>
               <Dropdown>
-                <DropdownTrigger>
+                <DropdownTrigger className="ml-4">
                   <Avatar
                     as="button"
                     size="sm"
