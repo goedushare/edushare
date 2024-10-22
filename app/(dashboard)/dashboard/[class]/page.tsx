@@ -5,27 +5,44 @@ import Module from "@/components/Module";
 import modules from "@/assets/modules.json";
 import Modal from "@/components/Modal";
 import TextField from "@/components/TextField";
-import { useState } from "react";
+import { use, useState } from "react";
 import withAuth from "@/lib/withAuth";
 import { useEffect } from "react";
-import { addDocument, fetchCollectionData } from "@/lib/firestoreHelpers";
-import { ModuleForm } from "@/interfaces";
+import { addDocument, fetchCollectionData, getDocumentById, updateDocument } from "@/lib/firestoreHelpers";
+import { ModuleForm, ClassForm } from "@/interfaces";
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '@/lib/firebaseConfig';
 import { getCurrentUser } from "@/lib/authHelpers";
 
 
-const Dashboard = ({params} : { params: {class: string}}) => {
+const DashboardClass = ({params} : { params: {class: string}}) => {
   
   const [modules, setModules] = useState<ModuleForm[]>([]);
 
-  console.log('Class id:', params.class); 
+  const [classes, setClasses] = useState<ClassForm[]>([]);
+
+  // console.log('Class id:', params.class); 
+  const getModuleClass = (moduleId: string) => {
+    console.log(classes);
+    const moduleClass = classes.find((class1) => class1.modules.includes(moduleId));
+    return moduleClass;
+  }
+
+  if(!getModuleClass(module.id)?.students.includes(getCurrentUser()?.uid || "")) {
+    return (
+      <div>
+        <h1>You are not enrolled in this class</h1>
+      </div>
+    )
+  } 
 
   const {
     isOpen: isModalOpen,
     onOpen: onModalOpen,
     onOpenChange: onModalOpenChange,
   } = useDisclosure();
+
+  
 
   const onCreate = (onClose: () => void) => {
     const defaultModuleForm: ModuleForm = {
@@ -46,7 +63,15 @@ const Dashboard = ({params} : { params: {class: string}}) => {
       owner: getCurrentUser()?.uid || ""
     };
 
-    addDocument('modules', newModule);
+    addDocument('modules', newModule).then((docId) => {
+      console.log(getModuleClass(params.class))
+      const classDoc = getDocumentById('classes', params.class);
+      classDoc.then((doc) => {
+        // console.log(doc);
+        updateDocument('classes', params.class, {modules: [...doc?.modules, docId]});
+      });
+    });
+
 
     onClose();
     setModuleName("");
@@ -80,7 +105,22 @@ const Dashboard = ({params} : { params: {class: string}}) => {
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    // Set up a real-time listener for the 'classes' collection
+    const unsubscribe = onSnapshot(collection(db, 'classes'), (snapshot) => {
+      const classesData = snapshot.docs.map((doc) => (doc.data() as ClassForm));
+      
+      setClasses(classesData);
+    });
 
+    // Cleanup the listener when the component unmounts
+    return () => unsubscribe();
+  }, []);
+
+  
+    
+
+  
   const [moduleName, setModuleName] = useState("");
   const [authors, setAuthors] = useState("");
 
@@ -118,11 +158,11 @@ const Dashboard = ({params} : { params: {class: string}}) => {
       </div>
       <div className="mt-4 mb-8">
         {modules.map((module) => {
-          return module.owner === getCurrentUser()?.uid &&  <Module module={module} isEditable={true} key={module.id} />;
+          return (getModuleClass(module.id)?.owner === getCurrentUser()?.uid || module.owner === getCurrentUser()?.uid) && getModuleClass(module.id)?.id === params.class && <Module module={module} isEditable={true} key={module.id} />;
         })}
       </div>
     </div>
   );
 };
 
-export default withAuth(Dashboard);
+export default withAuth(DashboardClass);
