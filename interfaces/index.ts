@@ -44,3 +44,12 @@ export interface QuestionForm {
   correct: number;
 }
 
+
+export interface ClassForm {
+  id: string;
+  title: string;
+  owner: string;
+  joinCode: string;
+  modules: string[];
+  students: string[];
+}

@@ -1,17 +1,24 @@
 "use client";
 
 import TextField from "@/components/TextField";
-import { Button } from "@nextui-org/react";
+import {
+  Button,
+  DropdownItem,
+  DropdownTrigger,
+  Dropdown,
+} from "@nextui-org/react";
 import Link from "next/link";
 import { useState } from "react";
 import { auth } from "@/lib/firebaseConfig";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { onRegister } from "@/lib/firestoreHelpers";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("student");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
@@ -20,19 +27,19 @@ const Register = () => {
   const handleRegister = async () => {
     setError("");
     try {
-      const userCredential = createUserWithEmailAndPassword(
+      const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
-      userCredential.then((res) => {
-        updateProfile(res.user, { displayName: name });
-        setSuccess(true);
-        router.push("/login");
+      await updateProfile(userCredential.user, {
+        displayName: name,
       });
-      userCredential.then((res) => {
-        console.log("User registered:", res.user);
-      });
+      setSuccess(true);
+      onRegister(userCredential.user, name, role);
+      console.log("User registered:", userCredential.user);
+      console.log("User registered:", userCredential);
+      router.push("/login");
     } catch (error) {
       // Handle different Firebase auth errors
       const firebaseError = error as { code: string };
