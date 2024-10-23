@@ -12,7 +12,7 @@ import {
 import Link from "next/link";
 import React from "react";
 
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { logout } from "@/lib/authHelpers";
 import { auth } from "@/lib/firebaseConfig";
 import { useState, useEffect } from "react";
@@ -46,10 +46,12 @@ export default function Header() {
     });
   }, []);
 
+  const router = useRouter();
+
   const handleLogout = async () => {
     try {
       await logout(); // Call the logout function
-      redirect("/login"); // Redirect to login page after logout
+      router.push("/login"); // Redirect to login page after logout
     } catch (error) {
       console.error("Error logging out:", error);
     }
