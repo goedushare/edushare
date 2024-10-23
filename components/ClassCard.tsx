@@ -102,7 +102,7 @@ export default function ClassCard({
         >
           View Class
         </Button>
-        {isEditable && (
+        {(isEditable && class1.owner === getCurrentUser()?.uid) && (
           <Button
             className="bg-[#0E793C] text-white"
             onPress={() => deleteDocument("classes", class1["id"])}
