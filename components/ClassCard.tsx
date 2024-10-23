@@ -87,7 +87,7 @@ export default function ClassCard({
     // TODO: Fix positioning of module component (causes page to shift in x-axis)
     <div
       id={`${class1["id"]}classDiv`}
-      className="relative bg-green-50 rounded-lg p-8 mt-8 basis-1/2 flex"
+      className="relative bg-green-50 rounded-lg p-8 mt-8 basis-1/2 flex justify-between"
     >
       <div>
         <h2 className="text-2xl font-montserrat font-bold">
