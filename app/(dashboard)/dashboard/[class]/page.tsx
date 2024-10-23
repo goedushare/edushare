@@ -28,14 +28,6 @@ const DashboardClass = ({params} : { params: {class: string}}) => {
     return moduleClass;
   }
 
-  if(!getModuleClass(module.id)?.students.includes(getCurrentUser()?.uid || "")) {
-    return (
-      <div>
-        <h1>You are not enrolled in this class</h1>
-      </div>
-    )
-  } 
-
   const {
     isOpen: isModalOpen,
     onOpen: onModalOpen,
@@ -123,6 +115,14 @@ const DashboardClass = ({params} : { params: {class: string}}) => {
   
   const [moduleName, setModuleName] = useState("");
   const [authors, setAuthors] = useState("");
+
+  if(!getModuleClass(module.id)?.students.includes(getCurrentUser()?.uid || "")) {
+    return (
+      <div>
+        <h1>You are not enrolled in this class</h1>
+      </div>
+    )
+  } 
 
   return (
     <div>
