@@ -4,10 +4,10 @@ import TextField from "@/components/TextField";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebaseConfig";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "@/lib/firebaseConfig";
 import useAuth from "@/lib/useAuth";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { redirect } from "next/navigation";
 
 const Login = () => {
@@ -23,6 +23,18 @@ const Login = () => {
     }
   }, [user, loading]);
 
+  const router = useRouter();
+
+  const handleGoogleLogin = async () => {
+    signInWithPopup(auth, googleProvider)
+      .then((res) => {
+        router.push("/dashboard");
+      })
+      .catch((error) => {
+        console.log("Error signing in with Google:", error);
+      });
+  };
+
   const handleLogin = async () => {
     setError("");
     try {
@@ -31,6 +43,7 @@ const Login = () => {
         email,
         password
       );
+      router.push("/dashboard");
       console.log("User logged in:", userCredential.user);
     } catch (error) {
       // Handle different Firebase auth errors
@@ -74,7 +87,13 @@ const Login = () => {
           />
 
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-          <div className="basis-1/2 flex flex-col justify-end">
+          <div className="basis-1/2 flex flex-col justify-end gap-y-4">
+            <Button
+              onClick={handleGoogleLogin}
+              className="text-[#0E793C] border-[#0E793C] border bg-transparent font-semibold"
+            >
+              Login with Google
+            </Button>
             <div className="flex flex-row justify-between items-end">
               <Button
                 onClick={handleLogin}

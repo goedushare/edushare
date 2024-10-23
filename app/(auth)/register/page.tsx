@@ -105,7 +105,6 @@ const Register = () => {
           <div className="basis-1/2 flex flex-col justify-end gap-y-4">
             <Button
               onClick={handleGoogleRegister}
-              type="submit"
               className="text-[#0E793C] border-[#0E793C] border bg-transparent font-semibold"
             >
               Register with Google
