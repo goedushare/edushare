@@ -12,7 +12,7 @@ import {
   addClass,
   fetchCollectionData,
   updateDocument,
-  addDocument
+  addDocument,
 } from "@/lib/firestoreHelpers";
 import { ModuleForm, ClassForm } from "@/interfaces";
 import { collection, onSnapshot, updateDoc } from "firebase/firestore";
@@ -24,7 +24,7 @@ const Dashboard = () => {
   const [classes, setClasses] = useState<ClassForm[]>([]);
 
   const [className, setClassName] = useState("");
-  const [teacher, setTeacher] = useState("");
+  // const [teacher, setTeacher] = useState("");
   const [joinCode, setJoinCode] = useState("");
 
   const [error, setError] = useState("");
@@ -42,6 +42,8 @@ const Dashboard = () => {
   } = useDisclosure();
 
   const onCreateClass = (onClose: () => void) => {
+    if (!className) return;
+
     const defaultClassForm: ClassForm = {
       id: "",
       title: "",
@@ -61,7 +63,7 @@ const Dashboard = () => {
 
     onClose();
     setClassName("");
-    setTeacher("");
+    // setTeacher("");
   };
 
   const onJoinClass = (onClose: () => void) => {
@@ -121,14 +123,13 @@ const Dashboard = () => {
 
   useEffect(() => {
     // Set up a real-time listener for the 'modules' collection
-    const unsubscribe = onSnapshot(collection(db, 'classes'), (snapshot) => {
-      
+    const unsubscribe = onSnapshot(collection(db, "classes"), (snapshot) => {
       console.log("Unsubscribed");
-      const modulesData = snapshot.docs.map((doc) => (doc.data() as ClassForm));
-      console.log("Modules Data:", modulesData);  
+      const modulesData = snapshot.docs.map((doc) => doc.data() as ClassForm);
+      console.log("Modules Data:", modulesData);
 
       // const modulesData = snapshot.docs.map((doc) => (doc.data() as ClassForm));
-      
+
       setClasses(modulesData);
     });
 
@@ -183,14 +184,14 @@ const Dashboard = () => {
               labelPlacement="inside"
             />
           </div>
-          <div>
+          {/* <div>
             <TextField
               label="Teacher"
               value={teacher}
               setValue={setTeacher}
               labelPlacement="inside"
             />
-          </div>
+          </div> */}
         </Modal>
         <Modal
           isOpen={isJoinClassModalOpen}
@@ -214,12 +215,17 @@ const Dashboard = () => {
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </Modal>
       </div>
-      <div className="mt-4 mb-8 flex flex-row gap-x-8">
+      <div className="mt-4 mb-8 grid grid-flow-row grid-cols-2 gap-x-8">
         {classes.map((class1) => {
           return (
             (class1.owner === getCurrentUser()?.uid ||
               class1.students.includes(getCurrentUser()?.uid || "")) && (
-              <ClassCard class1={class1} isEditable={true} isDashboard={true} key={class1.id} />
+              <ClassCard
+                class1={class1}
+                isEditable={true}
+                isDashboard={true}
+                key={class1.id}
+              />
             )
           );
         })}

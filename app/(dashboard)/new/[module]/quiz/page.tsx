@@ -5,13 +5,14 @@ import TextField from "@/components/TextField";
 import { Button } from "@nextui-org/react";
 import { useState } from "react";
 import { QuestionForm, QuizForm } from "@/interfaces";
-import { updateDocument, getDocumentById } from "@/lib/firestoreHelpers"; 
+import { updateDocument, getDocumentById } from "@/lib/firestoreHelpers";
 import { useRouter } from "next/navigation";
-
 
 const NewQuiz = ({ params }: { params: { module: string } }) => {
   const [title, setTitle] = useState("");
-  const [questions, setQuestions] = useState<QuestionForm[]>([])
+  const [questions, setQuestions] = useState<QuestionForm[]>([
+    { question: "", answers: [""], correct: 0 },
+  ]);
   const router = useRouter();
 
   const addQuestion = () => {
@@ -19,16 +20,21 @@ const NewQuiz = ({ params }: { params: { module: string } }) => {
   };
 
   const createQuiz = () => {
-
+    if (
+      !title ||
+      !questions ||
+      questions.length == 0 ||
+      questions.some((question) => !question.question) ||
+      questions.some((question) => !question.answers)
+    )
+      return;
     const defaultQuizForm: QuizForm = {
       id: 0,
       title: "",
-      questions: []
+      questions: [],
     };
 
-    
-
-    const modules = getDocumentById('modules', params.module);
+    const modules = getDocumentById("modules", params.module);
 
     modules.then((data) => {
       console.log(data?.quizzes);
@@ -36,11 +42,12 @@ const NewQuiz = ({ params }: { params: { module: string } }) => {
         ...defaultQuizForm,
         id: data?.quizzes.length,
         title: title,
-        questions: questions
+        questions: questions,
       };
-      updateDocument('modules', params.module, {quizzes: [...data?.quizzes, newQuiz]});
+      updateDocument("modules", params.module, {
+        quizzes: [...data?.quizzes, newQuiz],
+      });
     });
-
 
     setTitle("");
     setQuestions([]);

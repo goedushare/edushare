@@ -191,6 +191,9 @@ export default function Module({
   };
 
   const onCreateArticle = (onClose: () => void) => {
+    if (!articleForm || articleForm?.title === "" || articleForm?.text === "")
+      return;
+
     const defaultArticleForm: ArticleForm = {
       id: 0,
       title: "",
@@ -218,6 +221,9 @@ export default function Module({
   };
 
   const onEditArticle = (onClose: () => void) => {
+    if (!articleForm || articleForm?.title === "" || articleForm?.text === "")
+      return;
+
     console.log("Edit Article");
     // console.log(currentUser())
 
@@ -240,6 +246,9 @@ export default function Module({
   };
 
   const onEditVideo = (onClose: () => void) => {
+    if (!videoForm || videoForm?.title === "" || videoForm?.videoUrl === "")
+      return;
+
     console.log("Edit Video");
 
     const modules = getDocumentById("modules", currentModule);
@@ -277,6 +286,8 @@ export default function Module({
   };
 
   const onCreateVideo = (onClose: () => void) => {
+    if (!videoForm || videoForm?.title === "" || videoForm?.videoUrl === "")
+      return;
     const defaultVideoForm: VideoForm = {
       id: 0,
       title: "",

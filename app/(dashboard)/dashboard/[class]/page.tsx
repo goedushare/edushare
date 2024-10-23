@@ -40,6 +40,7 @@ const DashboardClass = ({ params }: { params: { class: string } }) => {
   } = useDisclosure();
 
   const onCreate = (onClose: () => void) => {
+    if (!moduleName || !authors) return;
     const defaultModuleForm: ModuleForm = {
       id: "0",
       title: "",

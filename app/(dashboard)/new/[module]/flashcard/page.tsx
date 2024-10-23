@@ -10,24 +10,31 @@ import { useRouter } from "next/navigation";
 
 const NewFlashcardSet = ({ params }: { params: { module: string } }) => {
   const [title, setTitle] = useState("");
-  const [flashcards, setFlashcards] = useState<FlashcardForm[]>([]);
+  const [flashcards, setFlashcards] = useState<FlashcardForm[]>([
+    { term: "", definition: "" },
+  ]);
   const router = useRouter();
-
 
   const addFlashcard = () => {
     setFlashcards([...flashcards, { term: "", definition: "" }]);
   };
 
   const createFlashcardSet = () => {
+    if (
+      !title ||
+      !flashcards ||
+      flashcards.length == 0 ||
+      flashcards.some((flashcard) => !flashcard.term) ||
+      flashcards.some((flashcard) => !flashcard.definition)
+    )
+      return;
     const defaultFlashcardSetForm: FlashcardSetForm = {
       id: 0,
       title: "",
-      flashcards: []
+      flashcards: [],
     };
 
-    
-
-    const modules = getDocumentById('modules', params.module);
+    const modules = getDocumentById("modules", params.module);
 
     modules.then((data) => {
       console.log(data?.flashcards);
@@ -35,11 +42,12 @@ const NewFlashcardSet = ({ params }: { params: { module: string } }) => {
         ...defaultFlashcardSetForm,
         id: data?.flashcards.length,
         title: title,
-        flashcards: flashcards
+        flashcards: flashcards,
       };
-      updateDocument('modules', params.module, {flashcards: [...data?.flashcards, newFlashcardSet]});
+      updateDocument("modules", params.module, {
+        flashcards: [...data?.flashcards, newFlashcardSet],
+      });
     });
-
 
     setTitle("");
     setFlashcards([]);
