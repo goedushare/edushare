@@ -88,6 +88,8 @@ const Flashcards = ({
           <FaArrowRight />
         </Button>
       </div>
+
+      <Chatbot></Chatbot>
     </div>
   );
 };
