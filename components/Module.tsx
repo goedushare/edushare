@@ -17,9 +17,19 @@ import {
 import Modal from "./Modal";
 import { useEffect, useState } from "react";
 import TextField from "./TextField";
-import { ModuleForm, ArticleForm, VideoForm, QuizForm, FlashcardSetForm } from "../interfaces";
-import { updateDocument, getDocumentById, deleteDocument } from "@/lib/firestoreHelpers";
-import { doc, collection, onSnapshot } from 'firebase/firestore';
+import {
+  ModuleForm,
+  ArticleForm,
+  VideoForm,
+  QuizForm,
+  FlashcardSetForm,
+} from "../interfaces";
+import {
+  updateDocument,
+  getDocumentById,
+  deleteDocument,
+} from "@/lib/firestoreHelpers";
+import { doc, collection, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebaseConfig";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/authHelpers";
@@ -31,7 +41,6 @@ export default function Module({
   module: ModuleForm;
   isEditable?: boolean;
 }) {
-
   // console.log(module);
   const {
     isOpen: isArticleModalOpen,
@@ -67,15 +76,13 @@ export default function Module({
     isOpen: isConfirmDeleteModalOpen,
     onOpen: onConfirmDeleteModalOpen,
     onOpenChange: onConfirmDeleteModalOpenChange,
-  } = useDisclosure()
-
-
+  } = useDisclosure();
 
   const [currentModule, setCurrentModule] = useState("");
 
-  const [videoForm, setVideoForm] = useState<VideoForm>()
+  const [videoForm, setVideoForm] = useState<VideoForm>();
 
-  const [articleForm, setArticleForm] = useState<ArticleForm>()
+  const [articleForm, setArticleForm] = useState<ArticleForm>();
 
   const [moduleName, setModuleName] = useState("");
   const [authors, setAuthors] = useState("");
@@ -85,21 +92,19 @@ export default function Module({
   const [flashcards, setFlashcard] = useState(module["flashcards"]);
   const [quizzes, setQuizzes] = useState(module["quizzes"]);
 
-  const [pendingDelete, setPendingDelete] = useState({type: "", id: ""});
-
-
+  const [pendingDelete, setPendingDelete] = useState({ type: "", id: "" });
 
   // useEffect(() => {
   //   const fetchModule = async () => {
   //     const fetchedModule = await getDocumentById('modules', module["id"]);
   //     setVideos(fetchedModule?.videos || []);
   //   };
-    
+
   //   fetchModule();
   // }, [module["id"]]);
 
   useEffect(() => {
-    const moduleRef = doc(db, 'modules', module["id"]);
+    const moduleRef = doc(db, "modules", module["id"]);
 
     const unsubscribe = onSnapshot(moduleRef, (doc) => {
       if (doc.exists()) {
@@ -119,16 +124,16 @@ export default function Module({
 
   const deleteVideo = async (videoId: number) => {
     try {
-
-      const modules = getDocumentById('modules', module["id"]);
+      const modules = getDocumentById("modules", module["id"]);
       modules.then((data) => {
-        const newVideos: VideoForm[] = data?.videos.filter((video: VideoForm) => video.id !== videoId);
+        const newVideos: VideoForm[] = data?.videos.filter(
+          (video: VideoForm) => video.id !== videoId
+        );
         for (let i = 0; i < newVideos.length; i++) {
           newVideos[i].id = i;
         }
-        updateDocument('modules', module["id"], {videos: newVideos});
+        updateDocument("modules", module["id"], { videos: newVideos });
       });
-
     } catch (error) {
       console.error("Error deleting video: ", error);
     }
@@ -136,16 +141,16 @@ export default function Module({
 
   const deleteArticle = async (articleId: number) => {
     try {
-
-      const modules = getDocumentById('modules', module["id"]);
+      const modules = getDocumentById("modules", module["id"]);
       modules.then((data) => {
-        const newArticles: ArticleForm[] = data?.articles.filter((article: ArticleForm) => article.id !== articleId);
+        const newArticles: ArticleForm[] = data?.articles.filter(
+          (article: ArticleForm) => article.id !== articleId
+        );
         for (let i = 0; i < newArticles.length; i++) {
           newArticles[i].id = i;
         }
-        updateDocument('modules', module["id"], {articles: newArticles});
+        updateDocument("modules", module["id"], { articles: newArticles });
       });
-
     } catch (error) {
       console.error("Error deleting article: ", error);
     }
@@ -153,16 +158,16 @@ export default function Module({
 
   const deleteFlashcards = async (flashcardId: number) => {
     try {
-
-      const modules = getDocumentById('modules', module["id"]);
+      const modules = getDocumentById("modules", module["id"]);
       modules.then((data) => {
-        const newFlashcards: FlashcardSetForm[] = data?.flashcards.filter((flashcard: FlashcardSetForm) => flashcard.id !== flashcardId);
+        const newFlashcards: FlashcardSetForm[] = data?.flashcards.filter(
+          (flashcard: FlashcardSetForm) => flashcard.id !== flashcardId
+        );
         for (let i = 0; i < newFlashcards.length; i++) {
           newFlashcards[i].id = i;
         }
-        updateDocument('modules', module["id"], {flashcards: newFlashcards});
+        updateDocument("modules", module["id"], { flashcards: newFlashcards });
       });
-
     } catch (error) {
       console.error("Error deleting article: ", error);
     }
@@ -170,30 +175,29 @@ export default function Module({
 
   const deleteQuiz = async (quizId: number) => {
     try {
-
-      const modules = getDocumentById('modules', module["id"]);
+      const modules = getDocumentById("modules", module["id"]);
       modules.then((data) => {
-        const newQuizzes: QuizForm[] = data?.quizzes.filter((quiz: QuizForm) => quiz.id !== quizId);
+        const newQuizzes: QuizForm[] = data?.quizzes.filter(
+          (quiz: QuizForm) => quiz.id !== quizId
+        );
         for (let i = 0; i < newQuizzes.length; i++) {
           newQuizzes[i].id = i;
         }
-        updateDocument('modules', module["id"], {quizzes: newQuizzes});
+        updateDocument("modules", module["id"], { quizzes: newQuizzes });
       });
-
     } catch (error) {
       console.error("Error deleting article: ", error);
     }
   };
 
-
   const onCreateArticle = (onClose: () => void) => {
     const defaultArticleForm: ArticleForm = {
       id: 0,
       title: "",
-      text: ""
-    }; 
+      text: "",
+    };
 
-    const modules = getDocumentById('modules', currentModule);
+    const modules = getDocumentById("modules", currentModule);
 
     modules.then((data) => {
       console.log(data?.articles.length);
@@ -203,11 +207,10 @@ export default function Module({
         title: articleForm?.title || "",
         text: articleForm?.text || "",
       };
-      updateDocument('modules', currentModule, {articles: [...data?.articles, newArticle]});
+      updateDocument("modules", currentModule, {
+        articles: [...data?.articles, newArticle],
+      });
     });
-
-    
-
 
     onClose();
     setArticleForm({ id: 0, title: "", text: "" });
@@ -218,7 +221,7 @@ export default function Module({
     console.log("Edit Article");
     // console.log(currentUser())
 
-    const modules = getDocumentById('modules', currentModule);
+    const modules = getDocumentById("modules", currentModule);
 
     modules.then((data) => {
       const updatedArticle: ArticleForm = {
@@ -228,18 +231,18 @@ export default function Module({
       };
       let currentArticles = data?.articles;
       currentArticles[articleForm?.id || 0] = updatedArticle;
-      updateDocument('modules', currentModule, {articles: currentArticles});
+      updateDocument("modules", currentModule, { articles: currentArticles });
     });
 
     onClose();
     setArticleForm({ id: 0, title: "", text: "" });
     setCurrentModule("");
-  }
+  };
 
   const onEditVideo = (onClose: () => void) => {
     console.log("Edit Video");
 
-    const modules = getDocumentById('modules', currentModule);
+    const modules = getDocumentById("modules", currentModule);
 
     modules.then((data) => {
       const updatedVideo: VideoForm = {
@@ -249,44 +252,38 @@ export default function Module({
       };
       let currentVideos = data?.videos;
       currentVideos[videoForm?.id || 0] = updatedVideo;
-      updateDocument('modules', currentModule, {videos: currentVideos});
+      updateDocument("modules", currentModule, { videos: currentVideos });
     });
 
     onClose();
     setVideoForm({ id: 0, title: "", videoUrl: "" });
     setCurrentModule("");
-  }
+  };
 
   const onConfirmDelete = (onClose: () => void) => {
-
     if (pendingDelete.type === "module") {
-      deleteDocument('modules', pendingDelete.id);
-    }
-    else if (pendingDelete.type === "video") {
+      deleteDocument("modules", pendingDelete.id);
+    } else if (pendingDelete.type === "video") {
       deleteVideo(parseInt(pendingDelete.id));
-    }
-    else if (pendingDelete.type === "article") {
+    } else if (pendingDelete.type === "article") {
       deleteArticle(parseInt(pendingDelete.id));
-    }
-    else if (pendingDelete.type === "flashcard") {
+    } else if (pendingDelete.type === "flashcard") {
       deleteFlashcards(parseInt(pendingDelete.id));
-    }
-    else if (pendingDelete.type === "quiz") {
+    } else if (pendingDelete.type === "quiz") {
       deleteQuiz(parseInt(pendingDelete.id));
     }
     onClose();
-    setPendingDelete({type: "", id: ""});
-  }
+    setPendingDelete({ type: "", id: "" });
+  };
 
   const onCreateVideo = (onClose: () => void) => {
-
     const defaultVideoForm: VideoForm = {
       id: 0,
       title: "",
-      videoUrl: ""
+      videoUrl: "",
     };
 
-    const modules = getDocumentById('modules', currentModule);
+    const modules = getDocumentById("modules", currentModule);
 
     modules.then((data) => {
       console.log(data?.videos.length);
@@ -296,7 +293,9 @@ export default function Module({
         title: videoForm?.title || "",
         videoUrl: videoForm?.videoUrl || "",
       };
-      updateDocument('modules', currentModule, {videos: [...data?.videos, newVideo]});
+      updateDocument("modules", currentModule, {
+        videos: [...data?.videos, newVideo],
+      });
     });
 
     onClose();
@@ -304,10 +303,9 @@ export default function Module({
     setCurrentModule("");
   };
 
-
   const onCreateEditModule = (onClose: () => void) => {
-    console.log("Edit Module"); 
-    const modules = getDocumentById('modules', module["id"]);
+    console.log("Edit Module");
+    const modules = getDocumentById("modules", module["id"]);
 
     modules.then((data) => {
       const updatedModule = {
@@ -315,9 +313,8 @@ export default function Module({
         title: moduleName,
         authors: authors,
       };
-      updateDocument('modules', module["id"], updatedModule);
+      updateDocument("modules", module["id"], updatedModule);
     });
-
 
     onClose();
     // setArticleForm({ id: 0, title: "", text: "" });
@@ -328,72 +325,90 @@ export default function Module({
 
   return (
     // TODO: Fix positioning of module component (causes page to shift in x-axis)
-    <div id={`${module["id"]}moduleDiv`} className="relative bg-green-50 rounded-lg p-8 mt-8">
-      {isEditable && (<div className="absolute top-4 right-4">
-        <button
-          className="text-gray-500 hover:text-blue-500 transition-all duration-200"
-          onClick={() => {
+    <div
+      id={`${module["id"]}moduleDiv`}
+      className="relative bg-green-50 rounded-lg p-8 mt-8"
+    >
+      {isEditable && (
+        <div className="absolute top-4 right-4">
+          <button
+            className="text-gray-500 hover:text-blue-500 transition-all duration-200"
+            onClick={() => {
               // document.getElementById(`${module["id"]}moduleDiv`)?.remove();
               // deleteDocument('modules', module["id"]);
               setCurrentModule(module["id"]);
               setModuleName(module["title"]);
               setAuthors(module["authors"]);
               onEditModuleModalOpen();
-          }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+            }}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M16 4l4 4-12 12H4v-4L16 4z"
-            />
-          </svg>
-        </button>
-        <button
-          className="text-gray-500 hover:text-red-500 transition-all duration-200"
-          onClick={() => {
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M16 4l4 4-12 12H4v-4L16 4z"
+              />
+            </svg>
+          </button>
+          <button
+            className="text-gray-500 hover:text-red-500 transition-all duration-200"
+            onClick={() => {
               // document.getElementById(`${module["id"]}moduleDiv`)?.remove();
               // deleteDocument('modules', module["id"]);
-              setPendingDelete({type: "module", id: module["id"]});
+              setPendingDelete({ type: "module", id: module["id"] });
               onConfirmDeleteModalOpen();
-
-          }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+            }}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-      </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
       )}
-      
-      
+
       <div>
-        <h2 className="text-2xl font-montserrat font-bold">{module["title"]}</h2>
+        <h2 className="text-2xl font-montserrat font-bold">
+          {module["title"]}
+        </h2>
         <p className="">By: {module["authors"]}</p>
       </div>
       <div className="flex flex-row mt-4 gap-12">
         <div className="flex flex-col w-full">
           <h3 className="font-semibold font-montserrat">Learn</h3>
-            {videos.map((video1, index) => (
-            <Link key={index} href={`/learn/${module["id"]}/video/${video1.id}`}>
+          {videos.length === 0 &&
+            articles.length === 0 &&
+            flashcards.length === 0 && (
+              <div className="group flex items-center justify-between mt-2 py-4 pr-4 w-full border-b hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
+                <div className="flex items-center">
+                  <p className="ml-4 text-sm leading-5 transition-all duration-200 group-hover:text-primary-green">
+                    No Learning Resources Found
+                  </p>
+                </div>
+              </div>
+            )}
+          {videos.map((video1, index) => (
+            <Link
+              key={index}
+              href={`/learn/${module["id"]}/video/${video1.id}`}
+            >
               <div className="group flex items-center justify-between py-4 pl-8 pr-4 w-full border-b hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
                 <div className="flex items-center">
                   <img src={video.src} className="w-10 h-10" />
@@ -401,127 +416,24 @@ export default function Module({
                     {video1.title}
                   </p>
                 </div>
-                
-                {isEditable && (<div>
-                  <button
-                    className="invisible group-hover:visible text-gray-500 hover:text-blue-500 transition-all duration-100"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setCurrentModule(module["id"]);
 
-                        setVideoForm({ id: video1.id, title: video1.title, videoUrl: video1.videoUrl });
-
-                        onEditVideoModalOpen();
-                    }}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M16 4l4 4-12 12H4v-4L16 4z"
-                      />
-                    </svg>
-                  </button>
-                  <button onClick={(e) => {
-                    console.log(module["videos"])
-                    e.preventDefault();
-                    e.stopPropagation();
-                    // deleteVideo(video1.id);
-                    setPendingDelete({type: "video", id: video1.id.toString()});
-                    onConfirmDeleteModalOpen();
-
-                  }}
-                    className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-                )}
-              </div>
-            </Link>
-            ))}
-            {articles.map((article1, index) => (
-            <Link key={index} href={`/learn/${module["id"]}/article/${article1.id}`}>
-              <div className="group flex items-center justify-between py-4 pl-8 pr-4 w-full border-b hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
-                <div className="flex items-center">
-                  <img src={article.src} className="w-10 h-10" />
-                  <p className="ml-4 text-sm leading-5 transition-all duration-200 group-hover:text-primary-green">
-                    {article1.title}
-                  </p>
-                </div>
-                
-                {isEditable && (<div>
-                  <button
-                    className="invisible group-hover:visible text-gray-500 hover:text-blue-500 transition-all duration-100"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setCurrentModule(module["id"]);
-
-                        setArticleForm({ id: article1.id, title: article1.title, text: article1.text });
-
-                        onEditArticleModalOpen();
-                    }}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M16 4l4 4-12 12H4v-4L16 4z"
-                      />
-                    </svg>
-                  </button>
-                  <button onClick={(e) => {
-                    console.log(module["videos"])
-                    e.preventDefault();
-                    e.stopPropagation();
-                    // deleteArticle(article1.id);
-                    setPendingDelete({type: "article", id: article1.id.toString()});
-                    onConfirmDeleteModalOpen();
-
-
-                  }}
-                    className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-                )}
-              </div>
-            </Link>
-            ))}
-            {flashcards.map((flashcard1, index) => (
-            <Link key={index} href={`/learn/${module["id"]}/flashcards/${flashcard1.id}`}>
-              <div className="group flex items-center justify-between py-4 pl-8 pr-4 w-full border-b hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
-                <div className="flex items-center">
-                  <img src={flashcard.src} className="w-10 h-10" />
-                  <p className="ml-4 text-sm leading-5 transition-all duration-200 group-hover:text-primary-green">
-                    {flashcard1.title}
-                  </p>
-                </div>
-                
-                {isEditable && (<div>
-                  <Link href={`/edit/${module["id"]}/flashcard/${flashcard1.id}`}>
+                {isEditable && (
+                  <div>
                     <button
                       className="invisible group-hover:visible text-gray-500 hover:text-blue-500 transition-all duration-100"
-                     
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setCurrentModule(module["id"]);
+
+                        setVideoForm({
+                          id: video1.id,
+                          title: video1.title,
+                          videoUrl: video1.videoUrl,
+                        });
+
+                        onEditVideoModalOpen();
+                      }}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -538,31 +450,201 @@ export default function Module({
                         />
                       </svg>
                     </button>
-                  </Link>
-                  <button onClick={(e) => {
-                    console.log(module["videos"])
-                    e.preventDefault();
-                    e.stopPropagation();
-                    // deleteFlashcards(flashcard1.id);
-                    setPendingDelete({type: "flashcard", id: flashcard1.id.toString()});
-                    onConfirmDeleteModalOpen();
-
-
-                  }}
-                    className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
+                    <button
+                      onClick={(e) => {
+                        console.log(module["videos"]);
+                        e.preventDefault();
+                        e.stopPropagation();
+                        // deleteVideo(video1.id);
+                        setPendingDelete({
+                          type: "video",
+                          id: video1.id.toString(),
+                        });
+                        onConfirmDeleteModalOpen();
+                      }}
+                      className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-6 h-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
                 )}
               </div>
             </Link>
-            ))}
-        
+          ))}
+          {articles.map((article1, index) => (
+            <Link
+              key={index}
+              href={`/learn/${module["id"]}/article/${article1.id}`}
+            >
+              <div className="group flex items-center justify-between py-4 pl-8 pr-4 w-full border-b hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
+                <div className="flex items-center">
+                  <img src={article.src} className="w-10 h-10" />
+                  <p className="ml-4 text-sm leading-5 transition-all duration-200 group-hover:text-primary-green">
+                    {article1.title}
+                  </p>
+                </div>
+
+                {isEditable && (
+                  <div>
+                    <button
+                      className="invisible group-hover:visible text-gray-500 hover:text-blue-500 transition-all duration-100"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setCurrentModule(module["id"]);
+
+                        setArticleForm({
+                          id: article1.id,
+                          title: article1.title,
+                          text: article1.text,
+                        });
+
+                        onEditArticleModalOpen();
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-6 h-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M16 4l4 4-12 12H4v-4L16 4z"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        console.log(module["videos"]);
+                        e.preventDefault();
+                        e.stopPropagation();
+                        // deleteArticle(article1.id);
+                        setPendingDelete({
+                          type: "article",
+                          id: article1.id.toString(),
+                        });
+                        onConfirmDeleteModalOpen();
+                      }}
+                      className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-6 h-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                )}
+              </div>
+            </Link>
+          ))}
+          {flashcards.map((flashcard1, index) => (
+            <Link
+              key={index}
+              href={`/learn/${module["id"]}/flashcards/${flashcard1.id}`}
+            >
+              <div className="group flex items-center justify-between py-4 pl-8 pr-4 w-full border-b hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
+                <div className="flex items-center">
+                  <img src={flashcard.src} className="w-10 h-10" />
+                  <p className="ml-4 text-sm leading-5 transition-all duration-200 group-hover:text-primary-green">
+                    {flashcard1.title}
+                  </p>
+                </div>
+
+                {isEditable && (
+                  <div>
+                    <Link
+                      href={`/edit/${module["id"]}/flashcard/${flashcard1.id}`}
+                    >
+                      <button className="invisible group-hover:visible text-gray-500 hover:text-blue-500 transition-all duration-100">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-6 h-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M16 4l4 4-12 12H4v-4L16 4z"
+                          />
+                        </svg>
+                      </button>
+                    </Link>
+                    <button
+                      onClick={(e) => {
+                        console.log(module["videos"]);
+                        e.preventDefault();
+                        e.stopPropagation();
+                        // deleteFlashcards(flashcard1.id);
+                        setPendingDelete({
+                          type: "flashcard",
+                          id: flashcard1.id.toString(),
+                        });
+                        onConfirmDeleteModalOpen();
+                      }}
+                      className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-6 h-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                )}
+              </div>
+            </Link>
+          ))}
         </div>
         <div className="flex flex-col w-full">
           <h3 className="font-semibold ">Practice</h3>
+          {quizzes.length === 0 && (
+            <div className="group flex items-center justify-between mt-2 py-4 pr-4 w-full border-b hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
+              <div className="flex items-center">
+                <p className="ml-4 text-sm leading-5 transition-all duration-200 group-hover:text-primary-green">
+                  No Practice Resources Found
+                </p>
+              </div>
+            </div>
+          )}
           {quizzes.map((quiz1, index) => (
             <Link key={index} href={`/learn/${module["id"]}/quiz/${quiz1.id}`}>
               <div className="group flex items-center justify-between py-4 pl-8 pr-4 w-full border-b hover:bg-primary-green/10 transition-all duration-200 rounded-lg">
@@ -572,12 +654,39 @@ export default function Module({
                     {quiz1.title}
                   </p>
                 </div>
-                
-                {isEditable && (<div>
-                  <Link href={`/edit/${module["id"]}/quiz/${quiz1.id}`}>
+
+                {isEditable && (
+                  <div>
+                    <Link href={`/edit/${module["id"]}/quiz/${quiz1.id}`}>
+                      <button className="invisible group-hover:visible text-gray-500 hover:text-blue-500 transition-all duration-100">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-6 h-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M16 4l4 4-12 12H4v-4L16 4z"
+                          />
+                        </svg>
+                      </button>
+                    </Link>
                     <button
-                      className="invisible group-hover:visible text-gray-500 hover:text-blue-500 transition-all duration-100"
-                     
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        // deleteQuiz(quiz1.id);
+                        setPendingDelete({
+                          type: "quiz",
+                          id: quiz1.id.toString(),
+                        });
+                        onConfirmDeleteModalOpen();
+                      }}
+                      className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -590,26 +699,11 @@ export default function Module({
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           strokeWidth="2"
-                          d="M16 4l4 4-12 12H4v-4L16 4z"
+                          d="M6 18L18 6M6 6l12 12"
                         />
                       </svg>
                     </button>
-                  </Link>
-                  <button onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    // deleteQuiz(quiz1.id);
-                    setPendingDelete({type: "quiz", id: quiz1.id.toString()});
-                    onConfirmDeleteModalOpen();
-
-
-                  }}
-                    className="invisible group-hover:visible text-gray-500 hover:text-red-500 transition-all duration-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
+                  </div>
                 )}
               </div>
             </Link>
@@ -620,7 +714,9 @@ export default function Module({
         <div className="mt-6">
           <Dropdown>
             <DropdownTrigger>
-              <Button className="bg-[#0E793C] text-white font-semibold font-montserrat">Add Resource</Button>
+              <Button className="bg-[#0E793C] text-white font-semibold font-montserrat">
+                Add Resource
+              </Button>
             </DropdownTrigger>
             <DropdownMenu>
               <DropdownItem key="quiz" href={`/new/${module.id}/quiz`}>
@@ -665,8 +761,12 @@ export default function Module({
                 label="Title"
                 value={articleForm?.title || ""}
                 setValue={(newTitle) =>
-        
-                  setArticleForm({ ...articleForm, title: newTitle, id: articleForm?.id || 0, text: articleForm?.text || "" })
+                  setArticleForm({
+                    ...articleForm,
+                    title: newTitle,
+                    id: articleForm?.id || 0,
+                    text: articleForm?.text || "",
+                  })
                 }
                 labelPlacement="inside"
               />
@@ -674,7 +774,12 @@ export default function Module({
                 placeholder="Article Text"
                 value={articleForm?.text || ""}
                 setValue={(newText) =>
-                  setArticleForm({ ...articleForm, text: newText, id: articleForm?.id || 0, title: articleForm?.title || "" })
+                  setArticleForm({
+                    ...articleForm,
+                    text: newText,
+                    id: articleForm?.id || 0,
+                    title: articleForm?.title || "",
+                  })
                 }
                 as={Textarea}
                 className="mt-4"
@@ -687,14 +792,21 @@ export default function Module({
             title="Add Video"
             actionText="Create"
             onAction={onCreateVideo}
-            onCloseModal={() => setVideoForm({ id: 0, title: "", videoUrl: "" })}
+            onCloseModal={() =>
+              setVideoForm({ id: 0, title: "", videoUrl: "" })
+            }
           >
             <div>
               <TextField
                 label="Title"
                 value={videoForm?.title}
                 setValue={(newTitle) =>
-                  setVideoForm({ ...videoForm, title: newTitle, id: videoForm?.id || 0, videoUrl: videoForm?.videoUrl || "" })
+                  setVideoForm({
+                    ...videoForm,
+                    title: newTitle,
+                    id: videoForm?.id || 0,
+                    videoUrl: videoForm?.videoUrl || "",
+                  })
                 }
                 labelPlacement="inside"
               />
@@ -702,7 +814,12 @@ export default function Module({
                 label="Video URL"
                 value={videoForm?.videoUrl}
                 setValue={(newVideoUrl) =>
-                  setVideoForm({ ...videoForm, videoUrl: newVideoUrl, id: videoForm?.id || 0, title: videoForm?.title || "" })
+                  setVideoForm({
+                    ...videoForm,
+                    videoUrl: newVideoUrl,
+                    id: videoForm?.id || 0,
+                    title: videoForm?.title || "",
+                  })
                 }
                 labelPlacement="inside"
                 className="mt-4"
@@ -716,16 +833,16 @@ export default function Module({
             actionText="Save"
             onAction={onCreateEditModule}
             onCloseModal={() => {
-              setAuthors("")
-              setModuleName("")
+              setAuthors("");
+              setModuleName("");
             }}
           >
             <div>
               <TextField
                 label="Title"
                 value={moduleName || ""}
-                setValue={(newTitle) =>
-                  setModuleName(newTitle)
+                setValue={
+                  (newTitle) => setModuleName(newTitle)
                   // setArticleForm({ ...articleForm, title: newTitle, id: articleForm?.id || 0, text: articleForm?.text || "" })
                 }
                 labelPlacement="inside"
@@ -733,8 +850,8 @@ export default function Module({
               <TextField
                 label="Authors"
                 value={authors || ""}
-                setValue={(newAuthors) =>
-                  setAuthors(newAuthors)
+                setValue={
+                  (newAuthors) => setAuthors(newAuthors)
                   // setVideoForm({ ...videoForm, videoUrl: newVideoUrl, id: videoForm?.id || 0, title: videoForm?.title || "" })
                 }
                 labelPlacement="inside"
@@ -747,7 +864,7 @@ export default function Module({
             onOpenChange={onEditArticleModalOpenChange}
             title="Edit Article"
             actionText="Save"
-            onAction={onEditArticle} 
+            onAction={onEditArticle}
             onCloseModal={() => setArticleForm({ id: 0, title: "", text: "" })}
           >
             <div>
@@ -755,8 +872,12 @@ export default function Module({
                 label="Title"
                 value={articleForm?.title || ""}
                 setValue={(newTitle) =>
-        
-                  setArticleForm({ ...articleForm, title: newTitle, id: articleForm?.id || 0, text: articleForm?.text || "" })
+                  setArticleForm({
+                    ...articleForm,
+                    title: newTitle,
+                    id: articleForm?.id || 0,
+                    text: articleForm?.text || "",
+                  })
                 }
                 labelPlacement="inside"
               />
@@ -764,7 +885,12 @@ export default function Module({
                 placeholder="Article Text"
                 value={articleForm?.text || ""}
                 setValue={(newText) =>
-                  setArticleForm({ ...articleForm, text: newText, id: articleForm?.id || 0, title: articleForm?.title || "" })
+                  setArticleForm({
+                    ...articleForm,
+                    text: newText,
+                    id: articleForm?.id || 0,
+                    title: articleForm?.title || "",
+                  })
                 }
                 as={Textarea}
                 className="mt-4"
@@ -777,14 +903,21 @@ export default function Module({
             title="Edit Video"
             actionText="Save"
             onAction={onEditVideo}
-            onCloseModal={() => setVideoForm({ id: 0, title: "", videoUrl: "" })}
+            onCloseModal={() =>
+              setVideoForm({ id: 0, title: "", videoUrl: "" })
+            }
           >
             <div>
               <TextField
                 label="Title"
                 value={videoForm?.title}
                 setValue={(newTitle) =>
-                  setVideoForm({ ...videoForm, title: newTitle, id: videoForm?.id || 0, videoUrl: videoForm?.videoUrl || "" })
+                  setVideoForm({
+                    ...videoForm,
+                    title: newTitle,
+                    id: videoForm?.id || 0,
+                    videoUrl: videoForm?.videoUrl || "",
+                  })
                 }
                 labelPlacement="inside"
               />
@@ -792,7 +925,12 @@ export default function Module({
                 label="Video URL"
                 value={videoForm?.videoUrl}
                 setValue={(newVideoUrl) =>
-                  setVideoForm({ ...videoForm, videoUrl: newVideoUrl, id: videoForm?.id || 0, title: videoForm?.title || "" })
+                  setVideoForm({
+                    ...videoForm,
+                    videoUrl: newVideoUrl,
+                    id: videoForm?.id || 0,
+                    title: videoForm?.title || "",
+                  })
                 }
                 labelPlacement="inside"
                 className="mt-4"
