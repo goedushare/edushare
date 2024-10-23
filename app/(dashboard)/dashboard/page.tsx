@@ -219,7 +219,7 @@ const Dashboard = () => {
           return (
             (class1.owner === getCurrentUser()?.uid ||
               class1.students.includes(getCurrentUser()?.uid || "")) && (
-              <ClassCard class1={class1} isEditable={true} key={class1.id} />
+              <ClassCard class1={class1} isEditable={true} isDashboard={true} key={class1.id} />
             )
           );
         })}

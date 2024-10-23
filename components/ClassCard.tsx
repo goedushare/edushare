@@ -38,9 +38,11 @@ import { getCurrentUser, getUserById } from "@/lib/authHelpers";
 export default function ClassCard({
   class1,
   isEditable,
+  isDashboard
 }: {
   class1: ClassForm;
   isEditable?: boolean;
+  isDashboard?: boolean;
 }) {
   const [teacher, setTeacher] = useState("");
 
@@ -98,7 +100,10 @@ export default function ClassCard({
       <div className="flex flex-row gap-x-4 mt-4">
         <Button
           className="bg-[#0E793C] text-white"
-          onPress={() => router.push(`/dashboard/${class1["id"]}`)}
+          onPress={() => {
+            const url = isDashboard ? `/dashboard/${class1["id"]}` : `/learn/class/${class1["id"]}`;
+            router.push(url);
+          }}
         >
           View Class
         </Button>
