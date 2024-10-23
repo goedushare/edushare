@@ -60,7 +60,7 @@ export default function Header() {
       <Navbar position="sticky">
         <NavbarBrand>
           <Link href="/" className="text-black">
-            <p className="font-bold text-inherit text-xl">NSL Forever!</p>
+            <p className="font-bold text-inherit text-xl">EduShare</p>
           </Link>
         </NavbarBrand>
         <NavbarContent justify="end">

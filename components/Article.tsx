@@ -4,7 +4,7 @@ import { motion, useScroll } from "framer-motion";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import Chatbot from "./Chatbot";
+import Chatbot from "../components/Chatbot"
 
 export default function Article({
   articleName,
@@ -40,6 +40,7 @@ export default function Article({
         className="fixed bottom-0 left-[25vw] bg-gradient-to-r from-[#0E793C] to-[#0E6D78] origin-[0%] h-1 w-3/4 z-50"
         style={{ scaleX: scrollYProgress }}
       ></motion.div>
+      <Chatbot articleBody={body}></Chatbot>
     </div>
   );
 }

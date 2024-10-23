@@ -9,7 +9,7 @@ export default function Home() {
     <div className="h-full">
       <div className="text-center flex justify-center items-center h-full w-full px-[116px]">
         <div className=" h-[100vh] w-[60%] flex flex-col justify-center items-start">
-          <h1 className="text-7xl mb-4 font-montserrat font-bold text-left text-[#444444]">Welcome to NSL Forever!</h1>
+          <h1 className="text-7xl mb-4 font-montserrat font-bold text-left text-[#444444]">Welcome to EduShare!</h1>
           <h2 className="mb-8  text-left text-[18px] w-[75%] text-[#6B7280]">Upload your own resources, access materials from others, and collaborate to succeed together. Join our community and make studying easier than ever.
           </h2>
           <Button className="bg-[#0E793C] text-white font-semibold" as={Link} href="/learn">

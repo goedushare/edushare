@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-export default function Chatbot() {
+export default function Chatbot({ articleBody = "" }) {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
@@ -29,13 +29,17 @@ export default function Chatbot() {
     setMessages((prev) => [...prev, { sender: "user", text: userMessage }]);
     setInput("");
 
+    const fullMessage = articleBody 
+      ? `${userMessage}\n\nArticle content: ${articleBody}` 
+      : userMessage;
+
     setIsTyping(true);
     const response = await fetch("/api/chatgpt", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message: userMessage }),
+      body: JSON.stringify({ message: fullMessage }),
     });
     const data = await response.json();
     setIsTyping(false);
