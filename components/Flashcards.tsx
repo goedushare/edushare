@@ -6,7 +6,7 @@ import { Button } from "@nextui-org/react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import ReactCardFlip from "react-card-flip";
 import { FlashcardForm } from "@/interfaces";
-import Chatbot from "./Chatbot"
+import Chatbot from "./Chatbot";
 
 const Flashcards = ({
   flashcardsName,
@@ -23,7 +23,9 @@ const Flashcards = ({
 
   return (
     <div className="w-3/4 pb-16 flex flex-col items-center h-[calc(100vh-64px)] overflow-y-scroll overflow-x-hidden px-8">
-      <h1 className="font-semibold text-3xl mt-6 font-montserrat">{flashcardsName}</h1>
+      <h1 className="font-semibold text-3xl mt-6 font-montserrat">
+        {flashcardsName}
+      </h1>
       <h2 className="font-normal text-xl mt-2 mb-12">By: {authors}</h2>
       <ReactCardFlip
         isFlipped={toggleNextAnimation}
@@ -86,7 +88,6 @@ const Flashcards = ({
           <FaArrowRight />
         </Button>
       </div>
-      <Chatbot></Chatbot>
     </div>
   );
 };

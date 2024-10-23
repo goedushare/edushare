@@ -1,5 +1,5 @@
 import React from "react";
-import Chatbot from "./Chatbot"
+import Chatbot from "./Chatbot";
 
 export default function Video({
   title,
@@ -20,7 +20,6 @@ export default function Video({
         src={link}
         className="rounded-xl shadow-xl mb-16"
       ></iframe>
-      <Chatbot></Chatbot>
     </div>
   );
 }

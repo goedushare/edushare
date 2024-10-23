@@ -15,7 +15,6 @@ export default function Home() {
           <Button className="bg-[#0E793C] text-white font-semibold" as={Link} href="/learn">
             Get Started
           </Button>
-          <Chatbot />
         </div>
         <div className="w-[40%] h-full flex flex-col items-center justify-center">
         <Image src="/images/self-learning.png" width={500} height={500} alt="Learning Icon"/>
