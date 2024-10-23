@@ -22,11 +22,14 @@ const DashboardClass = ({params} : { params: {class: string}}) => {
   const [classes, setClasses] = useState<ClassForm[]>([]);
 
   // console.log('Class id:', params.class); 
-  const getModuleClass = (moduleId: string) => {
-    console.log(classes);
-    const moduleClass = classes.find((class1) => class1.modules.includes(moduleId));
-    return moduleClass;
+  const getClass = () => {
+    return classes.find((class1) => class1.id === params.class);
   }
+
+  const getClassFromModule = (moduleId: string) => {
+    return classes.find((class1) => class1.modules.includes(moduleId));
+  }
+    
 
   const {
     isOpen: isModalOpen,
@@ -56,7 +59,7 @@ const DashboardClass = ({params} : { params: {class: string}}) => {
     };
 
     addDocument('modules', newModule).then((docId) => {
-      console.log(getModuleClass(params.class))
+      // console.log(getClassFromModule(params.class))
       const classDoc = getDocumentById('classes', params.class);
       classDoc.then((doc) => {
         // console.log(doc);
@@ -116,7 +119,8 @@ const DashboardClass = ({params} : { params: {class: string}}) => {
   const [moduleName, setModuleName] = useState("");
   const [authors, setAuthors] = useState("");
 
-  if(!getModuleClass(module.id)?.students.includes(getCurrentUser()?.uid || "")) {
+
+  if (!getClass() && !getClass()?.students.includes(getCurrentUser()?.uid || "") && getCurrentUser()?.uid !== getClass()?.owner) {
     return (
       <div>
         <h1>You are not enrolled in this class</h1>
@@ -158,7 +162,7 @@ const DashboardClass = ({params} : { params: {class: string}}) => {
       </div>
       <div className="mt-4 mb-8">
         {modules.map((module) => {
-          return (getModuleClass(module.id)?.owner === getCurrentUser()?.uid || module.owner === getCurrentUser()?.uid) && getModuleClass(module.id)?.id === params.class && <Module module={module} isEditable={true} key={module.id} />;
+          return (getClass()?.owner === getCurrentUser()?.uid || module.owner === getCurrentUser()?.uid) && getClassFromModule(module.id)?.id === params.class && <Module module={module} isEditable={true} key={module.id} />;
         })}
       </div>
     </div>
