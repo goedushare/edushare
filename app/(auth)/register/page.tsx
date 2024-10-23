@@ -9,8 +9,12 @@ import {
 } from "@nextui-org/react";
 import Link from "next/link";
 import { useState } from "react";
-import { auth } from "@/lib/firebaseConfig";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, googleProvider } from "@/lib/firebaseConfig";
+import {
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  updateProfile,
+} from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { onRegister } from "@/lib/firestoreHelpers";
 
@@ -39,7 +43,7 @@ const Register = () => {
       onRegister(userCredential.user, name, role);
       console.log("User registered:", userCredential.user);
       console.log("User registered:", userCredential);
-      router.push("/login");
+      router.push("/dashboard");
     } catch (error) {
       // Handle different Firebase auth errors
       const firebaseError = error as { code: string };
@@ -56,9 +60,21 @@ const Register = () => {
     }
   };
 
+  const handleGoogleRegister = async () => {
+    signInWithPopup(auth, googleProvider)
+      .then((res) => {
+        setSuccess(true);
+        onRegister(res.user, res.user.displayName, role);
+        router.push("/dashboard");
+      })
+      .catch((error) => {
+        console.log("Error signing in with Google:", error);
+      });
+  };
+
   return (
     <div className="h-screen flex flex-row justify-center">
-      <div className="w-96 h-96 mt-24 p-8 bg-gray-50 rounded-lg shadow-md">
+      <div className="w-96 h-[440px] mt-24 p-8 bg-gray-50 rounded-lg shadow-md">
         <h1 className="text-3xl font-bold">Register</h1>
         <form
           className="flex flex-col h-5/6 mt-4"
@@ -86,7 +102,14 @@ const Register = () => {
           />
 
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-          <div className="basis-1/2 flex flex-col justify-end">
+          <div className="basis-1/2 flex flex-col justify-end gap-y-4">
+            <Button
+              onClick={handleGoogleRegister}
+              type="submit"
+              className="text-[#0E793C] border-[#0E793C] border bg-transparent font-semibold"
+            >
+              Register with Google
+            </Button>
             <div className="flex flex-row justify-between items-end">
               <Button
                 onClick={handleRegister}

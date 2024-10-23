@@ -84,7 +84,7 @@ export default function Header() {
             <NavbarItem>
               <Button
                 as={Link}
-                className="bg-[#0E793C] text-white font-semibold"
+                className="bg-white text-[#0E793C] border-1 border-[#0E793C] font-semibold"
                 href="/login"
                 variant="flat"
               >
@@ -96,8 +96,8 @@ export default function Header() {
             <NavbarItem>
               <Button
                 as={Link}
-                className="bg-white text-[#0E793C] border-1 border-[#0E793C] font-semibold"
                 href="/register"
+                className="bg-[#0E793C] text-white font-semibold"
                 variant="flat"
               >
                 Register
