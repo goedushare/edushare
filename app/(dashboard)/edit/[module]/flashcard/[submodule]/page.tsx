@@ -4,8 +4,8 @@ import NewFlashcard from "@/components/NewFlashcard";
 import TextField from "@/components/TextField";
 import { Button } from "@nextui-org/react";
 import { useState } from "react";
-import { FlashcardSetForm, FlashcardForm, ModuleForm } from "@/interfaces";
-import { updateDocument, getDocumentById } from "@/lib/firestoreHelpers";
+import { FlashcardSetForm, FlashcardForm, ModuleForm, ClassForm} from "@/interfaces";
+import { updateDocument, getDocumentById, fetchCollectionData } from "@/lib/firestoreHelpers";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react"; 
 
@@ -15,6 +15,7 @@ const NewFlashcardSet = ({ params }: { params: { module: string, submodule: numb
   const router = useRouter();
 
   const [modules, setModules] = useState<ModuleForm>();
+  const [classId, setClassId] = useState("");
   useEffect(() => {
     const getModules = async () => {
       try {
@@ -28,6 +29,9 @@ const NewFlashcardSet = ({ params }: { params: { module: string, submodule: numb
           setFlashcards(moduleData.flashcards[params.submodule]["flashcards"]);
           setTitle(moduleData.flashcards[params.submodule]["title"]);
         }
+        const classData = await fetchCollectionData('classes');
+        const class1 = classData.find((class1) => class1.modules.includes(params.module)) as ClassForm;
+        setClassId(class1.id);
 
       } catch (error) {
         console.error('Error fetching posts:', error);
@@ -64,7 +68,7 @@ const NewFlashcardSet = ({ params }: { params: { module: string, submodule: numb
 
     setTitle("");
     setFlashcards([]);
-    router.push(`/dashboard`);
+    router.push(`/dashboard/${classId}`);
   };
 
   return (

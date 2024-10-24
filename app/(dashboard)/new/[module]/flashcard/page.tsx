@@ -3,10 +3,11 @@
 import NewFlashcard from "@/components/NewFlashcard";
 import TextField from "@/components/TextField";
 import { Button } from "@nextui-org/react";
-import { useState } from "react";
-import { FlashcardSetForm, FlashcardForm } from "@/interfaces";
-import { updateDocument, getDocumentById } from "@/lib/firestoreHelpers";
+import { useEffect, useState } from "react";
+import { FlashcardSetForm, FlashcardForm, ClassForm } from "@/interfaces";
+import { updateDocument, getDocumentById, fetchCollectionData } from "@/lib/firestoreHelpers";
 import { useRouter } from "next/navigation";
+
 
 const NewFlashcardSet = ({ params }: { params: { module: string } }) => {
   const [title, setTitle] = useState("");
@@ -15,9 +16,28 @@ const NewFlashcardSet = ({ params }: { params: { module: string } }) => {
   ]);
   const router = useRouter();
 
+  // const [classes, setClasses] = useState<ClassForm[]>([]);
   const addFlashcard = () => {
     setFlashcards([...flashcards, { term: "", definition: "" }]);
   };
+
+  const [classId, setClassId] = useState("");
+  useEffect(() => {
+    const getStuff = async () => {
+      try {
+        const classData = await fetchCollectionData('classes');
+
+        // setClasses(classData);
+
+        const class1 = classData.find((class1) => class1.modules.includes(params.module)) as ClassForm;
+        setClassId(class1.id);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+
+    getStuff();
+  }, []);
 
   const createFlashcardSet = () => {
     if (
@@ -51,7 +71,7 @@ const NewFlashcardSet = ({ params }: { params: { module: string } }) => {
 
     setTitle("");
     setFlashcards([]);
-    router.push(`/dashboard`);
+    router.push(`/dashboard/${classId}`);
   };
 
   return (

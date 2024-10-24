@@ -4,8 +4,8 @@ import NewQuestion from "@/components/NewQuestion";
 import TextField from "@/components/TextField";
 import { Button } from "@nextui-org/react";
 import { useState } from "react";
-import { QuestionForm, QuizForm, ModuleForm } from "@/interfaces";
-import { updateDocument, getDocumentById } from "@/lib/firestoreHelpers"; 
+import { QuestionForm, QuizForm, ModuleForm, ClassForm } from "@/interfaces";
+import { updateDocument, getDocumentById, fetchCollectionData } from "@/lib/firestoreHelpers"; 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -18,6 +18,7 @@ const NewQuiz = ({ params }: { params: { module: string, submodule: number } }) 
 
 
   const [modules, setModules] = useState<ModuleForm>();
+  const [classId, setClassId] = useState("");
   useEffect(() => {
     const getModules = async () => {
       try {
@@ -31,6 +32,10 @@ const NewQuiz = ({ params }: { params: { module: string, submodule: number } }) 
           setQuestions(moduleData.quizzes[params.submodule]["questions"]);
           setTitle(moduleData.quizzes[params.submodule]["title"]);
         }
+
+        const classData = await fetchCollectionData('classes');
+        const class1 = classData.find((class1) => class1.modules.includes(params.module)) as ClassForm;
+        setClassId(class1.id);
 
       } catch (error) {
         console.error('Error fetching posts:', error);
@@ -63,7 +68,7 @@ const NewQuiz = ({ params }: { params: { module: string, submodule: number } }) 
 
     setTitle("");
     setQuestions([]);
-    router.push(`/dashboard`);
+    router.push(`/dashboard/${classId}`);
   };
 
   return (

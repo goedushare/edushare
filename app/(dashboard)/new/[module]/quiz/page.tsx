@@ -3,9 +3,9 @@
 import NewQuestion from "@/components/NewQuestion";
 import TextField from "@/components/TextField";
 import { Button } from "@nextui-org/react";
-import { useState } from "react";
-import { QuestionForm, QuizForm } from "@/interfaces";
-import { updateDocument, getDocumentById } from "@/lib/firestoreHelpers";
+import { useState, useEffect } from "react";
+import { QuestionForm, QuizForm, ClassForm } from "@/interfaces";
+import { updateDocument, getDocumentById, fetchCollectionData } from "@/lib/firestoreHelpers";
 import { useRouter } from "next/navigation";
 
 const NewQuiz = ({ params }: { params: { module: string } }) => {
@@ -18,6 +18,24 @@ const NewQuiz = ({ params }: { params: { module: string } }) => {
   const addQuestion = () => {
     setQuestions([...questions, { question: "", answers: [""], correct: 0 }]);
   };
+
+  const [classId, setClassId] = useState("");
+  useEffect(() => {
+    const getStuff = async () => {
+      try {
+        const classData = await fetchCollectionData('classes');
+
+        // setClasses(classData);
+
+        const class1 = classData.find((class1) => class1.modules.includes(params.module)) as ClassForm;
+        setClassId(class1.id);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+
+    getStuff();
+  }, []);
 
   const createQuiz = () => {
     if (
@@ -51,7 +69,7 @@ const NewQuiz = ({ params }: { params: { module: string } }) => {
 
     setTitle("");
     setQuestions([]);
-    router.push(`/dashboard`);
+    router.push(`/dashboard/${classId}`);
   };
 
   return (

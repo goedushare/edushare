@@ -40,7 +40,7 @@ const DashboardClass = ({ params }: { params: { class: string } }) => {
   } = useDisclosure();
 
   const onCreate = (onClose: () => void) => {
-    if (!moduleName || !authors) return;
+    if (!moduleName) return;
     const defaultModuleForm: ModuleForm = {
       id: "0",
       title: "",
@@ -55,7 +55,7 @@ const DashboardClass = ({ params }: { params: { class: string } }) => {
     const newModule: ModuleForm = {
       ...defaultModuleForm,
       title: moduleName,
-      authors: authors,
+      authors: getCurrentUser()?.displayName || "",
       owner: getCurrentUser()?.uid || "",
     };
 
@@ -157,14 +157,14 @@ const DashboardClass = ({ params }: { params: { class: string } }) => {
               labelPlacement="inside"
             />
           </div>
-          <div>
+          {/* <div>
             <TextField
               label="Authors"
               value={authors}
               setValue={setAuthors}
               labelPlacement="inside"
             />
-          </div>
+          </div> */}
         </Modal>
       </div>
       <div className="mt-4 mb-8">
