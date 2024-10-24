@@ -48,9 +48,9 @@ export default function Sidebar() {
         console.log('Class:', class1);
         let classModules: ModuleForm[] = [];
         class1?.modules.map((moduleId) => {
-          const module = moduleData.find((module1) => module1.id === moduleId);
-          if (module) {
-            classModules.push(module);
+          const module1 = moduleData.find((module1) => module1.id === moduleId);
+          if (module1) {
+            classModules.push(module1);
           }
         });
         console.log('Class Modules:', classModules);  
